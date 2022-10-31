@@ -12,7 +12,9 @@ internal static class DataSource
 
     internal static DalOrderItem[]  ArrOrderItem  = new DalOrderItem[200];
 
-    internal static DalOrder[] ArrOrder = new DalOrderItem[];
+    internal static DalOrder[] ArrOrder = new DalOrder[100];
+
+    internal static DalProduct[] ArrProudct = new DalProduct[50];
 
 }
 
