@@ -4,12 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO;
+namespace Dal;
 
-public enum Category
+public class DalProduct
 {
-    Low,
-    Medium,
-    High
 }
-
