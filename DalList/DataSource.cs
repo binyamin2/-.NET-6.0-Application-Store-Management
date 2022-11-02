@@ -37,43 +37,52 @@ internal static class DataSource
         ///inital orderItem
     }
 
-
-
-
-
-
-
-
-    ///index for array
-
-    private static int OrderIndex = 0;
-
-    private static int OrderItemIndex = 0;
-
-    private static int ProductIndex = 0;
-
     ///metodes Add organ
     private static void AddOrder(DalOrder NewOrder)
     {
-        ArrOrder[OrderIndex] = NewOrder;
-        OrderIndex++;
+        ArrOrder[Config.OrderIndex] = NewOrder;
+        Config.OrderIndex++;
     }
     
     private static void AddOrderItem(DalOrderItem NewOrderItem)
     {
-        ArrOrderItem[OrderItemIndex] = NewOrderItem;
-        OrderItemIndex++;
+        ArrOrderItem[Config.OrderItemIndex] = NewOrderItem;
+        Config.OrderItemIndex++;
     }
 
     private static void AddProduct(DalProduct NewProduct)
     {
-        ArrProduct[ProductIndex] = NewProduct;
-        ProductIndex++;
+        ArrProduct[Config.ProductIndex] = NewProduct;
+        Config.ProductIndex++;
+    }
+
+    internal static class Config
+    {
+        ///index for array
+
+        internal static int OrderIndex = 0;
+
+        internal static int OrderItemIndex = 0;
+
+        internal static int ProductIndex = 0;
+
+        private static int IDOrder = 208900;
+        
+       internal static void getIDOrder()
+        {
+            IDOrder++;          
+        }
+
+        private static int IDOrderItem = 1;
+
+        internal static void getID_OI()
+        {
+            IDOrderItem++;
+        }
+
     }
 
 
-
-    
 }
 
 
