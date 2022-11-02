@@ -8,8 +8,10 @@ namespace DO;
 
 public enum Category
 {
-    Low,
-    Medium,
-    High
+   Sport,
+   Elegant,
+   Hike,
+   Sandals,
+   Boots
 }
 
