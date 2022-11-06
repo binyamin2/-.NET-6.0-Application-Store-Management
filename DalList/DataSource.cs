@@ -16,11 +16,11 @@ internal static class DataSource
 
     ///Array
 
-    internal static List<OrderItem> ArrOrderItem = new List <OrderItem>();
+    internal static OrderItem[] ArrOrderItem = new OrderItem[200];
 
-    internal static List<Order> ArrOrder = new List<Order>();
+    internal static Order[] ArrOrder = new Order[100];
 
-    internal static List<Product> ArrProduct = new List<Product>();
+    internal static Product[] ArrProduct = new Product[50];
 
 
     static DataSource() 
