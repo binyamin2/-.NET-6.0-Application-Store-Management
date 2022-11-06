@@ -12,15 +12,14 @@ class Program
     static void Main(string[] args)
     {
 
-        Console.WriteLine(@"Welcome to the 'Jerusalem Shoes' shoe StoreItem");
+        Console.WriteLine(@"Welcome to the 'Shoes for everyone' shoe StoreItem");
         do
         {
-            Console.WriteLine(@"For any activities about Products press 1");
-            Console.WriteLine(@"For any activities about Orders press 2");
-            Console.WriteLine(@"For any activities about Order Items press 3");
+            Console.WriteLine(@"For any actions about Products press 1");
+            Console.WriteLine(@"For any actions about Orders press 2");
+            Console.WriteLine(@"For any actions about Order Items press 3");
             Console.WriteLine(@"For exit the menu press 0");
             StoreItem.TryParse(Console.ReadLine(), out menuCode);
-
             try
             {
                 switch (menuCode)
@@ -82,9 +81,9 @@ class Program
                 {
                     ID = id,
                     Name = name,
-                    Category = (ShoesCategories)catgory,
+                    Category = (Category)catgory,
                     Price = tmpPrice,
-                    InSock = tmpAmount
+                    InStock= tmpAmount
                 };
                 int addedProductId = dalProduct.AddProduct(addedProduct);
                 Console.WriteLine($"The Product id: {0}", addedProductId);
@@ -93,11 +92,11 @@ class Program
                 Console.WriteLine(@"Enter the product ID number that you want to see his details");
                 int.TryParse(Console.ReadLine(), out id);
                 Product productToShow = new Product();
-                productToShow = dalProduct.GetProduct(id);
+                productToShow = dalProduct.getPruduct(id);
                 productToShow.ToString();
                 break;
             case CraudMethod.ViewAll:
-                Product[] productsList = dalProduct.GetProductsList();
+                Product[] productsList = dalProduct.GetAllProduct();
                 foreach (Product item in productsList)
                 {
                     item.ToString();
@@ -106,7 +105,7 @@ class Program
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the product ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Product oldProduct = dalProduct.GetProduct(id);
+                Product oldProduct = dalProduct.getPruduct(id);
                 oldProduct.ToString();
                 Console.WriteLine(@"Enter the new name");
                 name = Console.ReadLine();
@@ -121,18 +120,18 @@ class Program
                 int.TryParse(Console.ReadLine(), out tmpAmount);
                 Product updateProduct = new Product()
                 {
-                    Id = id,
+                    ID = id,
                     Name = name,
-                    Category = (ShoesCategories)tmpcatgory,
+                    Category = (Category)tmpcatgory,
                     Price = tmpPrice2,
-                    InSock = tmpAmount
+                    InStock= tmpAmount
                 };
                 dalProduct.UpdateProduct(updateProduct);
                 break;
             case CraudMethod.Delete:
                 Console.WriteLine(@"Enter the product ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out id);
-                dalProduct.DelateProduct(id);
+                dalProduct.deleteProduct(id);
                 break;
             default:
                 break;
@@ -175,7 +174,7 @@ class Program
                 DateTime.TryParse(Console.ReadLine(), out delivery);
                 Order addedOrder = new Order()
                 {
-                    Id = id,
+                    ID= id,
                     CustomerAdress = adress,
                     CustomerEmail = email,
                     CustomerName = customeName,
@@ -183,25 +182,25 @@ class Program
                     ShipDate = orderShip,
                     DeliveryDate = delivery
                 };
-                int addedOrderId = dalOrder.AddOrder(addedOrder);
+                int addedOrderId = dalOrder.Add(addedOrder);
                 Console.WriteLine($"The Order id: {0}", addedOrderId);
                 break;
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out id)) ;
                 Order OrderToShow = new Order();
-                OrderToShow = dalOrder.GetOrder(id);
+                OrderToShow = dalOrder.getOrder(id);
                 OrderToShow.ToString();
                 break;
             case CraudMethod.ViewAll:
-                Order[] OrdersList = dalOrder.GetOrdersList();
+                Order[] OrdersList = dalOrder.GetAllorder();
                 foreach (Order Order in OrdersList)
                     Order.ToString();
                 break;
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Order oldOrder = dalOrder.GetOrder(id);
+                Order oldOrder = dalOrder.getOrder(id);
                 oldOrder.ToString();
                 Console.WriteLine(@"Enter the new CUSTOMER name");
                 customeName = Console.ReadLine();
@@ -218,7 +217,7 @@ class Program
 
                 Order updateOrder = new Order()
                 {
-                    Id = id,
+                    ID = id,
                     CustomerAdress = adress,
                     CustomerEmail = email,
                     CustomerName = customeName,
@@ -226,12 +225,12 @@ class Program
                     ShipDate = orderShip,
                     DeliveryDate = delivery
                 };
-                dalOrder.UpdateOrder(updateOrder);
+                dalOrder.UpdateArOrder(updateOrder);
                 break;
             case CraudMethod.Delete:
                 Console.WriteLine(@"Enter the Order ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out id);
-                dalOrder.DelateOrder(id);
+                dalOrder.deleteOrder(id);
                 break;
             default:
                 break;
@@ -271,9 +270,9 @@ class Program
 
                 OrderItem addedOrderItem = new OrderItem()
                 {
-                    Id = id,
-                    ProductId = productId,
-                    OrderId = orderId,
+                    OrderItemID = id,
+                    ProdectID= productId,
+                    OrderID = orderId,
                     Amount = Amount,
                     Price = price
                 };
@@ -284,18 +283,18 @@ class Program
                 Console.WriteLine(@"Enter the Order Item ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
                 OrderItem OrderItemToShow = new OrderItem();
-                OrderItemToShow = dalorderitem.GetOrderItem(orderId);
+                OrderItemToShow = dalorderitem.getOrderItem(orderId);
                 OrderItemToShow.ToString();
                 break;
             case ItemOrderMenu.ViewAll:
-                OrderItem[] OrdersItemList = dalorderitem.GetOrderItemsList();
+                OrderItem[] OrdersItemList = dalorderitem.GetAllOrderItem();
                 foreach (OrderItem orderItem in OrdersItemList)
                     orderItem.ToString();
                 break;
             case ItemOrderMenu.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
-                OrderItem oldItemOrder = dalorderitem.GetOrderItem(orderId);
+                OrderItem oldItemOrder = dalorderitem.getOrderItem(orderId);
                 oldItemOrder.ToString();
                 Console.WriteLine(@"Enter the Order ID number that you want to add");
                 while (!int.TryParse(Console.ReadLine(), out id)) ;
@@ -309,18 +308,18 @@ class Program
                 while (!double.TryParse(Console.ReadLine(), out price)) ;
                 OrderItem updateItemOrder = new OrderItem()
                 {
-                    Id = id,
-                    ProductId = productId,
-                    OrderId = orderId,
+                    OrderItemID = id,
+                    ProdectID= productId,
+                    OrderID = orderId,
                     Amount = Amount,
                     Price = price
                 };
-                dalorderitem.UpdateOrderItem(updateItemOrder);
+                dalorderitem.UpdateArOrderItem(updateItemOrder);
                 break;
             case ItemOrderMenu.Delete:
                 Console.WriteLine(@"Enter the Order ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out orderId);
-                dalorderitem.DelateOrderItem(orderId);
+                dalorderitem.deleteOrderItem(orderId);
                 break;
             case ItemOrderMenu.itemByOrderAndProduct:
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");

@@ -12,6 +12,8 @@ namespace Dal;
 
 internal static class DataSource
 {
+
+
     public readonly static Random RandomInt = new Random();
 
     ///Array
@@ -26,6 +28,7 @@ internal static class DataSource
     static DataSource() 
     {
         s_Initialize();
+        Console.WriteLine("zz");
     }
 
 
@@ -70,8 +73,7 @@ internal static class DataSource
             }
 
         }
-    
-    
+ 
     }
 
     private static void Order_Initialize()
@@ -158,7 +160,7 @@ internal static class DataSource
             OI.OrderItemID = indexOrder;
             OI.Amount = rnd.Next(1, 20);
 
-            for (int i1 = 0; i1 < DataSource.Config.ProductIndex; i1++)
+            for (int i1 = 0; i1 < DataSource.ProductIndex; i1++)
             {
                 if (DataSource.ArrProduct[i1].ID == OI.ProdectID)
                     OI.Price = DataSource.ArrProduct[i1].Price;
@@ -176,24 +178,23 @@ internal static class DataSource
     ///metodes Add organ
     internal static void AddOrder(Order NewOrder)
     {
-        ArrOrder[Config.OrderIndex] = NewOrder;
-        Config.OrderIndex++;
+        ArrOrder[OrderIndex] = NewOrder;
+        OrderIndex++;
     }
     
     internal static void AddOrderItem(OrderItem NewOrderItem)
     {
-        ArrOrderItem[Config.OrderItemIndex] = NewOrderItem;
-        Config.OrderItemIndex++;
+        ArrOrderItem[OrderItemIndex] = NewOrderItem;
+        OrderItemIndex++;
     }
 
    internal static void AddProduct(Product NewProduct)
     {
-        ArrProduct[Config.ProductIndex] = NewProduct;
-        Config.ProductIndex++;
+        ArrProduct[ProductIndex] = NewProduct;
+        ProductIndex++;
     }
 
-    internal static class Config
-    {
+ 
         ///index for array
 
         internal static int OrderIndex = 0;
@@ -217,9 +218,6 @@ internal static class DataSource
         {
             IDOrderItem++;
         }
-
-    }
-
 
 }
 
