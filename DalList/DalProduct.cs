@@ -60,6 +60,16 @@ public class DalProduct
         }
     }
 
+    public Product[] GetAllProduct()
+    {
+        Product[] products = new Product[DataSource.ArrProduct.Length];
+
+        DataSource.ArrProduct.CopyTo(products, 0);
+
+        return products;
+
+    }
+
     public void UpdateProduct(Product p)
     {
         for (int i = 0; i < DataSource.Config.ProductIndex; i++)
