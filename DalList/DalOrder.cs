@@ -36,7 +36,29 @@ namespace Dal;
         order.ID = -1;
         return order;
     }
-    public 
+    public Order[] GetAllorder ()
+    {
+        Order[] order = new Order[DataSource.ArrOrder.Length];
+
+        DataSource.ArrOrder.CopyTo(order, 0);
+
+        return order;
+
+    }
+
+    public void UpdateArOrder(Order order )
+    {
+        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        {
+            if (DataSource.ArrOrder[i].ID == order.ID)
+            {
+               DataSource.ArrOrder[i] = order;
+                return;
+            }
+        }
+        throw new Exception("the object not found");
+      
+    }
 
 
 }

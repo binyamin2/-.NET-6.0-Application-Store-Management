@@ -43,13 +43,46 @@ internal static class DataSource
     private static void Product_Initialize()
     {
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 16; i++)
         {
+            
 
         }
     
     
     }
+
+    private static void Order_Initialize()
+    {
+        DalOrder dalOrder1 = new DalOrder();
+
+        Order order1 = new Order();
+
+       string CustomerName = "a";
+
+       int index_address = 1;
+
+       string CustomerAdress = "king_gorg";
+
+        for (int i = 0; i < 20; i++)
+        {
+            order1.CustomerName = CustomerName;
+          
+            order1.CustomerEmail = CustomerName += "@gmail.com";
+
+            CustomerName += "b";
+
+            order1.CustomerAdress = CustomerAdress += index_address;
+
+            index_address++;
+
+
+        }
+
+
+    }
+
+
 
     ///metodes Add organ
     internal static void AddOrder(Order NewOrder)
