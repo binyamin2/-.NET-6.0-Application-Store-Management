@@ -22,8 +22,6 @@ public struct Product
     public Category Category { get; set; }
 
 
-    public int size { get; set; }
-
     public int InStock { get; set; }
 
 
@@ -34,7 +32,6 @@ public struct Product
         Product ID={ID}, {Name} 
         category :{Category}
     	Price: {Price}
-        Size: {size}
     	Amount in stock: {InStock}";
 
 }
