@@ -29,7 +29,8 @@ public struct Product
     /// override tostring
     /// </summary>
     public override string ToString() => $@"
-        Product ID={ID}, {Name} 
+        Product ID :{ID}
+        Product name :{Name} 
         category :{Category}
     	Price: {Price}
     	Amount in stock: {InStock}";
