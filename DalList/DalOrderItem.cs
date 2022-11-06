@@ -51,6 +51,29 @@ public class DalOrderItem
         }
     }
 
+    public OrderItem[] GetAllOrderItem()
+    {
+        OrderItem[] orderItems = new OrderItem[DataSource.ArrOrderItem.Length];
+
+        DataSource.ArrOrderItem.CopyTo(orderItems, 0);
+
+        return orderItems;
+
+    }
+
+    public void UpdateArOrderItem(OrderItem orderItem)
+    {
+        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        {
+            if (DataSource.ArrOrderItem[i].OrderItemID == orderItem.OrderItemID)
+            {
+                DataSource.ArrOrderItem[i] = orderItem;
+                return;
+            }
+        }
+        throw new Exception("the object not found");
+
+    }
 }
 
 

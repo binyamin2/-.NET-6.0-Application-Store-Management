@@ -60,6 +60,22 @@ namespace Dal;
       
     }
 
+    public void deleteOrder(int id)
+    {
+        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        {
+            if (DataSource.ArrOrder[i].ID == id)
+            {
+                for (int j = i; j < DataSource.Config.OrderIndex - 1; j++)
+                {
+                    DataSource.ArrOrder[j] = DataSource.ArrOrder[j + 1];
+                }
+                DataSource.Config.OrderIndex--;
+                return;
+            }
+        }
+    }
+
 
 }
 

@@ -59,4 +59,14 @@ public class DalProduct
             }
         }
     }
+
+    public Product[] GetAllProduct()
+    {
+        Product[] products = new Product[DataSource.ArrProduct.Length];
+
+        DataSource.ArrProduct.CopyTo(products, 0);
+
+        return products;
+
+    }
 }
