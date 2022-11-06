@@ -31,13 +31,13 @@ internal static class DataSource
 
     private static void  s_Initialize()
     {
-      
 
-        ///inital product
+
+        Product_Initialize();
         ///
-        ///inital order
+        Order_Initialize();
         ///
-        ///inital orderItem
+        OrderItem_Initialize();
     }
 
     private static void Product_Initialize()
@@ -78,7 +78,7 @@ internal static class DataSource
     {
         DalOrder dalOrder1 = new DalOrder();
 
-        Order order1 = new Order();
+        
 
        string CustomerName = "a";
 
@@ -86,8 +86,14 @@ internal static class DataSource
 
        string CustomerAdress = "king_gorg";
 
+       int index_time_delivery = 0;
+       int index_time_ship = 0;
+
+
         for (int i = 0; i < 20; i++)
         {
+            Order order1 = new Order();
+
             order1.CustomerName = CustomerName;
           
             order1.CustomerEmail = CustomerName += "@gmail.com";
@@ -98,6 +104,58 @@ internal static class DataSource
 
             index_address++;
 
+            order1.OrderDate = DateTime.Now;
+
+            if (index_time_ship < 16)
+            {
+                order1.ShipDate = new DateTime(2023, 1, 1);
+                index_time_ship++;
+
+
+                if (index_time_delivery < 10)
+                {
+                    order1.ShipDate = new DateTime(2023, 2, 1);
+                    index_time_delivery++;
+                }
+            }
+
+
+            dalOrder1.Add(order1);
+        }
+
+
+    }
+
+    private static void OrderItem_Initialize()
+    {
+        DalOrderItem dalOrderItem = new DalOrderItem();
+
+        Random rnd = new Random();
+        rnd.Next(10, 20);
+
+        int indexOrder = -1;
+
+
+        for (int i = 0; i < 40; i++)
+        {
+            OrderItem OI = new OrderItem();
+
+            OI.ProdectID = rnd.Next(111111, 111131);
+
+            if (i % 4 == 0 )
+            {
+                indexOrder++;
+            }
+            OI.OrderItemID = indexOrder;
+            OI.Amount = rnd.Next(1, 20);
+
+            for (int i1 = 0; i1 < DataSource.Config.ProductIndex; i1++)
+            {
+                if (DataSource.ArrProduct[i1].ID == OI.ProdectID)
+                    OI.Price = DataSource.ArrProduct[i1].Price;
+            }
+
+            dalOrderItem.AddOrderItem(OI);
 
         }
 
