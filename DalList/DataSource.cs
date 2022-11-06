@@ -80,7 +80,8 @@ internal static class DataSource
 
         
 
-       string CustomerName = "a";
+       string[] CustomerName = {"avi","dani","oz","yoni","gal","david","yona","bini","meir","yosi","efi","ynon",
+        "slomi", "yarden","shchr","roni","tami","hdar","zav","nati"};
 
        int index_address = 1;
 
@@ -94,29 +95,37 @@ internal static class DataSource
         {
             Order order1 = new Order();
 
-            order1.CustomerName = CustomerName;
+            order1.CustomerName = CustomerName[i];
           
-            order1.CustomerEmail = CustomerName += "@gmail.com";
-
-            CustomerName += "b";
+            order1.CustomerEmail = CustomerName[i] += "@gmail.com";
 
             order1.CustomerAdress = CustomerAdress += index_address;
 
             index_address++;
 
-            order1.OrderDate = DateTime.Now;
+            
 
             if (index_time_ship < 16)
-            {
-                order1.ShipDate = new DateTime(2023, 1, 1);
+            {    
                 index_time_ship++;
-
 
                 if (index_time_delivery < 10)
                 {
-                    order1.ShipDate = new DateTime(2023, 2, 1);
+                    order1.DeliveryDate = DateTime.Now - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 100L));
+                    order1.ShipDate = order1.DeliveryDate - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 7L));
                     index_time_delivery++;
                 }
+                else
+                {
+
+                    order1.ShipDate = DateTime.Now - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 7L));
+                }
+                order1.OrderDate = order1.ShipDate - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 3L));
+            }
+            else
+            {
+                order1.OrderDate = DateTime.Now - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L));
+
             }
 
 
