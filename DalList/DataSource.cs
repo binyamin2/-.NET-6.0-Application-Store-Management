@@ -52,19 +52,19 @@ internal static class DataSource
     }
 
     ///metodes Add organ
-    private static void AddOrder(DalOrder NewOrder)
+    internal static void AddOrder(Order NewOrder)
     {
         ArrOrder[Config.OrderIndex] = NewOrder;
         Config.OrderIndex++;
     }
     
-    private static void AddOrderItem(DalOrderItem NewOrderItem)
+    internal static void AddOrderItem(OrderItem NewOrderItem)
     {
         ArrOrderItem[Config.OrderItemIndex] = NewOrderItem;
         Config.OrderItemIndex++;
     }
 
-    private static void AddProduct(DalProduct NewProduct)
+   internal static void AddProduct(Product NewProduct)
     {
         ArrProduct[Config.ProductIndex] = NewProduct;
         Config.ProductIndex++;
@@ -80,14 +80,16 @@ internal static class DataSource
 
         internal static int ProductIndex = 0;
 
-        private static int IDOrder = 208900;
+        internal static int IDOrder = 0;
+
+
         
        internal static void getIDOrder()
         {
             IDOrder++;          
         }
 
-        private static int IDOrderItem = 1;
+        internal static int IDOrderItem = 0;
 
         internal static void getID_OI()
         {
