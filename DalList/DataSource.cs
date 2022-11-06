@@ -5,8 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.ComponentModel;
+using DO;
 namespace Dal;
+
 
 internal static class DataSource
 {
@@ -14,11 +16,11 @@ internal static class DataSource
 
     ///Array
 
-    internal static DalOrderItem[] ArrOrderItem = new DalOrderItem[200];
+    internal static List<OrderItem> ArrOrderItem = new List<OrderItem>();
 
-    internal static DalOrder[] ArrOrder = new DalOrder[100];
+    internal static List<Order> ArrOrder = new List<Order>();
 
-    internal static DalProduct[] ArrProduct = new DalProduct[50];
+    internal static List<Product> ArrProduct = new List<Product>();
 
 
     static DataSource()
@@ -29,12 +31,24 @@ internal static class DataSource
 
     private static void  s_Initialize()
     {
+      
 
         ///inital product
         ///
         ///inital order
         ///
         ///inital orderItem
+    }
+
+    private static void Product_Initialize()
+    {
+
+        for (int i = 0; i < 10; i++)
+        {
+
+        }
+    
+    
     }
 
     ///metodes Add organ
@@ -44,7 +58,7 @@ internal static class DataSource
         Config.OrderIndex++;
     }
     
-    private static void AddOrderItem(DalOrderItem NewOrderItem)
+    private static void AddOrderItem(OrderItem NewOrderItem)
     {
         ArrOrderItem[Config.OrderItemIndex] = NewOrderItem;
         Config.OrderItemIndex++;
