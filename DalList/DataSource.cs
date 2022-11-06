@@ -23,7 +23,7 @@ internal static class DataSource
     internal static List<Product> ArrProduct = new List<Product>();
 
 
-    static DataSource()
+    static DataSource() 
     {
         s_Initialize();
     }
