@@ -16,11 +16,11 @@ internal static class DataSource
 
     ///Array
 
-    internal static List<OrderItem> ArrOrderItem = new List <OrderItem>();
+    internal static OrderItem[] ArrOrderItem = new OrderItem[200];
 
-    internal static List<Order> ArrOrder = new List<Order>();
+    internal static Order[] ArrOrder = new Order[100];
 
-    internal static List<Product> ArrProduct = new List<Product>();
+    internal static Product[] ArrProduct = new Product[50];
 
 
     static DataSource() 
@@ -52,19 +52,19 @@ internal static class DataSource
     }
 
     ///metodes Add organ
-    private static void AddOrder(DalOrder NewOrder)
+    private static void AddOrder(Order NewOrder)
     {
         ArrOrder[Config.OrderIndex] = NewOrder;
         Config.OrderIndex++;
     }
     
-    private static void AddOrderItem(DalOrderItem NewOrderItem)
+    internal static void AddOrderItem(OrderItem NewOrderItem)
     {
         ArrOrderItem[Config.OrderItemIndex] = NewOrderItem;
         Config.OrderItemIndex++;
     }
 
-    private static void AddProduct(DalProduct NewProduct)
+    private static void AddProduct(Product NewProduct)
     {
         ArrProduct[Config.ProductIndex] = NewProduct;
         Config.ProductIndex++;
@@ -87,7 +87,7 @@ internal static class DataSource
             IDOrder++;          
         }
 
-        private static int IDOrderItem = 1;
+       internal static int IDOrderItem = 0;
 
         internal static void getID_OI()
         {

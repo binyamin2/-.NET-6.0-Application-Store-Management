@@ -12,6 +12,7 @@ public struct OrderItem
     /// <summary>
     /// OrderItem data
     /// </summary>
+    public int OrderItemID { get; set; }
     public int ProdectID { get; set; }//s
 
     public int OrderID { get; set; }
