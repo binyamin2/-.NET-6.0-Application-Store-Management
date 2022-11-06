@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
+
 using DO;
 namespace Dal;
 
@@ -16,11 +16,11 @@ internal static class DataSource
 
     ///Array
 
-    internal static List<OrderItem> ArrOrderItem = new List<OrderItem>();
+    internal static OrderItem[] ArrOrderItem = new OrderItem[200];
 
-    internal static List<Order> ArrOrder = new List<Order>();
+    internal static DalOrder[] ArrOrder = new DalOrder[100];
 
-    internal static List<Product> ArrProduct = new List<Product>();
+    internal static DalProduct[] ArrProduct = new DalProduct[50];
 
 
     static DataSource()
@@ -58,7 +58,7 @@ internal static class DataSource
         Config.OrderIndex++;
     }
     
-    private static void AddOrderItem(OrderItem NewOrderItem)
+    private static void AddOrderItem(DalOrderItem NewOrderItem)
     {
         ArrOrderItem[Config.OrderItemIndex] = NewOrderItem;
         Config.OrderItemIndex++;

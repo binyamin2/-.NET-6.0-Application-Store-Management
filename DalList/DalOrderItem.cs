@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dal;
 
-public class OrderItem
+public class DalOrderItem
 {
 
 }
