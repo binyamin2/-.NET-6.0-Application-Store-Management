@@ -17,9 +17,9 @@ public struct Order
     public string CustomerName { get; set; }
     public string CustomerEmail { get; set; }
     public string CustomerAdress { get; set; }
-    public DateTime OrderDate { get; set; }
-    public DateTime ShipDate { get; set; }
-    public DateTime DeliveryDate { get; set; }
+    public DateTime OrderDate { get; set; } = DateTime.MinValue;
+    public DateTime ShipDate { get; set; } = DateTime.MinValue;
+    public DateTime DeliveryDate { get; set; } = DateTime.MinValue;
     /// <summary>
     /// override tostring
     /// </summary>
