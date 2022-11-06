@@ -12,9 +12,9 @@ public class DalOrderItem
 {
     public int AddOrderItem(OrderItem OI) 
     {
-        OI.OrderItemID = DataSource.Config.IDOrderItem;
+        OI.OrderItemID = DataSource.IDOrderItem;
 
-        DataSource.Config.getID_OI();
+        DataSource.getID_OI();
 
         DataSource.AddOrderItem(OI);
          
@@ -24,7 +24,7 @@ public class DalOrderItem
 
     public OrderItem getOrderItem(int IDorderItem)
     {
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (int i = 0; i < DataSource.OrderIndex; i++)
         {
             if (DataSource.ArrOrderItem[i].OrderItemID == IDorderItem)
             {
@@ -38,15 +38,15 @@ public class DalOrderItem
 
     public void deleteOrderItem(int id)
     {
-        for(int i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        for(int i = 0; i < DataSource.OrderItemIndex; i++)
         {
             if(DataSource.ArrOrderItem[i].OrderItemID == id)
             {
-                for (int j = i; j < DataSource.Config.OrderItemIndex - 1; j++)
+                for (int j = i; j < DataSource.OrderItemIndex - 1; j++)
                 {
                     DataSource.ArrOrderItem[j] = DataSource.ArrOrderItem[j+1];
                 }
-                DataSource.Config.OrderItemIndex--;
+                DataSource.OrderItemIndex--;
             }
         }
     }
@@ -63,7 +63,7 @@ public class DalOrderItem
 
     public void UpdateArOrderItem(OrderItem orderItem)
     {
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (int i = 0; i < DataSource.OrderIndex; i++)
         {
             if (DataSource.ArrOrderItem[i].OrderItemID == orderItem.OrderItemID)
             {
@@ -73,6 +73,34 @@ public class DalOrderItem
         }
         throw new Exception("the object not found");
 
+    }
+    public OrderItem GetItemByOrderAndProduct(int orderId,int productId)
+    {
+        foreach (OrderItem item in DataSource.ArrOrderItem)
+        {
+            if (item.OrderID ==orderId && item.ProdectID == productId)
+            {
+                return item;
+            }
+        }
+
+        throw new Exception("the object not found");
+    }
+
+    public OrderItem[] GetItemsListByOrderId(int orderId)
+    {
+        OrderItem[] tempArray = new OrderItem[DataSource.OrderItemIndex];
+        int index1 = 0;
+        foreach (OrderItem item in DataSource.ArrOrderItem)
+        {
+            if (item.OrderID == orderId)
+            {
+                tempArray[index1] = item;
+                index1++;
+            }
+        }
+
+        throw new Exception("the object not found");
     }
 }
 

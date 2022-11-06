@@ -47,15 +47,15 @@ public class DalProduct
 
     public void deleteProduct(int id)
     {
-        for (int i = 0; i < DataSource.Config.ProductIndex; i++)
+        for (int i = 0; i < DataSource.ProductIndex; i++)
         {
             if (DataSource.ArrProduct[i].ID == id)
             {
-                for (int j = i; j < DataSource.Config.ProductIndex - 1; j++)
+                for (int j = i; j < DataSource.ProductIndex - 1; j++)
                 {
                     DataSource.ArrProduct[j] = DataSource.ArrProduct[j + 1];
                 }
-                DataSource.Config.ProductIndex--;
+                DataSource.ProductIndex--;
             }
         }
     }
@@ -72,7 +72,7 @@ public class DalProduct
 
     public void UpdateProduct(Product p)
     {
-        for (int i = 0; i < DataSource.Config.ProductIndex; i++)
+        for (int i = 0; i < DataSource.ProductIndex; i++)
         {
             if (DataSource.ArrProduct[i].ID == p.ID)
             {

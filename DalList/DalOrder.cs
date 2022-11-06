@@ -14,9 +14,9 @@ namespace Dal;
     public int Add(Order order)
     {
 
-        order.ID = DataSource.Config.IDOrder;
+        order.ID = DataSource.IDOrder;
 
-        DataSource.Config.getIDOrder();
+        DataSource.getIDOrder();
 
         DataSource.AddOrder(order);
 
@@ -25,7 +25,7 @@ namespace Dal;
 
     public Order getOrder(int IDorder)
     {
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (int i = 0; i < DataSource.OrderIndex; i++)
         {
             if (DataSource.ArrOrder[i].ID == IDorder)
             {
@@ -48,7 +48,7 @@ namespace Dal;
 
     public void UpdateArOrder(Order order )
     {
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (int i = 0; i < DataSource.OrderIndex; i++)
         {
             if (DataSource.ArrOrder[i].ID == order.ID)
             {
@@ -62,15 +62,15 @@ namespace Dal;
 
     public void deleteOrder(int id)
     {
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (int i = 0; i < DataSource.OrderIndex; i++)
         {
             if (DataSource.ArrOrder[i].ID == id)
             {
-                for (int j = i; j < DataSource.Config.OrderIndex - 1; j++)
+                for (int j = i; j < DataSource.OrderIndex - 1; j++)
                 {
                     DataSource.ArrOrder[j] = DataSource.ArrOrder[j + 1];
                 }
-                DataSource.Config.OrderIndex--;
+                DataSource.OrderIndex--;
                 return;
             }
         }
