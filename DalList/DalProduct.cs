@@ -47,11 +47,11 @@ public class DalProduct
 
     public void deleteProduct(int id)
     {
-        for (int i = 0; i < DataSource.ArrProduct.Length; i++)
+        for (int i = 0; i < DataSource.Config.ProductIndex; i++)
         {
             if (DataSource.ArrProduct[i].ID == id)
             {
-                for (int j = i; j < DataSource.ArrProduct.Length - 1; j++)
+                for (int j = i; j < DataSource.Config.ProductIndex - 1; j++)
                 {
                     DataSource.ArrProduct[j] = DataSource.ArrProduct[j + 1];
                 }
@@ -59,4 +59,19 @@ public class DalProduct
             }
         }
     }
+
+    public void UpdateProduct(Product p)
+    {
+        for (int i = 0; i < DataSource.Config.ProductIndex; i++)
+        {
+            if (DataSource.ArrProduct[i].ID == p.ID)
+            {
+                DataSource.ArrProduct[i] = p;
+                return;
+            }
+        }
+        throw new Exception("the object not found");
+
+    }
+
 }

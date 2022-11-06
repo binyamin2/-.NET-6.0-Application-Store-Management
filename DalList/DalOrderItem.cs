@@ -38,11 +38,11 @@ public class DalOrderItem
 
     public void deleteOrderItem(int id)
     {
-        for(int i = 0; i < DataSource.ArrOrderItem.Length; i++)
+        for(int i = 0; i < DataSource.Config.OrderItemIndex; i++)
         {
             if(DataSource.ArrOrderItem[i].OrderItemID == id)
             {
-                for (int j = i; j < DataSource.ArrOrderItem.Length - 1; j++)
+                for (int j = i; j < DataSource.Config.OrderItemIndex - 1; j++)
                 {
                     DataSource.ArrOrderItem[j] = DataSource.ArrOrderItem[j+1];
                 }
