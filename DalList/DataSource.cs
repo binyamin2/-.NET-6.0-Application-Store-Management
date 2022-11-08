@@ -145,7 +145,6 @@ internal static class DataSource
         DalOrderItem dalOrderItem = new DalOrderItem();
 
         Random rnd = new Random();
-        rnd.Next(10, 20);
 
         int indexOrder = -1;
 
@@ -153,22 +152,23 @@ internal static class DataSource
         for (int i = 0; i < 40; i++)
         {
             OrderItem OI = new OrderItem();
-
+            OI.OrderItemID = i;
             OI.ProdectID = rnd.Next(111111, 111131);
 
-            if (i % 4 == 0 )
+            if ((float)i % 2.0 == 0 )
             {
                 indexOrder++;
             }
-            OI.OrderItemID = indexOrder;
+            OI.OrderID = indexOrder;
             OI.Amount = rnd.Next(1, 20);
 
+            ///chack the price of the choce prodect
             for (int i1 = 0; i1 < DataSource.ProductIndex; i1++)
             {
                 if (DataSource.ArrProduct[i1].ID == OI.ProdectID)
                     OI.Price = DataSource.ArrProduct[i1].Price;
             }
-
+            ///put the new organ into the array
             dalOrderItem.AddOrderItem(OI);
 
         }
