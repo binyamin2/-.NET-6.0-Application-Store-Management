@@ -68,6 +68,13 @@ class Program
                 string name;
                 name = Console.ReadLine();
                 Console.WriteLine(@"Enter a product category that you want to add");
+                Console.WriteLine(
+                $@"
+                Sport = 0
+                Hike =  1
+                Sandals = 2
+                Elegant = 3
+                Boots = 4 ");
                 int catgory;
                 int.TryParse(Console.ReadLine(), out catgory);
 
@@ -110,6 +117,13 @@ class Program
                 Console.WriteLine(@"Enter the new name");
                 name = Console.ReadLine();
                 Console.WriteLine(@"Enter the new category");
+                Console.WriteLine(
+                $@"
+                Sport = 0
+                Hike =  1
+                Sandals = 2
+                Elegant = 3
+                Boots = 4 ");
                 int tmpcatgory;
                 int.TryParse(Console.ReadLine(), out tmpcatgory);
                 Console.WriteLine(@"Enter The New new price");
@@ -158,8 +172,6 @@ class Program
         switch (orderCode)
         {
             case CraudMethod.Add:
-                ///Console.WriteLine(@"Enter the Order ID number that you want to add");
-                ///int.TryParse(Console.ReadLine(), out id);
                 Console.WriteLine(@"Enter a Customer name that you want to add");
                 customeName = Console.ReadLine();
                 Console.WriteLine(@"Enter a Customer email that you want to add");
@@ -167,12 +179,6 @@ class Program
                 Console.WriteLine(@"Enter a Customer adress that you want to add");
                 adress = Console.ReadLine();
                 orderCreate = DateTime.Now;
-                ///Console.WriteLine(@"Enter a created Order  time");
-                ///DateTime.TryParse(Console.ReadLine(), out orderCreate);
-                ///Console.WriteLine(@"Enter a Ship Order  time");
-                ///DateTime.TryParse(Console.ReadLine(), out orderShip);
-                ///Console.WriteLine(@"Enter a delivery Order time");
-                ///DateTime.TryParse(Console.ReadLine(), out delivery);
                 Order addedOrder = new Order()
                 {
                     ID= null,

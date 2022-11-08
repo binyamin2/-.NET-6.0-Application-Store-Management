@@ -9,9 +9,9 @@ namespace DO;
 public enum Category
 {
    Sport,
-   Elegant,
    Hike,
    Sandals,
+   Elegant,
    Boots
 }
 

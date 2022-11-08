@@ -26,7 +26,7 @@ public class DalProduct
         }
         else
         {
-            return p.ID;
+            throw new Exception("the ID exitis");
         }
 
     }
