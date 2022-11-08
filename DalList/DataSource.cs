@@ -27,8 +27,9 @@ internal static class DataSource
 
     static DataSource() 
     {
+        Console.WriteLine("Start s_Initialize");
         s_Initialize();
-        Console.WriteLine("zz");
+        Console.WriteLine("Finish s_Initialize");
     }
 
 
@@ -100,6 +101,8 @@ internal static class DataSource
             order1.CustomerName = CustomerName[i];
           
             order1.CustomerEmail = CustomerName[i] += "@gmail.com";
+
+            CustomerAdress = "king_gorg";
 
             order1.CustomerAdress = CustomerAdress += index_address;
 

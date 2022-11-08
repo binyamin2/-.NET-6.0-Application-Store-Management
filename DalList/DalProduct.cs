@@ -84,4 +84,6 @@ public class DalProduct
 
     }
 
+    public int Get_current_index() { return DataSource.ProductIndex; }
+
 }

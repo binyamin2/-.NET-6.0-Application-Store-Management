@@ -11,7 +11,7 @@ namespace Dal;
 
  public class DalOrder
 {
-    public int Add(Order order)
+    public int? Add(Order order)
     {
 
         order.ID = DataSource.IDOrder;
@@ -75,6 +75,8 @@ namespace Dal;
             }
         }
     }
+
+    public int Get_current_index() { return DataSource.OrderIndex; }
 
 
 }

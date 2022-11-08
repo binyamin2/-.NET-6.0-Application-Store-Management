@@ -102,6 +102,8 @@ public class DalOrderItem
 
         throw new Exception("the object not found");
     }
+
+    public int Get_current_index() { return DataSource.OrderItemIndex; }
 }
 
 
