@@ -5,7 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DO;
-
+/// <summary>
+/// binyamin shapira:208965863
+/// oz asban:207565607
+/// file:Enums
+/// discraption:
+/// this file contain the enum of the project
+/// </summary>
 public enum Category
 {
    Sport,

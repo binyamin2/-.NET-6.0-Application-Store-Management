@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace DO;
-
+/// <summary>
+/// binyamin shapira:208965863
+/// oz asban:207565607
+/// file:Proudct
+/// discraption:
+/// this file is class of "Proudct"
+/// </summary>
 public struct Product
 {
     /// <summary>

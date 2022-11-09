@@ -2,6 +2,13 @@
 using Dal;
 namespace Dal;
 
+/// <summary>
+/// binyamin shapira:208965863
+/// oz asban:207565607
+/// file:Program
+/// discraption:
+/// this file make tests
+/// </summary>
 enum StoreItem { Exit, Product, Order, OrderItem };
 enum CraudMethod { Add = 1, View, ViewAll, Update, Delete, };
 enum ItemOrderMenu { Add = 1, View, ViewAll, Update, Delete, itemByOrderAndProduct, itemListByOrder };
@@ -93,7 +100,7 @@ class Program
                     InStock= tmpAmount
                 };
                 int addedProductId = dalProduct.AddProduct(addedProduct);
-                Console.WriteLine($"The Product id: {0}", addedProductId);
+                Console.WriteLine("The Product id: {0}", addedProductId);
                 break;
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the product ID number that you want to see his details");
@@ -190,7 +197,7 @@ class Program
                     DeliveryDate = null
                 };
                 int? addedOrderId = dalOrder.Add(addedOrder);
-                Console.WriteLine($"The Order id: {0}", addedOrderId);
+                Console.WriteLine("The Order id: {0}", addedOrderId);
                 break;
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");
@@ -266,11 +273,10 @@ class Program
         switch (OrderItem)
         {
             case ItemOrderMenu.Add:
-                Console.WriteLine(@"Enter the Orde item ID number that you want to add");
-                while (!int.TryParse(Console.ReadLine(), out id)) ;
+        
                 Console.WriteLine(@"Enter the productID number that you want to add");
                 while (!int.TryParse(Console.ReadLine(), out productId)) ;
-                Console.WriteLine(@"Enter the Orde Id that you want to add");
+                Console.WriteLine(@"Enter the Order Id that you want to add");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
                 Console.WriteLine(@"Enter the amount that you want to add");
                 while (!int.TryParse(Console.ReadLine(), out Amount)) ;
@@ -279,14 +285,14 @@ class Program
 
                 OrderItem addedOrderItem = new OrderItem()
                 {
-                    OrderItemID = id,
+                    OrderItemID = 0,///the function add give him id OI
                     ProdectID= productId,
                     OrderID = orderId,
                     Amount = Amount,
                     Price = price
                 };
                 int addedOrderId = dalorderitem.AddOrderItem(addedOrderItem);
-                Console.WriteLine($"The Orde item id: {0}", addedOrderId);
+                Console.WriteLine("The Order item id: {0}", addedOrderId);
                 break;
             case ItemOrderMenu.View:
                 Console.WriteLine(@"Enter the Order Item ID number that you want to see his details");
@@ -307,19 +313,18 @@ class Program
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
                 OrderItem oldItemOrder = dalorderitem.getOrderItem(orderId);
                 Console.WriteLine(oldItemOrder);
-                Console.WriteLine(@"Enter the Order ID number that you want to add");
-                while (!int.TryParse(Console.ReadLine(), out id)) ;
-                Console.WriteLine(@"Enter the productID number that you want to add");
+                
+                Console.WriteLine(@"Enter the productID number that you want to update");
                 while (!int.TryParse(Console.ReadLine(), out productId)) ;
-                Console.WriteLine(@"Enter the order that you want to add");
+                Console.WriteLine(@"Enter the orderID that you want to update");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
-                Console.WriteLine(@"Enter the amount that you want to add");
+                Console.WriteLine(@"Enter the amount that you want to update");
                 while (!int.TryParse(Console.ReadLine(), out Amount)) ;
                 Console.WriteLine(@"Enter the price of product");
                 while (!double.TryParse(Console.ReadLine(), out price)) ;
                 OrderItem updateItemOrder = new OrderItem()
                 {
-                    OrderItemID = id,
+                    OrderItemID = oldItemOrder.OrderItemID,
                     ProdectID= productId,
                     OrderID = orderId,
                     Amount = Amount,

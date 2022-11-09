@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 using DO;
 namespace Dal;
 
+/// <summary>
+/// binyamin shapira:208965863
+/// oz asban:207565607
+/// file:DataStructure
+/// discraption:
+/// this file contain all the Data base
+/// </summary>
 
 internal static class DataSource
 {
@@ -25,22 +32,24 @@ internal static class DataSource
     internal static Product[] ArrProduct = new Product[50];
 
 
-    static DataSource() 
+    static DataSource() ///static constractor
     {
-        Console.WriteLine("Start s_Initialize");
+      
         s_Initialize();
-        Console.WriteLine("Finish s_Initialize");
+       
     }
 
-
+    /// <summary>
+    /// metouds of Initialize data base
+    /// </summary>
     private static void  s_Initialize()
     {
 
 
         Product_Initialize();
-        ///
+        
         Order_Initialize();
-        ///
+        
         OrderItem_Initialize();
     }
 
@@ -109,7 +118,7 @@ internal static class DataSource
             index_address++;
 
             
-
+            ///initial the date
             if (index_time_ship < 16)
             {    
                 index_time_ship++;
@@ -208,7 +217,9 @@ internal static class DataSource
 
         internal static int IDOrder = 0;
 
-
+    /// <summary>
+    /// metouds of get ID array
+    /// </summary>
         
        internal static void getIDOrder()
         {

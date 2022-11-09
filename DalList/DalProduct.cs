@@ -6,9 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Dal;
-
+/// <summary>
+/// binyamin shapira:208965863
+/// oz asban:207565607
+/// file:DalProudct
+/// discraption:
+/// this file contain the class DalProudct
+/// and is metouds.
+/// this file is the connection beetwen the main to the Array of class Proudct
+/// </summary>
 public class DalProduct
 {
+    /// <summary>
+    /// Add organ to the array and chack if id exitis
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns>int</returns>
     public int AddProduct(Product p)
     {
         bool flag=false;
@@ -30,7 +43,7 @@ public class DalProduct
         }
 
     }
-
+    
     public Product getPruduct(int IDp)
     {
         for (int i = 0; i < DataSource.ArrProduct.Length; i++)
@@ -59,7 +72,10 @@ public class DalProduct
             }
         }
     }
-
+    /// <summary>
+    /// return new array of all product
+    /// </summary>
+    /// <returns></returns>
     public Product[] GetAllProduct()
     {
         Product[] products = new Product[DataSource.ArrProduct.Length];
@@ -69,7 +85,10 @@ public class DalProduct
         return products;
 
     }
-
+    /// <summary>
+    /// update the product
+    /// </summary>
+   
     public void UpdateProduct(Product p)
     {
         for (int i = 0; i < DataSource.ProductIndex; i++)
@@ -83,7 +102,10 @@ public class DalProduct
         throw new Exception("the object not found");
 
     }
-
+    /// <summary>
+    /// return current index
+    /// </summary>
+    /// <returns></returns>
     public int Get_current_index() { return DataSource.ProductIndex; }
 
 }
