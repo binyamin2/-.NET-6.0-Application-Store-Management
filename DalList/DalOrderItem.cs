@@ -86,15 +86,14 @@ public class DalOrderItem
 
     public void UpdateArOrderItem(OrderItem orderItem)
     {
-        for (int i = 0; i < DataSource.OrderItemIndex; i++)
+        foreach (var item in DataSource.LOrderItem)
         {
-            if (DataSource.LOrderItem[i].OrderItemID == orderItem.OrderItemID)
+            if (item.OrderItemID == orderItem.OrderItemID)
             {
-                DataSource.LOrderItem[i] = orderItem;
-                return;
+                DataSource.LOrderItem[DataSource.LOrderItem.IndexOf(item)] = orderItem;
             }
         }
-        throw new Exception("the object not found");
+        throw new Exception("the OrderItem not find");
 
     }
     public OrderItem GetItemByOrderAndProduct(int orderId,int productId)

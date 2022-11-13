@@ -190,30 +190,23 @@ internal static class DataSource
     ///metodes Add organ
     internal static void AddOrder(Order NewOrder)
     {
-        LOrder[OrderIndex] = NewOrder;
-        OrderIndex++;
+        LOrder.Add(NewOrder);
     }
     
     internal static void AddOrderItem(OrderItem NewOrderItem)
     {
-        LOrderItem[OrderItemIndex] = NewOrderItem;
-        OrderItemIndex++;
+        LOrderItem.Add (NewOrderItem);
     }
 
    internal static void AddProduct(Product NewProduct)
     {
-        LProduct[ProductIndex] = NewProduct;
-        ProductIndex++;
+        LProduct.Add(NewProduct);
     }
 
  
         ///index for array
 
-        internal static int OrderIndex = 0;
-
-        internal static int OrderItemIndex = 0;
-
-        internal static int ProductIndex = 0;
+       
 
         internal static int IDOrder = 0;
 

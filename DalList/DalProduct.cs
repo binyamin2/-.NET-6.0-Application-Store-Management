@@ -24,14 +24,16 @@ public class DalProduct
     /// <returns>int</returns>
     public int AddProduct(Product p)
     {
+        
         bool flag=false;
-        for (int i = 0; i < DataSource.LProduct.Length; i++)
+        foreach (var item in DataSource.LProduct)
         {
-            if (DataSource.LProduct[i].ID==p.ID)
+            if (item.ID == p.ID)
             {
-                flag=true;
+                flag = true;
             }
         }
+      
         if(!flag)
         {
             DataSource.AddProduct(p);
@@ -46,41 +48,36 @@ public class DalProduct
     
     public Product getPruduct(int IDp)
     {
-        for (int i = 0; i < DataSource.LProduct.Length; i++)
+        foreach (var item in DataSource.LProduct)
         {
-            if (DataSource.LProduct[i].ID == IDp)
+            if(item.ID==IDp)
             {
-                return DataSource.LProduct[i];
+                return item;    
             }
+
         }
-        Product p = new Product();
-        p.ID = -1;
-        return p;
+        throw new Exception("the product not found");
     }
 
     public void deleteProduct(int id)
     {
-        for (int i = 0; i < DataSource.ProductIndex; i++)
+        foreach (var item in DataSource.LProduct)
         {
-            if (DataSource.LProduct[i].ID == id)
+            if (item.ID==id)
             {
-                for (int j = i; j < DataSource.ProductIndex - 1; j++)
-                {
-                    DataSource.LProduct[j] = DataSource.LProduct[j + 1];
-                }
-                DataSource.ProductIndex--;
+                DataSource.LProduct.Remove(item);
+                return;
             }
         }
+        throw new Exception("the product not find");
     }
     /// <summary>
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public Product[] GetAllProduct()
+    public List<Product> GetAllProduct()
     {
-        Product[] products = new Product[DataSource.LProduct.Length];
-
-        DataSource.LProduct.CopyTo(products, 0);
+       List<Product> products = new List<Product>(DataSource.LProduct);
 
         return products;
 
@@ -91,21 +88,17 @@ public class DalProduct
    
     public void UpdateProduct(Product p)
     {
-        for (int i = 0; i < DataSource.ProductIndex; i++)
-        {
-            if (DataSource.LProduct[i].ID == p.ID)
+        foreach (var item in DataSource.LProduct)
+        { 
+            if (item.ID==p.ID)
             {
-                DataSource.LProduct[i] = p;
-                return;
+                DataSource.LProduct[DataSource.LProduct.IndexOf(item)] = p;
             }
         }
-        throw new Exception("the object not found");
+        throw new Exception("the Product not find");
+       
 
     }
-    /// <summary>
-    /// return current index
-    /// </summary>
-    /// <returns></returns>
-    public int Get_current_index() { return DataSource.ProductIndex; }
+  
 
 }
