@@ -1,5 +1,7 @@
 ﻿using DO;
 using Dal;
+using System.Collections.Generic;
+using DalApi;
 namespace Dal;
 
 /// <summary>
@@ -13,8 +15,11 @@ enum StoreItem { Exit, Product, Order, OrderItem };
 enum CraudMethod { Add = 1, View, ViewAll, Update, Delete, };
 enum ItemOrderMenu { Add = 1, View, ViewAll, Update, Delete, itemByOrderAndProduct, itemListByOrder };
 
+
 class Program
 {
+    static DalList DalList = new DalList();
+
     private static StoreItem menuCode;
     static void Main(string[] args)
     {
@@ -56,7 +61,6 @@ class Program
 
     static void ProductMenue()
     {
-        DalProduct dalProduct = new DalProduct();
         Console.WriteLine(@"For add a product tap 1");
         Console.WriteLine(@"For product display tap 2");
         Console.WriteLine(@"For display all products tap 3");
@@ -99,27 +103,28 @@ class Program
                     Price = tmpPrice,
                     InStock= tmpAmount
                 };
-                int addedProductId = dalProduct.Add(addedProduct);
+                int? addedProductId = DalList.Product.Add(addedProduct);
                 Console.WriteLine("The Product id: {0}", addedProductId);
                 break;
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the product ID number that you want to see his details");
                 int.TryParse(Console.ReadLine(), out id);
                 Product productToShow = new Product();
-                productToShow = dalProduct.Get(id);
+                productToShow = DalList.Product.Get(id);
                 Console.WriteLine(productToShow);
                 break;
             case CraudMethod.ViewAll:
-                Product[] productsList = dalProduct.GetAllProduct();
-                for (int i = 0; i < dalProduct.Get_current_index(); i++)
+                IEnumerable<Product> productsList = DalList.Product.GetAll();
+                foreach (var item in productsList)
                 {
-                    Console.WriteLine(productsList[i]);
+                    Console.WriteLine(item);
                 }
+                
                 break;
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the product ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Product oldProduct = dalProduct.Get(id);
+                Product oldProduct = DalList.Product.Get(id);
                 Console.WriteLine(oldProduct);
                 Console.WriteLine(@"Enter the new name");
                 name = Console.ReadLine();
@@ -147,12 +152,12 @@ class Program
                     Price = tmpPrice2,
                     InStock= tmpAmount
                 };
-                dalProduct.Update(Update);
+                DalList.Product.Update(Update);
                 break;
             case CraudMethod.Delete:
                 Console.WriteLine(@"Enter the product ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out id);
-                dalProduct.Delete(id);
+                DalList.Product.Delete(id);
                 break;
             default:
                 break;
@@ -160,7 +165,7 @@ class Program
     }
     static void OrderMenue()
     {
-        DalOrder dalOrder = new DalOrder();
+        
         Console.WriteLine(@"For add a Order tap 1");
         Console.WriteLine(@"For Order display tap 2");
         Console.WriteLine(@"For display all Orders tap 3");
@@ -196,27 +201,27 @@ class Program
                     ShipDate = null,
                     DeliveryDate = null
                 };
-                int? addedOrderId = dalOrder.Add(addedOrder);
+                int? addedOrderId = DalList.Order.Add(addedOrder);
                 Console.WriteLine("The Order id: {0}", addedOrderId);
                 break;
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out id)) ;
                 Order OrderToShow = new Order();
-                OrderToShow = dalOrder.Get(id);
+                OrderToShow = DalList.Order.Get(id);
                 Console.WriteLine(OrderToShow);
                 break;
             case CraudMethod.ViewAll:
-                Order[] OrdersList = dalOrder.GetAllorder();
-                for (int i = 0; i < dalOrder.Get_current_index(); i++)
+                IEnumerable<Order> productsList = DalList.Order.GetAll();
+                foreach (var item in productsList)
                 {
-                    Console.WriteLine(OrdersList[i]);
+                    Console.WriteLine(item);
                 }
                 break;
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Order oldOrder = dalOrder.Get(id);
+                Order oldOrder = DalList.Order.Get(id);
                 Console.WriteLine(oldOrder);
                 Console.WriteLine(@"Enter the new CUSTOMER name");
                 customeName = Console.ReadLine();
@@ -241,12 +246,12 @@ class Program
                     ShipDate = orderShip,
                     DeliveryDate = delivery
                 };
-                dalOrder.Update(updateOrder);
+                DalList.Order.Update(updateOrder);
                 break;
             case CraudMethod.Delete:
                 Console.WriteLine(@"Enter the Order ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out id);
-                dalOrder.Delete(id);
+                DalList.Order.Delete(id);
                 break;
             default:
                 break;
@@ -254,7 +259,6 @@ class Program
     }
     static void OrderItemMenue()
     {
-        DalOrderItem dalorderitem = new DalOrderItem();
         Console.WriteLine(@"For add a Order Item tap 1");
         Console.WriteLine(@"For Order Item display tap 2");
         Console.WriteLine(@"For display all OrderItems tap 3");
@@ -291,27 +295,27 @@ class Program
                     Amount = Amount,
                     Price = price
                 };
-                int addedOrderId = dalorderitem.Add(addedOrderItem);
+                int? addedOrderId = DalList.OrderItem.Add(addedOrderItem);
                 Console.WriteLine("The Order item id: {0}", addedOrderId);
                 break;
             case ItemOrderMenu.View:
                 Console.WriteLine(@"Enter the Order Item ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
                 OrderItem OrderItemToShow = new OrderItem();
-                OrderItemToShow = dalorderitem.Get(orderId);
+                OrderItemToShow = DalList.OrderItem.Get(orderId);
                 Console.WriteLine(OrderItemToShow);
                 break;
             case ItemOrderMenu.ViewAll:
-                OrderItem[] OrdersItemList = dalorderitem.GetAllOrderItem();
-                for (int i = 0; i < dalorderitem.Get_current_index(); i++)
+                IEnumerable<OrderItem> OrdersItemList = DalList.OrderItem.GetAll();
+                foreach (var item in OrdersItemList)
                 {
-                    Console.WriteLine(OrdersItemList[i]);
+                    Console.WriteLine(item);
                 }
                 break;
             case ItemOrderMenu.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
-                OrderItem oldItemOrder = dalorderitem.Get(orderId);
+                OrderItem oldItemOrder = DalList.OrderItem.Get(orderId);
                 Console.WriteLine(oldItemOrder);
                 
                 Console.WriteLine(@"Enter the productID number that you want to update");
@@ -330,25 +334,25 @@ class Program
                     Amount = Amount,
                     Price = price
                 };
-                dalorderitem.Update(updateItemOrder);
+                DalList.OrderItem.Update(updateItemOrder);
                 break;
             case ItemOrderMenu.Delete:
                 Console.WriteLine(@"Enter the Order ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out orderId);
-                dalorderitem.Delete(orderId);
+                DalList.OrderItem.Delete(orderId);
                 break;
             case ItemOrderMenu.itemByOrderAndProduct:
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");
                 int.TryParse(Console.ReadLine(), out orderId);
                 Console.WriteLine(@"Enter the product ID number that you want to see his details");
                 int.TryParse(Console.ReadLine(), out productId);
-                OrderItem itemToShowByProductAndOrder = dalorderitem.GetItemByOrderAndProduct(orderId, productId);
+                OrderItem itemToShowByProductAndOrder = DalList.OrderItem.GetItemByOrderAndProduct(orderId, productId);
                 Console.WriteLine(itemToShowByProductAndOrder);
                 break;
             case ItemOrderMenu.itemListByOrder:
                 Console.WriteLine(@"Enter the Order ID number that you want to see Item Order that belogs to him");
                 int.TryParse(Console.ReadLine(), out orderId);
-                OrderItem[] ordersItemsList = dalorderitem.GetItemsListByOrderId(orderId);
+                IEnumerable<OrderItem> ordersItemsList = DalList.OrderItem.GetItemsListByOrderId(orderId);
                 foreach (OrderItem item in ordersItemsList)
                     Console.WriteLine(item);
                 break;

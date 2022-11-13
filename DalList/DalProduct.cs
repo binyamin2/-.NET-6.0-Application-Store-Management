@@ -76,7 +76,7 @@ internal class DalProduct:IProduct
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public List<Product> GetAllProduct()
+    public IEnumerable<Product> GetAll()
     {
        List<Product> products = new List<Product>(DataSource.LProduct);
 

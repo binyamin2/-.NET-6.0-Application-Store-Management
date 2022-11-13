@@ -69,7 +69,7 @@ internal class DalOrderItem :IOrderItem
     /// return new array of all OrderItem
     /// </summary>
     /// <returns></returns>
-    public List<OrderItem> GetAllorder()
+    public IEnumerable<OrderItem> GetAll()
     {
         List<OrderItem> listOrderItem = new List<OrderItem>(DataSource.LOrderItem);
 
@@ -105,7 +105,7 @@ internal class DalOrderItem :IOrderItem
         throw new NotFoundException();
     }
 
-    public List<OrderItem> GetItemsListByOrderId(int orderId)
+    public IEnumerable<OrderItem> GetItemsListByOrderId(int orderId)
     {
         List<OrderItem> LOI = new List<OrderItem> ();
         bool flag = false;///if have minimum one organ in new array

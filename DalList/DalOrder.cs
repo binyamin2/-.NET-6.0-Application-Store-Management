@@ -57,7 +57,7 @@ internal class DalOrder:IOrder
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public List<Order> GetAllorder ()
+    public IEnumerable<Order> GetAll ()
     {
         List<Order> listOrder = new List<Order>(DataSource.LOrder);
 
