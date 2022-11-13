@@ -39,28 +39,25 @@ public class DalOrder
 
     public Order getOrder(int IDorder)
     {
-        for (int i = 0; i < DataSource.OrderIndex; i++)
+        foreach (var order in DataSource.LOrder)
         {
-            if (DataSource.LOrder[i].ID == IDorder)
+            if (order.ID == IDorder)
             {
-                return DataSource.LOrder[i];
+                return order;
             }
         }
-        Order order = new Order();
-        order.ID = -1;
-        return order;
+        throw new Exception("the organ not find");
     }
+
     /// <summary>
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public Order[] GetAllorder ()
+    public List<Order> GetAllorder ()
     {
-        Order[] order = new Order[DataSource.LOrder.Length];
+        List<Order> listOrder = new List<Order>(DataSource.LOrder);
 
-        DataSource.LOrder.CopyTo(order, 0);
-
-        return order;
+        return listOrder;
 
     }
     /// <summary>
@@ -68,11 +65,12 @@ public class DalOrder
     /// </summary>
     public void UpdateArOrder(Order order )
     {
-        for (int i = 0; i < DataSource.OrderIndex; i++)
+        foreach (var organ in DataSource.LOrder)
         {
-            if (DataSource.LOrder[i].ID == order.ID)
+            if (organ.ID == order.ID)
             {
-               DataSource.LOrder[i] = order;
+                DataSource.LOrder[DataSource.LOrder.IndexOf(organ)] = order;
+              
                 return;
             }
         }
@@ -82,24 +80,20 @@ public class DalOrder
 
     public void deleteOrder(int id)
     {
-        for (int i = 0; i < DataSource.OrderIndex; i++)
+        foreach (var item in DataSource.LOrder)
         {
-            if (DataSource.LOrder[i].ID == id)
+            if (item.ID == id )
             {
-                for (int j = i; j < DataSource.OrderIndex - 1; j++)
-                {
-                    DataSource.LOrder[j] = DataSource.LOrder[j + 1];
-                }
-                DataSource.OrderIndex--;
-                return;
+                DataSource.LOrder.Remove(item);
             }
         }
+        throw new Exception("the object not found");
     }
     /// <summary>
     /// return current index
     /// </summary>
     /// <returns></returns>
-    public int Get_current_index() { return DataSource.OrderIndex; }
+
 
 
 }
