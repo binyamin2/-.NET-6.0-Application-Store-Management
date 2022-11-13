@@ -41,9 +41,9 @@ public class DalOrder
     {
         for (int i = 0; i < DataSource.OrderIndex; i++)
         {
-            if (DataSource.ArrOrder[i].ID == IDorder)
+            if (DataSource.LOrder[i].ID == IDorder)
             {
-                return DataSource.ArrOrder[i];
+                return DataSource.LOrder[i];
             }
         }
         Order order = new Order();
@@ -56,9 +56,9 @@ public class DalOrder
     /// <returns></returns>
     public Order[] GetAllorder ()
     {
-        Order[] order = new Order[DataSource.ArrOrder.Length];
+        Order[] order = new Order[DataSource.LOrder.Length];
 
-        DataSource.ArrOrder.CopyTo(order, 0);
+        DataSource.LOrder.CopyTo(order, 0);
 
         return order;
 
@@ -70,9 +70,9 @@ public class DalOrder
     {
         for (int i = 0; i < DataSource.OrderIndex; i++)
         {
-            if (DataSource.ArrOrder[i].ID == order.ID)
+            if (DataSource.LOrder[i].ID == order.ID)
             {
-               DataSource.ArrOrder[i] = order;
+               DataSource.LOrder[i] = order;
                 return;
             }
         }
@@ -84,11 +84,11 @@ public class DalOrder
     {
         for (int i = 0; i < DataSource.OrderIndex; i++)
         {
-            if (DataSource.ArrOrder[i].ID == id)
+            if (DataSource.LOrder[i].ID == id)
             {
                 for (int j = i; j < DataSource.OrderIndex - 1; j++)
                 {
-                    DataSource.ArrOrder[j] = DataSource.ArrOrder[j + 1];
+                    DataSource.LOrder[j] = DataSource.LOrder[j + 1];
                 }
                 DataSource.OrderIndex--;
                 return;

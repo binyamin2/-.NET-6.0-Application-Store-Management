@@ -42,9 +42,9 @@ public class DalOrderItem
     {
         for (int i = 0; i < DataSource.OrderItemIndex; i++)
         {
-            if (DataSource.ArrOrderItem[i].OrderItemID == IDorderItem)
+            if (DataSource.LOrderItem[i].OrderItemID == IDorderItem)
             {
-                return DataSource.ArrOrderItem[i];
+                return DataSource.LOrderItem[i];
             }
         }
         throw new Exception("the object not found");
@@ -57,11 +57,11 @@ public class DalOrderItem
     {
         for(int i = 0; i < DataSource.OrderItemIndex; i++)
         {
-            if(DataSource.ArrOrderItem[i].OrderItemID == id)
+            if(DataSource.LOrderItem[i].OrderItemID == id)
             {
                 for (int j = i; j < DataSource.OrderItemIndex - 1; j++)
                 {
-                    DataSource.ArrOrderItem[j] = DataSource.ArrOrderItem[j+1];
+                    DataSource.LOrderItem[j] = DataSource.LOrderItem[j+1];
                 }
                 DataSource.OrderItemIndex--;
             }
@@ -73,9 +73,9 @@ public class DalOrderItem
     /// <returns></returns>
     public OrderItem[] GetAllOrderItem()
     {
-        OrderItem[] orderItems = new OrderItem[DataSource.ArrOrderItem.Length];
+        OrderItem[] orderItems = new OrderItem[DataSource.LOrderItem.Length];
 
-        DataSource.ArrOrderItem.CopyTo(orderItems, 0);
+        DataSource.LOrderItem.CopyTo(orderItems, 0);
 
         return orderItems;
 
@@ -88,9 +88,9 @@ public class DalOrderItem
     {
         for (int i = 0; i < DataSource.OrderItemIndex; i++)
         {
-            if (DataSource.ArrOrderItem[i].OrderItemID == orderItem.OrderItemID)
+            if (DataSource.LOrderItem[i].OrderItemID == orderItem.OrderItemID)
             {
-                DataSource.ArrOrderItem[i] = orderItem;
+                DataSource.LOrderItem[i] = orderItem;
                 return;
             }
         }
@@ -99,7 +99,7 @@ public class DalOrderItem
     }
     public OrderItem GetItemByOrderAndProduct(int orderId,int productId)
     {
-        foreach (OrderItem item in DataSource.ArrOrderItem)
+        foreach (OrderItem item in DataSource.LOrderItem)
         {
             if (item.OrderID ==orderId && item.ProdectID == productId)
             {
@@ -115,7 +115,7 @@ public class DalOrderItem
         
         int index1 = 0;
         bool flag = false;///if have minimum one organ in new array
-        foreach (OrderItem item in DataSource.ArrOrderItem)
+        foreach (OrderItem item in DataSource.LOrderItem)
         {
             if (item.OrderID == orderId)
             {
@@ -131,7 +131,7 @@ public class DalOrderItem
         OrderItem[] tempArray = new OrderItem[index1];///length of new array acorrding num of organ that found
 
         index1 = 0;
-        foreach (OrderItem item in DataSource.ArrOrderItem)
+        foreach (OrderItem item in DataSource.LOrderItem)
         {
             if (item.OrderID == orderId)
             {

@@ -25,11 +25,11 @@ internal static class DataSource
 
     ///Array
 
-    internal static OrderItem[] ArrOrderItem = new OrderItem[200];
+    internal static List<OrderItem> LOrderItem = new List<OrderItem>();
 
-    internal static Order[] ArrOrder = new Order[100];
+    internal static List<Order> LOrder = new List<Order>();
 
-    internal static Product[] ArrProduct = new Product[50];
+    internal static List<Product> LProduct = new List<Product>();
 
 
     static DataSource() ///static constractor
@@ -174,8 +174,8 @@ internal static class DataSource
             ///chack the price of the choce prodect
             for (int i1 = 0; i1 < DataSource.ProductIndex; i1++)
             {
-                if (DataSource.ArrProduct[i1].ID == OI.ProdectID)
-                    OI.Price = DataSource.ArrProduct[i1].Price;
+                if (DataSource.LProduct[i1].ID == OI.ProdectID)
+                    OI.Price = DataSource.LProduct[i1].Price;
             }
             ///put the new organ into the array
             dalOrderItem.AddOrderItem(OI);
@@ -190,19 +190,19 @@ internal static class DataSource
     ///metodes Add organ
     internal static void AddOrder(Order NewOrder)
     {
-        ArrOrder[OrderIndex] = NewOrder;
+        LOrder[OrderIndex] = NewOrder;
         OrderIndex++;
     }
     
     internal static void AddOrderItem(OrderItem NewOrderItem)
     {
-        ArrOrderItem[OrderItemIndex] = NewOrderItem;
+        LOrderItem[OrderItemIndex] = NewOrderItem;
         OrderItemIndex++;
     }
 
    internal static void AddProduct(Product NewProduct)
     {
-        ArrProduct[ProductIndex] = NewProduct;
+        LProduct[ProductIndex] = NewProduct;
         ProductIndex++;
     }
 

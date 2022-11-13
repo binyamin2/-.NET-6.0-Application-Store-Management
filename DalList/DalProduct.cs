@@ -25,9 +25,9 @@ public class DalProduct
     public int AddProduct(Product p)
     {
         bool flag=false;
-        for (int i = 0; i < DataSource.ArrProduct.Length; i++)
+        for (int i = 0; i < DataSource.LProduct.Length; i++)
         {
-            if (DataSource.ArrProduct[i].ID==p.ID)
+            if (DataSource.LProduct[i].ID==p.ID)
             {
                 flag=true;
             }
@@ -46,11 +46,11 @@ public class DalProduct
     
     public Product getPruduct(int IDp)
     {
-        for (int i = 0; i < DataSource.ArrProduct.Length; i++)
+        for (int i = 0; i < DataSource.LProduct.Length; i++)
         {
-            if (DataSource.ArrProduct[i].ID == IDp)
+            if (DataSource.LProduct[i].ID == IDp)
             {
-                return DataSource.ArrProduct[i];
+                return DataSource.LProduct[i];
             }
         }
         Product p = new Product();
@@ -62,11 +62,11 @@ public class DalProduct
     {
         for (int i = 0; i < DataSource.ProductIndex; i++)
         {
-            if (DataSource.ArrProduct[i].ID == id)
+            if (DataSource.LProduct[i].ID == id)
             {
                 for (int j = i; j < DataSource.ProductIndex - 1; j++)
                 {
-                    DataSource.ArrProduct[j] = DataSource.ArrProduct[j + 1];
+                    DataSource.LProduct[j] = DataSource.LProduct[j + 1];
                 }
                 DataSource.ProductIndex--;
             }
@@ -78,9 +78,9 @@ public class DalProduct
     /// <returns></returns>
     public Product[] GetAllProduct()
     {
-        Product[] products = new Product[DataSource.ArrProduct.Length];
+        Product[] products = new Product[DataSource.LProduct.Length];
 
-        DataSource.ArrProduct.CopyTo(products, 0);
+        DataSource.LProduct.CopyTo(products, 0);
 
         return products;
 
@@ -93,9 +93,9 @@ public class DalProduct
     {
         for (int i = 0; i < DataSource.ProductIndex; i++)
         {
-            if (DataSource.ArrProduct[i].ID == p.ID)
+            if (DataSource.LProduct[i].ID == p.ID)
             {
-                DataSource.ArrProduct[i] = p;
+                DataSource.LProduct[i] = p;
                 return;
             }
         }
