@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,11 +41,11 @@ public class DalOrderItem
     /// <param name="IDorderItem"></param>
     public OrderItem getOrderItem(int IDorderItem)
     {
-        for (int i = 0; i < DataSource.OrderItemIndex; i++)
+        foreach (var organ in DataSource.LOrderItem)
         {
-            if (DataSource.LOrderItem[i].OrderItemID == IDorderItem)
+            if (organ.OrderItemID == IDorderItem)
             {
-                return DataSource.LOrderItem[i];
+                return organ;
             }
         }
         throw new Exception("the object not found");
@@ -55,29 +56,24 @@ public class DalOrderItem
     /// <param name="id"></param>
     public void deleteOrderItem(int id)
     {
-        for(int i = 0; i < DataSource.OrderItemIndex; i++)
+        foreach (var item in DataSource.LOrderItem)
         {
-            if(DataSource.LOrderItem[i].OrderItemID == id)
+            if (item.OrderItemID == id)
             {
-                for (int j = i; j < DataSource.OrderItemIndex - 1; j++)
-                {
-                    DataSource.LOrderItem[j] = DataSource.LOrderItem[j+1];
-                }
-                DataSource.OrderItemIndex--;
+                DataSource.LOrderItem.Remove(item);
             }
         }
+        throw new Exception("the object not found");
     }
     /// <summary>
     /// return new array of all OrderItem
     /// </summary>
     /// <returns></returns>
-    public OrderItem[] GetAllOrderItem()
+    public List<OrderItem> GetAllorder()
     {
-        OrderItem[] orderItems = new OrderItem[DataSource.LOrderItem.Length];
+        List<OrderItem> listOrderItem = new List<OrderItem>(DataSource.LOrderItem);
 
-        DataSource.LOrderItem.CopyTo(orderItems, 0);
-
-        return orderItems;
+        return listOrderItem;
 
     }
     /// <summary>
@@ -110,44 +106,30 @@ public class DalOrderItem
         throw new Exception("the object not found");
     }
 
-    public OrderItem[] GetItemsListByOrderId(int orderId)
+    public List<OrderItem> GetItemsListByOrderId(int orderId)
     {
-        
-        int index1 = 0;
+        List<OrderItem> LOI = new List<OrderItem> ();
         bool flag = false;///if have minimum one organ in new array
         foreach (OrderItem item in DataSource.LOrderItem)
         {
             if (item.OrderID == orderId)
             {
-                index1++;
-                flag = true;
-
+                LOI.Add(item);
+                flag = true;    
             }
         }
         if (!flag)///not found organ
         {
             throw new Exception("the object not found");
         }
-        OrderItem[] tempArray = new OrderItem[index1];///length of new array acorrding num of organ that found
-
-        index1 = 0;
-        foreach (OrderItem item in DataSource.LOrderItem)
-        {
-            if (item.OrderID == orderId)
-            {
-                tempArray[index1] = item;
-                index1++;
-            }
-        }
-
-        return tempArray;
+        return LOI;
         
     }
     /// <summary>
     /// return current index
     /// </summary>
     /// <returns></returns>
-    public int Get_current_index() { return DataSource.OrderItemIndex; }
+
 }
 
 
