@@ -6,18 +6,29 @@ using System.Threading.Tasks;
 
 namespace DalApi;
 
-public class CheckExitsesOrganExcept : Exception
+public class NotFoundException : Exception
 {
     //Overriding the Message property
-    public CheckExitsesOrganExcept()
+    public override string Message
     {
-    }
-    public CheckExitsesOrganExcept(string message)
-        : base(message)
-    {
+        get
+        {
+            return "The item not found";
+        }
     }
 }
 
+public class AllreadyExistException : Exception
+{
+    //Overriding the Message property
+    public override string Message
+    {
+        get
+        {
+            return "The ID number already exists";
+        }
+    }
+}
 
 ////using System;
 //namespace ExceptionHandlingDemo

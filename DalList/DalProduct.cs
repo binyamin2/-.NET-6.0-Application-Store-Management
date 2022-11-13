@@ -42,7 +42,7 @@ internal class DalProduct:IProudct
         }
         else
         {
-            throw new Exception("the ID exitis");
+            throw new AllreadyExistException();
         }
 
     }
@@ -57,7 +57,7 @@ internal class DalProduct:IProudct
             }
 
         }
-        throw new Exception("the product not found");
+        throw new NotFoundException();
     }
 
     public void Delete(int id)
@@ -70,7 +70,7 @@ internal class DalProduct:IProudct
                 return;
             }
         }
-        throw new Exception("the product not find");
+        throw new NotFoundException();
     }
     /// <summary>
     /// return new array of all product
@@ -96,8 +96,8 @@ internal class DalProduct:IProudct
                 DataSource.LProduct[DataSource.LProduct.IndexOf(item)] = p;
             }
         }
-        throw new Exception("the Product not find");
-       
+        throw new NotFoundException();
+
 
     }
   

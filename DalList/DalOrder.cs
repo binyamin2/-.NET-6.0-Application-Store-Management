@@ -40,15 +40,17 @@ internal class DalOrder:IOrder
 
     public Order Get(int IDorder)
     {
-
-        foreach (var order in DataSource.LOrder)
-        {
-            if (order.ID == IDorder)
+       
+            foreach (var order in DataSource.LOrder)
             {
-                return order;
+                if (order.ID == IDorder)
+                {
+                    return order;
+                }
             }
-        }
-        throw new Exception("the organ not find");
+            throw new NotFoundException();
+      
+    
     }
 
     /// <summary>
@@ -76,7 +78,7 @@ internal class DalOrder:IOrder
                 return;
             }
         }
-        throw new Exception("the object not found");
+        throw new NotFoundException();
       
     }
 
@@ -89,7 +91,7 @@ internal class DalOrder:IOrder
                 DataSource.LOrder.Remove(item);
             }
         }
-        throw new Exception("the object not found");
+        throw new NotFoundException();
     }
     /// <summary>
     /// return current index

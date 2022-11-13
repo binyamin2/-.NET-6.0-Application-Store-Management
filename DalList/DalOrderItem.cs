@@ -48,7 +48,7 @@ internal class DalOrderItem :IOrderItem
                 return organ;
             }
         }
-        throw new Exception("the object not found");
+        throw new NotFoundException();
     }
     /// <summary>
     /// delete organ
@@ -63,7 +63,7 @@ internal class DalOrderItem :IOrderItem
                 DataSource.LOrderItem.Remove(item);
             }
         }
-        throw new Exception("the object not found");
+        throw new NotFoundException();
     }
     /// <summary>
     /// return new array of all OrderItem
@@ -89,7 +89,7 @@ internal class DalOrderItem :IOrderItem
                 DataSource.LOrderItem[DataSource.LOrderItem.IndexOf(item)] = orderItem;
             }
         }
-        throw new Exception("the OrderItem not find");
+        throw new NotFoundException();
 
     }
     public OrderItem GetItemByOrderAndProduct(int orderId,int productId)
@@ -102,7 +102,7 @@ internal class DalOrderItem :IOrderItem
             }
         }
 
-        throw new Exception("the object not found");
+        throw new NotFoundException();
     }
 
     public List<OrderItem> GetItemsListByOrderId(int orderId)
@@ -119,7 +119,7 @@ internal class DalOrderItem :IOrderItem
         }
         if (!flag)///not found organ
         {
-            throw new Exception("the object not found");
+            throw new NotFoundException();
         }
         return LOI;
         
