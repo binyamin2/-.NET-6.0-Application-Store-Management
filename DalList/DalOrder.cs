@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
+using DalApi;
 
 namespace Dal;
 
@@ -18,7 +19,7 @@ namespace Dal;
 /// and is metouds.
 /// this file is the connection beetwen the main to the Array of class Order
 /// </summary>
-public class DalOrder
+internal class DalOrder:IOrder
 {
     /// <summary>
     /// Add organ to the array and give it id
@@ -37,7 +38,7 @@ public class DalOrder
         return order.ID;
     }
 
-    public Order getOrder(int IDorder)
+    public Order Get(int IDorder)
     {
         foreach (var order in DataSource.LOrder)
         {
@@ -63,7 +64,7 @@ public class DalOrder
     /// <summary>
     /// update the product
     /// </summary>
-    public void UpdateArOrder(Order order )
+    public void Update(Order order )
     {
         foreach (var organ in DataSource.LOrder)
         {
@@ -78,7 +79,7 @@ public class DalOrder
       
     }
 
-    public void deleteOrder(int id)
+    public void Delete(int id)
     {
         foreach (var item in DataSource.LOrder)
         {
