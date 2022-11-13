@@ -1,4 +1,5 @@
 ﻿using DO;
+using DalApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +16,14 @@ namespace Dal;
 /// and is metouds.
 /// this file is the connection beetwen the main to the Array of class Proudct
 /// </summary>
-public class DalProduct
+internal class DalProduct:IProudct
 {
     /// <summary>
     /// Add organ to the array and chack if id exitis
     /// </summary>
     /// <param name="p"></param>
     /// <returns>int</returns>
-    public int AddProduct(Product p)
+    public int? Add(Product p)
     {
         
         bool flag=false;
@@ -36,7 +37,7 @@ public class DalProduct
       
         if(!flag)
         {
-            DataSource.AddProduct(p);
+            DataSource.Add(p);
             return p.ID;
         }
         else
@@ -46,7 +47,7 @@ public class DalProduct
 
     }
     
-    public Product getPruduct(int IDp)
+    public Product Get(int IDp)
     {
         foreach (var item in DataSource.LProduct)
         {
@@ -59,7 +60,7 @@ public class DalProduct
         throw new Exception("the product not found");
     }
 
-    public void deleteProduct(int id)
+    public void Delete(int id)
     {
         foreach (var item in DataSource.LProduct)
         {
@@ -86,7 +87,7 @@ public class DalProduct
     /// update the product
     /// </summary>
    
-    public void UpdateProduct(Product p)
+    public void Update(Product p)
     {
         foreach (var item in DataSource.LProduct)
         { 

@@ -99,14 +99,14 @@ class Program
                     Price = tmpPrice,
                     InStock= tmpAmount
                 };
-                int addedProductId = dalProduct.AddProduct(addedProduct);
+                int addedProductId = dalProduct.Add(addedProduct);
                 Console.WriteLine("The Product id: {0}", addedProductId);
                 break;
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the product ID number that you want to see his details");
                 int.TryParse(Console.ReadLine(), out id);
                 Product productToShow = new Product();
-                productToShow = dalProduct.getPruduct(id);
+                productToShow = dalProduct.Get(id);
                 Console.WriteLine(productToShow);
                 break;
             case CraudMethod.ViewAll:
@@ -119,7 +119,7 @@ class Program
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the product ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Product oldProduct = dalProduct.getPruduct(id);
+                Product oldProduct = dalProduct.Get(id);
                 Console.WriteLine(oldProduct);
                 Console.WriteLine(@"Enter the new name");
                 name = Console.ReadLine();
@@ -139,7 +139,7 @@ class Program
                 int tmpAmount2;
                 Console.WriteLine(@"Enter the new amount in stok");
                 int.TryParse(Console.ReadLine(), out tmpAmount);
-                Product updateProduct = new Product()
+                Product Update = new Product()
                 {
                     ID = id,
                     Name = name,
@@ -147,12 +147,12 @@ class Program
                     Price = tmpPrice2,
                     InStock= tmpAmount
                 };
-                dalProduct.UpdateProduct(updateProduct);
+                dalProduct.Update(Update);
                 break;
             case CraudMethod.Delete:
                 Console.WriteLine(@"Enter the product ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out id);
-                dalProduct.deleteProduct(id);
+                dalProduct.Delete(id);
                 break;
             default:
                 break;
@@ -203,7 +203,7 @@ class Program
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out id)) ;
                 Order OrderToShow = new Order();
-                OrderToShow = dalOrder.getOrder(id);
+                OrderToShow = dalOrder.Get(id);
                 Console.WriteLine(OrderToShow);
                 break;
             case CraudMethod.ViewAll:
@@ -216,7 +216,7 @@ class Program
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Order oldOrder = dalOrder.getOrder(id);
+                Order oldOrder = dalOrder.Get(id);
                 Console.WriteLine(oldOrder);
                 Console.WriteLine(@"Enter the new CUSTOMER name");
                 customeName = Console.ReadLine();
@@ -241,12 +241,12 @@ class Program
                     ShipDate = orderShip,
                     DeliveryDate = delivery
                 };
-                dalOrder.UpdateArOrder(updateOrder);
+                dalOrder.Update(updateOrder);
                 break;
             case CraudMethod.Delete:
                 Console.WriteLine(@"Enter the Order ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out id);
-                dalOrder.deleteOrder(id);
+                dalOrder.Delete(id);
                 break;
             default:
                 break;
@@ -291,14 +291,14 @@ class Program
                     Amount = Amount,
                     Price = price
                 };
-                int addedOrderId = dalorderitem.AddOrderItem(addedOrderItem);
+                int addedOrderId = dalorderitem.Add(addedOrderItem);
                 Console.WriteLine("The Order item id: {0}", addedOrderId);
                 break;
             case ItemOrderMenu.View:
                 Console.WriteLine(@"Enter the Order Item ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
                 OrderItem OrderItemToShow = new OrderItem();
-                OrderItemToShow = dalorderitem.getOrderItem(orderId);
+                OrderItemToShow = dalorderitem.Get(orderId);
                 Console.WriteLine(OrderItemToShow);
                 break;
             case ItemOrderMenu.ViewAll:
@@ -311,7 +311,7 @@ class Program
             case ItemOrderMenu.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
-                OrderItem oldItemOrder = dalorderitem.getOrderItem(orderId);
+                OrderItem oldItemOrder = dalorderitem.Get(orderId);
                 Console.WriteLine(oldItemOrder);
                 
                 Console.WriteLine(@"Enter the productID number that you want to update");
@@ -330,12 +330,12 @@ class Program
                     Amount = Amount,
                     Price = price
                 };
-                dalorderitem.UpdateArOrderItem(updateItemOrder);
+                dalorderitem.Update(updateItemOrder);
                 break;
             case ItemOrderMenu.Delete:
                 Console.WriteLine(@"Enter the Order ID number that you want to remove");
                 int.TryParse(Console.ReadLine(), out orderId);
-                dalorderitem.deleteOrderItem(orderId);
+                dalorderitem.Delete(orderId);
                 break;
             case ItemOrderMenu.itemByOrderAndProduct:
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");

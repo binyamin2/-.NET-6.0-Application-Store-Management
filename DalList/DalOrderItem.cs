@@ -17,20 +17,20 @@ namespace Dal;
 /// and is metouds.
 /// this file is the connection beetwen the main to the Array of class OrderItem
 /// </summary>
-public class DalOrderItem
+internal class DalOrderItem :IOrderItem
 {
     /// <summary>
     /// Add organ to the array and give it id
     /// </summary>
     /// <param name="OI"></param>
     /// <returns>int</returns>
-    public int AddOrderItem(OrderItem OI) 
+  public int? Add(OrderItem OI) 
     {
         OI.OrderItemID = DataSource.IDOrderItem;
 
         DataSource.getID_OI();
 
-        DataSource.AddOrderItem(OI);
+        DataSource.Add(OI);
          
         return OI.OrderItemID;
        
@@ -39,7 +39,7 @@ public class DalOrderItem
     /// get orderitem by id
     /// </summary>
     /// <param name="IDorderItem"></param>
-    public OrderItem getOrderItem(int IDorderItem)
+    public OrderItem Get(int IDorderItem)
     {
         foreach (var organ in DataSource.LOrderItem)
         {
@@ -54,7 +54,7 @@ public class DalOrderItem
     /// delete organ
     /// </summary>
     /// <param name="id"></param>
-    public void deleteOrderItem(int id)
+    public void Delete(int id)
     {
         foreach (var item in DataSource.LOrderItem)
         {
@@ -80,7 +80,7 @@ public class DalOrderItem
     /// update the product
     /// </summary>
 
-    public void UpdateArOrderItem(OrderItem orderItem)
+    public void Update(OrderItem orderItem)
     {
         foreach (var item in DataSource.LOrderItem)
         {

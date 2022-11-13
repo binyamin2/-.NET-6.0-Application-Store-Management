@@ -79,7 +79,7 @@ internal static class DataSource
                 p.Category = (Category)i;
                 p.Price = price[j];
                 p.InStock= inStock[j];
-                dalP.AddProduct(p);
+                dalP.Add(p);
             }
 
         }
@@ -171,14 +171,15 @@ internal static class DataSource
             OI.OrderID = indexOrder;
             OI.Amount = rnd.Next(1, 20);
 
-            ///chack the price of the choce prodect
-            for (int i1 = 0; i1 < DataSource.ProductIndex; i1++)
+            ///chack the price of the choosen prodect
+            foreach (var item in DataSource.LProduct)
             {
-                if (DataSource.LProduct[i1].ID == OI.ProdectID)
-                    OI.Price = DataSource.LProduct[i1].Price;
+                if(item.ID==OI.ProdectID)
+                    OI.Price = item.Price;
             }
+            
             ///put the new organ into the array
-            dalOrderItem.AddOrderItem(OI);
+            dalOrderItem.Add(OI);
 
         }
 
@@ -193,12 +194,12 @@ internal static class DataSource
         LOrder.Add(NewOrder);
     }
     
-    internal static void AddOrderItem(OrderItem NewOrderItem)
+    internal static void Add(OrderItem NewOrderItem)
     {
         LOrderItem.Add (NewOrderItem);
     }
 
-   internal static void AddProduct(Product NewProduct)
+   internal static void Add(Product NewProduct)
     {
         LProduct.Add(NewProduct);
     }
