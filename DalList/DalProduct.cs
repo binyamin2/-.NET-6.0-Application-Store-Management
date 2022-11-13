@@ -16,7 +16,7 @@ namespace Dal;
 /// and is metouds.
 /// this file is the connection beetwen the main to the Array of class Proudct
 /// </summary>
-internal class DalProduct:IProudct
+internal class DalProduct:IProduct
 {
     /// <summary>
     /// Add organ to the array and chack if id exitis

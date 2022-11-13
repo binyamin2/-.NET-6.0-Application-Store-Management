@@ -9,8 +9,7 @@ namespace DalApi;
 
 public interface IDal
 {
-    Product Product { get; }
-    Order Order { get; }
-
-    OrderItem Item { get; } 
+    IProduct Product { get; }
+    IOrder Order { get; }
+    IOrderItem OrderItem { get; } 
 }
