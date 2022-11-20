@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DalApi;
 
+
+
+[Serializable]
 public class NotFoundException : Exception
 {
-    //Overriding the Message property
+    public NotFoundException() : base() { }
+    public NotFoundException(string message) : base(message) { }
+    public NotFoundException(string message, Exception inner) : base(message, inner) { }
+    protected NotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
     public override string Message
     {
         get
@@ -18,9 +26,14 @@ public class NotFoundException : Exception
     }
 }
 
+[Serializable]
 public class AllreadyExistException : Exception
 {
-    //Overriding the Message property
+    public AllreadyExistException() : base() { }
+    public AllreadyExistException(string message) : base(message) { }
+    public AllreadyExistException (string message, Exception inner) : base(message, inner) { }
+    protected AllreadyExistException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
     public override string Message
     {
         get
