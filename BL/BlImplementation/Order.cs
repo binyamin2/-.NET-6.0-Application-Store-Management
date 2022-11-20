@@ -101,20 +101,11 @@ internal class Order : BlApi.IOrder
                 OrderFL.Status = OrderStatus.Confirmed;
 
 
-            ///update the "Amount Items" and "Total price"
-            int AmountItems = 0;
-            Double TotalPrice = 0;
+            ///update the "Amount Items" and "Total price" with func help
+            var tuple = CalcAmountAndTotal(OrderFL.ID, ListOrderItem);
 
-            foreach (var OrderItem in ListOrderItem)
-            {
-                if (OrderItem.OrderID == OrderFL.ID)
-                {
-                    AmountItems ++;
-                    TotalPrice += (OrderItem.Amount * OrderItem.Price);
-                }
-            }
-            OrderFL.TotalPrice = TotalPrice;
-            OrderFL.AmountOfItems = AmountItems;
+            OrderFL.AmountOfItems = tuple.Item1;
+            OrderFL.TotalPrice = tuple.Item2;
 
             ///add to new list
             NewList.Add(OrderFL);
@@ -144,7 +135,12 @@ internal class Order : BlApi.IOrder
         throw new NotImplementedException();
     }
 
-
+    /// <summary>
+    /// calculate the amount of items of one order according id and the total price
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="orderItems"></param>
+    /// <returns>Tuple<int ,Double></returns>
     internal Tuple<int ,Double> CalcAmountAndTotal(int? id, IEnumerable<DO.OrderItem> orderItems)
     {
         int AmountItems = 0;
