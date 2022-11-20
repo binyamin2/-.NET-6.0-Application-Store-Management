@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using BO;
 namespace BlApi;
 
-public interface IB1
+public interface IBl
 {
     public IProduct Product { get; }
     public IOrder Order { get; }

@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using Dal;
+using DalApi;
+
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
+    private IDal Dal = new DalList();
 
 
 }
