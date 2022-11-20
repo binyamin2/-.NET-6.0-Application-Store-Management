@@ -29,6 +29,7 @@ public class Order
         Name :{CustomerName} 
         Adress : {CustomerAdress}
         Mail : {CustomerEmail}
+        OrderStatus {Status}
     	OrderDate: {OrderDate}
         PaymentDate: {PaymentDate}
     	ShipDate: {ShipDate}

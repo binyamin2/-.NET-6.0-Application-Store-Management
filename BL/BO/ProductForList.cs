@@ -6,21 +6,19 @@ using System.Threading.Tasks;
 
 namespace BO;
 /// <summary>
-/// for the screen of the product for maneging
+/// for the screen of product list
 /// </summary>
-
-public class Product
+public class ProductForList
 {
     public int? ID { get; set; }
     public string? Name { get; set; }
-    public double? Price { get; set; }   
+    public double? Price { get; set; }
     public Category Category { get; set; }
-    public int InStock { get; set; }
+
 
     public override string ToString() => $@"
         Product ID :{ID}
         Product name :{Name} 
-        category :{Category}
-    	Price: {Price}
-    	Amount in stock: {InStock}";
+        Price: {Price}
+        category :{Category}";
 }

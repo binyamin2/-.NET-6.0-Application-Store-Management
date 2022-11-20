@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BO;
-
+/// <summary>
+/// for the screen of orderitems list and details of order screen
+/// </summary>
 public class OrderItem
 {
     public int ID { get; set; }
