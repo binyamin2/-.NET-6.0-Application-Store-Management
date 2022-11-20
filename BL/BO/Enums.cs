@@ -14,3 +14,11 @@ public enum Category
     Elegant,
     Boots
 }
+
+public enum OrderStatus
+{
+    Confirmed,
+    Shiped,
+    Deliverd
+
+}
