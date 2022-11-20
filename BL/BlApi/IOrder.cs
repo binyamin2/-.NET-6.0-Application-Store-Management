@@ -16,8 +16,8 @@ public interface IOrder
     /// get list Order
     /// for manager
     /// </summary>
-    /// <returns>IEnumerable<BO.Order></returns>
-    public IEnumerable<BO.Order> GetList ();
+    /// <returns>IEnumerable<></returns>
+    public IEnumerable<BO.OrderForList> GetList ();
     /// <summary>
     /// get order
     /// for manager and client
