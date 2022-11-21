@@ -23,4 +23,11 @@ public class Product
         category :{Category}
     	Price: {Price}
     	Amount in stock: {InStock}";
+
+    internal string FindNameByID( int id)
+    {
+
+
+
+    }
 }

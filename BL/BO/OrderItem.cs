@@ -26,5 +26,23 @@ public class OrderItem
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";
 
+    OrderItem(DO.OrderItem orderItem)
+    {
+        this.ID = orderItem.OrderItemID;
+        this.ProdectID = orderItem.ProdectID;
+        this.Price = orderItem.Price;
+        this.Amount = orderItem.Amount;
+        this.TotalPrice = orderItem.Price * orderItem.Amount;
+        this->Name = /// i want use with method of BO.orderitem that i build
+
+
+    }
+
+    internal IEnumerable<BO.OrderItem> convert_list( IEnumerable<DO.OrderItem> listOrder)
+    {
+        return 
+
+    }
+
 }
 

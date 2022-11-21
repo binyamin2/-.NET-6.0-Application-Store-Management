@@ -52,6 +52,7 @@ internal class Order : BlApi.IOrder
 
             newOrder.Items = ListOrderItem;///צריך להמיר מרשימה של order do לorder BO
             ///נראלי כדי לעשות פונקצייית עזר כזאת בorder item
+            ///התחלתי לבנוצ
 
             ///newOrder.PaymentDate = ?????
 
