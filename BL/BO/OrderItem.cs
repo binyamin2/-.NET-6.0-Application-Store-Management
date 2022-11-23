@@ -1,4 +1,6 @@
-﻿using DO;
+﻿using Dal;
+using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,8 @@ public class OrderItem
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";
 
+    OrderItem()
+    { }
     OrderItem(DO.OrderItem orderItem)
     {
         this.ID = orderItem.OrderItemID;
@@ -33,16 +37,19 @@ public class OrderItem
         this.Price = orderItem.Price;
         this.Amount = orderItem.Amount;
         this.TotalPrice = orderItem.Price * orderItem.Amount;
+        private IDal Dal = new DalList();
+
+    IEnumerable<DO.Product> ListOrderItem = Dal.Product.GetAll();
+        foreach (var item in)
+	{
+
+	}
         this->Name = /// i want use with method of BO.orderitem that i build
 
 
     }
 
-    internal IEnumerable<BO.OrderItem> convert_list( IEnumerable<DO.OrderItem> listOrder)
-    {
-        return 
-
-    }
+  
 
 }
 

@@ -17,13 +17,7 @@ public class NotFoundException : Exception
     public NotFoundException(string message, Exception inner) : base(message, inner) { }
     protected NotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
-    public override string Message
-    {
-        get
-        {
-            return "The item not found";
-        }
-    }
+  
 }
 
 [Serializable]
@@ -34,13 +28,6 @@ public class AllreadyExistException : Exception
     public AllreadyExistException (string message, Exception inner) : base(message, inner) { }
     protected AllreadyExistException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
-    public override string Message
-    {
-        get
-        {
-            return "The ID number already exists";
-        }
-    }
 }
 
 ////using System;

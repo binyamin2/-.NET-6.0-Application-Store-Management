@@ -48,7 +48,7 @@ internal class DalOrder:IOrder
                     return order;
                 }
             }
-            throw new NotFoundException();
+            throw new NotFoundException("the ID not found");
       
     
     }

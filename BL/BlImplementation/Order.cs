@@ -5,10 +5,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
 using Dal;
 using DalApi;
-using DO;
+
 
 namespace BlImplementation;
 
@@ -37,11 +36,11 @@ internal class Order : BlApi.IOrder
             newOrder.DeliveryDate = order.DeliveryDate;
 
             if (order.DeliveryDate != null)
-                newOrder.Status = OrderStatus.Deliverd;
+                newOrder.Status = BO.OrderStatus.Deliverd;
             else if (order.ShipDate != null)
-                newOrder.Status = OrderStatus.Shiped;
+                newOrder.Status = BO.OrderStatus.Shiped;
             else
-                newOrder.Status = OrderStatus.Confirmed;
+                newOrder.Status = BO.OrderStatus.Confirmed;
 
             IEnumerable<DO.OrderItem> ListOrderItem = Dal.OrderItem.GetAll();
 
@@ -49,6 +48,7 @@ internal class Order : BlApi.IOrder
             var tuple = CalcAmountAndTotal(newOrder.ID, ListOrderItem);
 
             newOrder.TotalPrice = tuple.Item2;
+
 
             newOrder.Items = ListOrderItem;///צריך להמיר מרשימה של order do לorder BO
             ///נראלי כדי לעשות פונקצייית עזר כזאת בorder item
@@ -95,11 +95,11 @@ internal class Order : BlApi.IOrder
 
             ///update the status enum
             if (item.DeliveryDate != null)
-                OrderFL.Status = OrderStatus.Deliverd;
+                OrderFL.Status = BO.OrderStatus.Deliverd;
             else if (item.ShipDate != null)
-                OrderFL.Status = OrderStatus.Shiped;
+                OrderFL.Status = BO.OrderStatus.Shiped;
             else
-                OrderFL.Status = OrderStatus.Confirmed;
+                OrderFL.Status = BO.OrderStatus.Confirmed;
 
 
             ///update the "Amount Items" and "Total price" with func help
