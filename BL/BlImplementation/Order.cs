@@ -49,7 +49,10 @@ internal class Order : BlApi.IOrder
 
             newOrder.TotalPrice = tuple.Item2;
 
-
+            foreach (var item in ListOrderItem)
+            {
+                ///להמשיך
+            }
             newOrder.Items = ListOrderItem;///צריך להמיר מרשימה של order do לorder BO
             ///נראלי כדי לעשות פונקצייית עזר כזאת בorder item
             ///התחלתי לבנוצ
