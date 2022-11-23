@@ -19,14 +19,26 @@ public class WorngProductException : Exception
 
 }
 
-//[Serializable]
-//public class AllreadyExistException : Exception
-//{
-//    public AllreadyExistException() : base() { }
-//    public AllreadyExistException(string message) : base(message) { }
-//    public AllreadyExistException(string message, Exception inner) : base(message, inner) { }
-//    protected AllreadyExistException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
-//}
 
+[Serializable]
+public class InputUnvalidException : Exception
+{
+    public InputUnvalidException() : base() { }
+    public InputUnvalidException(string message) : base(message) { }
+    public InputUnvalidException(string message, Exception inner) : base(message, inner) { }
+    protected InputUnvalidException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+}
+
+[Serializable]
+public class WorngOrderException : Exception
+{
+    public WorngOrderException() : base() { }
+    public WorngOrderException(string message) : base(message) { }
+    public WorngOrderException(string message, Exception inner) : base(message, inner) { }
+    protected WorngOrderException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+
+}
 

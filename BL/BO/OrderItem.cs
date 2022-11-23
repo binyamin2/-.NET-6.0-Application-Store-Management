@@ -13,6 +13,7 @@ namespace BO;
 /// </summary>
 public class OrderItem
 {
+    private IDal Dal = new DalList();
     public int ID { get; set; }
     public int ProdectID { get; set; }
     public string? Name { get; set; }
@@ -28,18 +29,23 @@ public class OrderItem
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";
 
-    private IDal Dal = new DalList();
-
-    OrderItem()
+    /// <summary>
+    /// defult constractor
+    /// </summary>
+    public OrderItem()
     { }
-    OrderItem(DO.OrderItem orderItem)
+    /// <summary>
+    /// constractor that take DO.OrderItem
+    /// </summary>
+    /// <param name="orderItem"></param>
+    public OrderItem(DO.OrderItem orderItem)
     {
         this.ID = orderItem.OrderItemID;
         this.ProdectID = orderItem.ProdectID;
         this.Price = orderItem.Price;
         this.Amount = orderItem.Amount;
         this.TotalPrice = orderItem.Price * orderItem.Amount;
-        private IDal Dal = new DalList();
+       
 
         ///find the name of the product
 

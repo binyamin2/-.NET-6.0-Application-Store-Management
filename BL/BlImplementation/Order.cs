@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using BO;
 using Dal;
 using DalApi;
 
@@ -18,59 +19,25 @@ internal class Order : BlApi.IOrder
     public BO.Order Get(int id)
     {
         if (0 >= id)
-            throw new Exception("id not valid");
+            throw new BO.InputUnvalidException("ID not valid");
 
         ///try if id found in Orders list
         try
         {
             DO.Order order = Dal.Order.Get(id);
 
-            BO.Order newOrder = new BO.Order();
+            ///build the new organ with constractor of Order
+            BO.Order NewOrder = new BO.Order(order);
 
-            newOrder.ID = order.ID;
-            newOrder.CustomerName = order.CustomerName;
-            newOrder.CustomerAdress = order.CustomerAdress;
-            newOrder.CustomerEmail = order.CustomerEmail;
-            newOrder.OrderDate = order.OrderDate;
-            newOrder.ShipDate = order.ShipDate;
-            newOrder.DeliveryDate = order.DeliveryDate;
-
-            if (order.DeliveryDate != null)
-                newOrder.Status = BO.OrderStatus.Deliverd;
-            else if (order.ShipDate != null)
-                newOrder.Status = BO.OrderStatus.Shiped;
-            else
-                newOrder.Status = BO.OrderStatus.Confirmed;
-
-            IEnumerable<DO.OrderItem> ListOrderItem = Dal.OrderItem.GetAll();
-
-            ///help metoud
-            var tuple = CalcAmountAndTotal(newOrder.ID, ListOrderItem);
-
-            newOrder.TotalPrice = tuple.Item2;
-
-            foreach (var item in ListOrderItem)
-            {
-                ///להמשיך
-            }
-            newOrder.Items = ListOrderItem;///צריך להמיר מרשימה של order do לorder BO
-            ///נראלי כדי לעשות פונקצייית עזר כזאת בorder item
-            ///התחלתי לבנוצ
-
-            ///newOrder.PaymentDate = ?????
+            return NewOrder;
 
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
-            throw ex;
+            throw;
         }
-
-       
-
-
-        throw new NotImplementedException();
     }
 
 
@@ -124,9 +91,36 @@ internal class Order : BlApi.IOrder
         throw new NotImplementedException();
     }
 
-    public BO.Order UpdateDelivery(int id)
+    public BO.Order UpdateShip(int id)
     {
-        throw new NotImplementedException();
+        if (0 >= id)
+            throw new BO.InputUnvalidException("ID not valid");
+        try
+        {
+            DO.Order order = Dal.Order.Get(id);
+            //if allready ship
+            if (order.ShipDate != null)
+            {
+                throw new BO.WorngOrderException("The order allready ship");
+            }
+
+            DateTime NowDate = DateTime.Now; 
+
+            order.ShipDate = NowDate;
+
+            //update the order n database
+            Dal.Order.Update(order);
+
+            ///create a BO.order and return it.
+            BO.Order BOorder = new BO.Order(order);
+
+            return BOorder;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     public BO.Order UpdateOrder(int id)
@@ -134,11 +128,47 @@ internal class Order : BlApi.IOrder
         throw new NotImplementedException();
     }
 
-    public BO.Order UpdateShip(int id)
+    public BO.Order UpdateDelivery(int id)
     {
-        throw new NotImplementedException();
+        if (0 >= id)
+            throw new BO.InputUnvalidException("ID not valid");
+        try
+        {
+            DO.Order order = Dal.Order.Get(id);
+            //if not allready ship
+            if (order.ShipDate == null)
+            {
+                throw new BO.WorngOrderException("The order not allready ship");
+            }
+            //if allready delivery
+            if (order.DeliveryDate != null)
+            {
+                throw new BO.WorngOrderException("The order allready delivery");
+            }
+
+            DateTime NowDate = DateTime.Now;
+
+            order.DeliveryDate = NowDate;
+
+            //update the order in database
+            Dal.Order.Update(order);
+
+            ///create a BO.order and return it.
+            BO.Order BOorder = new BO.Order(order);
+
+            return BOorder;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
+
+    ///Help method
+  
+    
     /// <summary>
     /// calculate the amount of items of one order according id and the total price
     /// </summary>
