@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-public  class ProudctItem
+public  class ProductItem
 {
 
     public int? Amount { get; set; }

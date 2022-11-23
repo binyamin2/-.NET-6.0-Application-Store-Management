@@ -12,20 +12,20 @@ public interface IProduct
     /// get list of product
     /// </summary>
     /// <returns>IEnumerable<BO.Product></returns>
-    public IEnumerable<BO.Product> GetList();
+    public IEnumerable<BO.ProductForList> GetList();
     /// <summary>
     /// get product details for manager
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Product</returns>
-    public BO.Product GetForManager(int? id);
+    public BO.Product GetForManager(int id);
     /// <summary>
     /// get product details for client
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cart"></param>
-    /// <returns>BO.Product</returns>
-    public BO.Product GetForClient(int? id,BO.Cart cart);
+    /// <returns>BO.ProductItem</returns>
+    public BO.ProductItem GetForClient(int id,BO.Cart cart);
     /// <summary>
     /// add a product for data base   for manager
     /// </summary>
@@ -35,7 +35,7 @@ public interface IProduct
     /// delete product from data base   for manager
     /// </summary>
     /// <param name="id"></param>
-    public void Delete(int? id);
+    public void Delete(int id);
     /// <summary>
     /// update a product   for manager
     /// </summary>

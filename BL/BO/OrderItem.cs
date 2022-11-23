@@ -37,7 +37,7 @@ public class OrderItem
         this.Price = orderItem.Price;
         this.Amount = orderItem.Amount;
         this.TotalPrice = orderItem.Price * orderItem.Amount;
-        private IDal Dal = new DalList();
+         IDal Dal = new DalList();
 
     IEnumerable<DO.Product> ListOrderItem = Dal.Product.GetAll();
         foreach (var item in)
@@ -47,7 +47,7 @@ public class OrderItem
         this->Name = /// i want use with method of BO.orderitem that i build
 
 
-    }
+    
 
   
 

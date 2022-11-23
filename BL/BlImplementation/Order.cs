@@ -116,7 +116,7 @@ internal class Order : BlApi.IOrder
        
     }
 
-    public OrderTracking OrderTracking(int id)
+    public BO.OrderTracking OrderTracking(int id)
     {
         throw new NotImplementedException();
     }

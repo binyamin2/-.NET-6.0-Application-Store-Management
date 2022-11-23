@@ -15,6 +15,15 @@ public class ProductForList
     public double? Price { get; set; }
     public Category Category { get; set; }
 
+    public ProductForList() { }
+    public ProductForList(DO.Product p)
+    {
+        ID = p.ID;
+        Name = p.Name;
+        Price = p.Price;
+        Category = (BO.Category)p.Category;
+    }
+
 
     public override string ToString() => $@"
         Product ID :{ID}

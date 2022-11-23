@@ -70,7 +70,7 @@ internal class DalProduct:IProduct
                 return;
             }
         }
-        throw new NotFoundException();
+        throw new NotFoundException("the item not found");
     }
     /// <summary>
     /// return new array of all product
