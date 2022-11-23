@@ -28,6 +28,8 @@ public class OrderItem
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";
 
+    private IDal Dal = new DalList();
+
     OrderItem()
     { }
     OrderItem(DO.OrderItem orderItem)
@@ -37,19 +39,27 @@ public class OrderItem
         this.Price = orderItem.Price;
         this.Amount = orderItem.Amount;
         this.TotalPrice = orderItem.Price * orderItem.Amount;
-         IDal Dal = new DalList();
+        private IDal Dal = new DalList();
 
-    IEnumerable<DO.Product> ListOrderItem = Dal.Product.GetAll();
-        foreach (var item in)
-	{
+        ///find the name of the product
 
-	}
-        this->Name = /// i want use with method of BO.orderitem that i build
+        IEnumerable<DO.Product> ListOrderItem = Dal.Product.GetAll();
 
 
-    
 
-  
+        foreach (var item in ListOrderItem)
+        {
+            if (this.ID == item.ID)
+            {
+                this.Name = item.Name;
+                return;
+            }
 
+
+
+    }
+
+
+
+    }
 }
-
