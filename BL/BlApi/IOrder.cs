@@ -47,12 +47,27 @@ public interface IOrder
     /// <returns>OrderTracking </returns>
     public OrderTracking OrderTracking (int id);
     /// <summary>
-    /// bonus Update Order amount
+    /// bonus Update Order item amount  add
     /// for manager
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Order</returns>
-    public BO.Order UpdateOrder (int id);
+    public void UpdateOIADD (int orderID, int proudctID);
+    /// <summary>
+    /// bonus Update Order item delete
+    /// for manager
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <param name="proudctID"></param>
+    public void updateOIdelete(int orderID, int proudctID);
+    
+    /// <summary>
+    /// bonus Update Order item change amount
+    /// for manager
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <param name="proudctID"></param>
 
+    public void updateOIchangeAmount(int orderID, int proudctID);
 
 }

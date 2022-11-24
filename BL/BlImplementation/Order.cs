@@ -8,7 +8,7 @@ using BlApi;
 using BO;
 using Dal;
 using DalApi;
-
+using DO;
 
 namespace BlImplementation;
 
@@ -64,12 +64,9 @@ internal class Order : BlApi.IOrder
             OrderFL.CustomerName = item.CustomerName;
 
             ///update the status enum
-            if (item.DeliveryDate != null)
-                OrderFL.Status = BO.OrderStatus.Deliverd;
-            else if (item.ShipDate != null)
-                OrderFL.Status = BO.OrderStatus.Shiped;
-            else
-                OrderFL.Status = BO.OrderStatus.Confirmed;
+            /////method help "CheckStatus"
+            OrderFL.Status = CheckStatus(item);
+           
 
 
             ///update the "Amount Items" and "Total price" with func help
@@ -86,9 +83,49 @@ internal class Order : BlApi.IOrder
        
     }
 
+  
+
     public BO.OrderTracking OrderTracking(int id)
     {
-        throw new NotImplementedException();
+        if (0 <= id)
+        {
+            throw new InputUnvalidException("ID not valid");
+        }
+
+        try
+        {
+            DO.Order order = Dal.Order.Get(id);
+            BO.OrderTracking orderTrack = new BO.OrderTracking();
+            orderTrack.ID = order.ID;
+            //method help "CheckStatus"
+            orderTrack.Status = CheckStatus(order);
+            
+            if (order.OrderDate != null)
+            {
+                Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order.OrderDate, "The order created");
+                orderTrack.DateList.Add(DateOrder);
+            }
+
+            if (order.ShipDate != null)
+            {
+                Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order.ShipDate, "The order shiped");
+                orderTrack.DateList.Add(DateOrder);
+            }
+
+            if (order.DeliveryDate != null)
+            {
+                Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order.DeliveryDate, "The order delivered");
+                orderTrack.DateList.Add(DateOrder);
+            }
+
+            return orderTrack;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     public BO.Order UpdateShip(int id)
@@ -123,10 +160,6 @@ internal class Order : BlApi.IOrder
         }
     }
 
-    public BO.Order UpdateOrder(int id)
-    {
-        throw new NotImplementedException();
-    }
 
     public BO.Order UpdateDelivery(int id)
     {
@@ -165,10 +198,45 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    //bounos method
+
+    /// <summary>
+    /// bonus Update Order item amount  add
+    /// for manager
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>BO.Order</returns>
+    public void UpdateOIADD(int orderID, int proudctID)
+    {
+       
+    }
+    /// <summary>
+    /// bonus Update Order item delete
+    /// for manager
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <param name="proudctID"></param>
+    public void updateOIdelete(int orderID, int proudctID)
+    {
+
+    }
+
+    /// <summary>
+    /// bonus Update Order item change amount
+    /// for manager
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <param name="proudctID"></param>
+
+    public void updateOIchangeAmount(int orderID, int proudctID)
+    {
+
+    }
+
 
     ///Help method
-  
-    
+
+
     /// <summary>
     /// calculate the amount of items of one order according id and the total price
     /// </summary>
@@ -268,5 +336,20 @@ internal class Order : BlApi.IOrder
 
         return BOorderItem;
     }
+
+    internal BO.OrderStatus CheckStatus(DO.Order item)
+    {
+        BO.OrderStatus Status =new OrderStatus();
+
+        if (item.DeliveryDate != null)
+            Status = BO.OrderStatus.Deliverd;
+        else if (item.ShipDate != null)
+            Status = BO.OrderStatus.Shiped;
+        else
+            Status = BO.OrderStatus.Confirmed;
+
+        return Status;
+    }
+}
 
 

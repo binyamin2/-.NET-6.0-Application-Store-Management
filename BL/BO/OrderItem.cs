@@ -29,9 +29,4 @@ public class OrderItem
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";
 
- 
-
-
-
-    }
 }
