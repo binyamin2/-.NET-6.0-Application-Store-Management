@@ -14,7 +14,7 @@ public class OrderTracking
     
     public OrderStatus? Status { get; set; }
 
-    public List<Tuple<DateTime?, OrderStatus>> DateList { get; set; }
+    public List<Tuple<DateTime?, String>> DateList { get; set; }
 
     public override string ToString() => $@"
         Product ID :{ID}

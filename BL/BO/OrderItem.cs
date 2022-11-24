@@ -1,4 +1,4 @@
-﻿   using Dal;
+﻿using Dal;
 using DalApi;
 using DO;
 using System;
@@ -29,9 +29,4 @@ public class OrderItem
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";
 
- 
-
-
-
-    
 }
