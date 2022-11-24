@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using BO;
 namespace BlApi;
 
+
+
 public interface IBl
 {
     public IProduct Product { get; }
