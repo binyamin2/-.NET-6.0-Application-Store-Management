@@ -12,7 +12,13 @@ namespace BlImplementation;
 internal class Cart : BlApi.ICart
 {
     private IDal Dal = new DalList();
-
+    /// <summary>
+    /// Add product to cart
+    /// for catalog and Detail order
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="id"></param>
+    /// <returns>BO.Cart</returns>
     public BO.Cart Add(BO.Cart cart, int id)
     {
         //return true if the product exist in the cart
@@ -70,21 +76,79 @@ internal class Cart : BlApi.ICart
         return cart;
       
     }
+    /// <summary>
+    /// confirm the order and update the data
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="DetailClient"></param>
+    /// <exception cref="BO.WrongCartDeteilsException"></exception>
+    public void ConfirmOrder(BO.Cart cart, Tuple<string?, string?, string?> DetailClient)//tuple orser=name,email,addres
+    {
+        if (string.IsNullOrEmpty(DetailClient.Item1))
+            throw new BO.WrongCartDeteilsException("name not valid");
+        if (string.IsNullOrEmpty(DetailClient.Item2))
+            throw new BO.WrongCartDeteilsException("email not valid");
+        if (string.IsNullOrEmpty(DetailClient.Item3))
+            throw new BO.WrongCartDeteilsException("adress not valid");
+        try
+        {
+            //building new DO.order
+            DO.Order NewO = new DO.Order();
+            NewO.CustomerName = DetailClient.Item1;
+            NewO.CustomerEmail = DetailClient.Item2;
+            NewO.CustomerAdress = DetailClient.Item3;
+            NewO.OrderDate = DateTime.Now;
+            //building new DO.orderItems
+            int OrderID =Dal.Order.Add(NewO);
+            foreach (var item in cart.Items)
+            {
+                DO.OrderItem NewDOOI = BuildOI(item);
+                NewDOOI.OrderID = OrderID;
+                Dal.OrderItem.Add(NewDOOI);
+            }
+            foreach (var item in cart.Items)//for all order item in cart
+            {
+                foreach (var i in Dal.Product.GetAll())//run in all product to find the 1 who needs update
+                {
+                    if(item.ProdectID==i.ID)
+                    {
+                        if (item.Amount>i.InStock)//exeption
+                        {
+                            throw new BO.WrongCartDeteilsException("the product is out of stock");
+                        }
+                        //update the data 
+                        DO.Product UpdateProduct = new DO.Product();
+                        UpdateProduct = i;
+                        UpdateProduct.InStock-=item.Amount;
+                        Dal.Product.Update(UpdateProduct);
+                    }
+                }
 
-    public void ConfirmOrder(BO.Cart cart, Tuple<string?, string?, string?> DetailClient)
-    { 
-        throw new NotImplementedException();
+            }
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
+
     }
-
+    /// <summary>
+    /// update the cart
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="id"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.WrongCartDeteilsException"></exception>
     public BO.Cart Update(BO.Cart cart, int id, int amount)
     {
-        bool exist = cart.Items.Any(i => i.ProdectID == id);
+        bool exist = cart.Items.Any(i => i.ProdectID == id);//Check if the product in the cart
         if (!exist)
             throw new BO.WrongCartDeteilsException("the product is not in the cart");
-        if (!Dal.Product.GetAll().Any(i => i.ID == id))
+        if (!Dal.Product.GetAll().Any(i => i.ID == id))//Check if the product exist
             throw new BO.WrongCartDeteilsException("the product is not exist");
         int currentInStock=0;
-        foreach (var item in Dal.Product.GetAll())
+        foreach (var item in Dal.Product.GetAll())//find how match in stock
         {
             if (item.ID == id)
             {
@@ -92,11 +156,11 @@ internal class Cart : BlApi.ICart
                 break;
             }
         }
-        foreach (var item in cart.Items)
+        foreach (var item in cart.Items)//adding/updating the product
         {
             if (item.ProdectID==id)
             {
-                if (amount == 0)
+                if (amount == 0)//delete the product if the amount is 0
                 {
                     cart.TotalPrice-=item.TotalPrice;
                     cart.Items.Remove(item);
@@ -110,7 +174,7 @@ internal class Cart : BlApi.ICart
                     }
                     UpDateOI(cart,id, amount - item.Amount);
                 }
-                else if(item.Amount>amount)
+                else if(item.Amount>amount)//if want smaller amount
                 {
                     UpDateOI(cart, id, amount- item.Amount);
                 }
@@ -121,7 +185,12 @@ internal class Cart : BlApi.ICart
         }
         return cart;
     }
-
+    /// <summary>
+    /// func for update order item
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="id"></param>
+    /// <param name="amount"></param>
    public void UpDateOI(BO.Cart cart,int id,int amount)
     {
      
@@ -135,5 +204,18 @@ internal class Cart : BlApi.ICart
             }
 
         }
+    }
+    /// <summary>
+    /// func for build new Do.orderitem from Bo.orderitem eccept the order id order item id
+    /// </summary>
+    /// <param name="BOOI"></param>
+    /// <returns></returns>
+    public DO.OrderItem BuildOI(BO.OrderItem BOOI)
+    {
+        DO.OrderItem item = new DO.OrderItem();
+        item.ProdectID = BOOI.ProdectID;
+        item.Amount = BOOI.Amount;
+        item.Price = BOOI.Price;
+        return item;
     }
 }

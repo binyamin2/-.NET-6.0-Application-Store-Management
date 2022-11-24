@@ -23,7 +23,7 @@ internal class DalProduct:IProduct
     /// </summary>
     /// <param name="p"></param>
     /// <returns>int</returns>
-    public int? Add(Product p)
+    public int Add(Product p)
     {
         
         bool flag=false;

@@ -24,7 +24,7 @@ internal class DalOrderItem :IOrderItem
     /// </summary>
     /// <param name="OI"></param>
     /// <returns>int</returns>
-  public int? Add(OrderItem OI) 
+  public int Add(OrderItem OI) 
     {
         OI.OrderItemID = DataSource.IDOrderItem;
 

@@ -6,7 +6,7 @@ namespace DalApi;
 public interface ICrud<T> where T : struct
 {
 
-    public int? Add(T value);
+    public int Add(T value);
     public void Update(T value);
 
     public void Delete(int value);

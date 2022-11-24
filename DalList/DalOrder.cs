@@ -26,7 +26,7 @@ internal class DalOrder:IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns>int?</returns>
-    public int? Add(Order order)
+    public int Add(Order order)
     {
 
         order.ID = DataSource.IDOrder;
