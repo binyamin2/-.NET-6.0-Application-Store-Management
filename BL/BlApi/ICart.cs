@@ -19,7 +19,7 @@ public interface ICart
     /// <param name="cart"></param>
     /// <param name="id"></param>
     /// <returns>BO.Cart</returns>
-    public BO.Cart Add(Cart cart, int? id);
+    public BO.Cart Add(Cart cart, int id);
     /// <summary>
     /// Update amount of order
     /// for cart

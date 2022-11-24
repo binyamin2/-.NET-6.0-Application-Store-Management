@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using BlApi;
 using Dal;
 using DalApi;
@@ -141,7 +142,11 @@ internal class Product : BlApi.IProduct
         List<BO.ProductForList> list2 = new List<BO.ProductForList>();
         foreach (DO.Product item in list)
         {
-            BO.ProductForList PFLItem = new BO.ProductForList(item);
+            BO.ProductForList PFLItem = new BO.ProductForList();
+            PFLItem.ID = item.ID;
+            PFLItem.Name = item.Name;
+            PFLItem.Price = item.Price;
+            PFLItem.Category = (BO.Category)item.Category;
             list2.Add(PFLItem);
         }
         return list2;

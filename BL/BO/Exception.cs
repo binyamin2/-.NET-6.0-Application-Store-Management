@@ -42,3 +42,12 @@ public class WorngOrderException : Exception
 
 }
 
+[Serializable]
+public class NotInStockException : Exception
+{
+    public NotInStockException() : base() { }
+    public NotInStockException(string message) : base(message) { }
+    public NotInStockException(string message, Exception inner) : base(message, inner) { }
+    protected NotInStockException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+}
+
