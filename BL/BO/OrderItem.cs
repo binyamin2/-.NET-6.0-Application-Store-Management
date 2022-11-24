@@ -29,41 +29,7 @@ public class OrderItem
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";
 
-    /// <summary>
-    /// defult constractor
-    /// </summary>
-    public OrderItem()
-    { }
-    /// <summary>
-    /// constractor that take DO.OrderItem
-    /// </summary>
-    /// <param name="orderItem"></param>
-    public OrderItem(DO.OrderItem orderItem)
-    {
-        this.ID = orderItem.OrderItemID;
-        this.ProdectID = orderItem.ProdectID;
-        this.Price = orderItem.Price;
-        this.Amount = orderItem.Amount;
-        this.TotalPrice = orderItem.Price * orderItem.Amount;
-       
-
-        ///find the name of the product
-
-        IEnumerable<DO.Product> ListOrderItem = Dal.Product.GetAll();
-
-
-
-        foreach (var item in ListOrderItem)
-        {
-            if (this.ID == item.ID)
-            {
-                this.Name = item.Name;
-                return;
-            }
-
-
-
-    }
+ 
 
 
 

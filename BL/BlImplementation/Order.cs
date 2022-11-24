@@ -27,7 +27,7 @@ internal class Order : BlApi.IOrder
             DO.Order order = Dal.Order.Get(id);
 
             ///build the new organ with constractor of Order
-            BO.Order NewOrder = new BO.Order(order);
+            BO.Order NewOrder = BuildOrderBO(order);
 
             return NewOrder;
 
@@ -112,7 +112,7 @@ internal class Order : BlApi.IOrder
             Dal.Order.Update(order);
 
             ///create a BO.order and return it.
-            BO.Order BOorder = new BO.Order(order);
+            BO.Order BOorder = BuildOrderBO(order);
 
             return BOorder;
         }
@@ -154,7 +154,7 @@ internal class Order : BlApi.IOrder
             Dal.Order.Update(order);
 
             ///create a BO.order and return it.
-            BO.Order BOorder = new BO.Order(order);
+            BO.Order BOorder = BuildOrderBO(order);
 
             return BOorder;
         }
@@ -191,4 +191,82 @@ internal class Order : BlApi.IOrder
         return Tuple.Create(AmountItems, TotalPrice);
 
     }
-}
+
+    public BO.Order BuildOrderBO(DO.Order order)
+    {
+        BO.Order BOorder =new BO.Order();
+
+        BOorder.ID = order.ID;
+        BOorder.CustomerName = order.CustomerName;
+        BOorder.CustomerAdress = order.CustomerAdress;
+        BOorder.CustomerEmail = order.CustomerEmail;
+        BOorder.OrderDate = order.OrderDate;
+        BOorder.ShipDate = order.ShipDate;
+        BOorder.DeliveryDate = order.DeliveryDate;
+        BOorder.PaymentDate = BOorder.OrderDate;
+
+        if (order.DeliveryDate != null)
+            BOorder.Status = BO.OrderStatus.Deliverd;
+        else if (order.ShipDate != null)
+            BOorder.Status = BO.OrderStatus.Shiped;
+        else
+            BOorder.Status = BO.OrderStatus.Confirmed;
+
+        ///list of orderitem
+        IEnumerable<DO.OrderItem> ListOrderItem = Dal.OrderItem.GetAll();
+
+
+        ///HelpOrder , it need for method "CalcAmountAndTotal"
+        BlImplementation.Order HelpOrder = new BlImplementation.Order();
+
+        var tuple = HelpOrder.CalcAmountAndTotal(BOorder.ID, ListOrderItem);
+
+        BOorder.TotalPrice = tuple.Item2;
+
+        ///build the list with "linq" and constractor of BO.OrderItem
+        BOorder.Items =
+                (from OrderItem in ListOrderItem
+                 where OrderItem.OrderID == BOorder.ID
+                 select BuildOrderItemBO(OrderItem)).ToList();
+
+        return BOorder;
+
+
+    }
+
+
+
+    /// <summary>
+    /// constractor that take DO.OrderItem
+    /// </summary>
+    /// <param name="orderItem"></param>
+    public BO.OrderItem BuildOrderItemBO(DO.OrderItem orderItem)
+    {
+        BO.OrderItem BOorderItem = new BO.OrderItem();
+
+        BOorderItem.ID = orderItem.OrderItemID;
+        BOorderItem.ProdectID = orderItem.ProdectID;
+        BOorderItem.Price = orderItem.Price;
+        BOorderItem.Amount = orderItem.Amount;
+        BOorderItem.TotalPrice = orderItem.Price * orderItem.Amount;
+
+
+        ///find the name of the product
+
+        IEnumerable<DO.Product> ListOrderItem = Dal.Product.GetAll();
+
+
+
+        foreach (var item in ListOrderItem)
+        {
+            if (BOorderItem.ID == item.ID)
+            {
+                BOorderItem.Name = item.Name;
+                break;
+            }
+        }
+
+        return BOorderItem;
+    }
+
+
