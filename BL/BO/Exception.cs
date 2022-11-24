@@ -51,3 +51,11 @@ public class NotInStockException : Exception
     protected NotInStockException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
+public class WrongCartDeteilsException : Exception
+{
+    public WrongCartDeteilsException() : base() { }
+    public WrongCartDeteilsException(string message) : base(message) { }
+    public WrongCartDeteilsException(string message, Exception inner) : base(message, inner) { }
+    protected WrongCartDeteilsException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+}
+

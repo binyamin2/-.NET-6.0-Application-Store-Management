@@ -28,7 +28,7 @@ public interface ICart
     /// <param name="id"></param>
     /// <param name="amount"></param>
     /// <returns></returns>
-    public BO.Cart Update(Cart cart, int? id, int? amount);
+    public BO.Cart Update(Cart cart, int id, int amount);
     /// <summary>
     /// Confirm Order 
     /// </summary>
