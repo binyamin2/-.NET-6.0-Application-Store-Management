@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlApi;
 using BO;
 using Dal;
 
@@ -11,12 +12,12 @@ namespace BlTest;
 enum BLoption { Cart = 1, Order, Product, Exit = 0 }
 enum BLorder { GetListOrder = 1, GetOrder, UpdateShip, UpdateDelivery, TrackOrder, AddOrder, DeleteOrder, ChangeAmount, Exit = 0}
 
-enum BLocart { AddProductToCart = 1, UpdateAmpuntProduct, ConfirmOrder, Exit =0 }
+enum BLcart { AddProductToCart = 1, UpdateAmpuntProduct, ConfirmOrder, Exit =0 }
 
 enum BLproduct { GetListProduct = 1, GetProduct, GetDetailsProduct, AddProduct, DeleteProduct, UpdateDetailsProduct,Exit =0 }
 class MainBL
 {
-    BlApi.IBl IBL = new BlImplementation.Bl();
+    static BlApi.IBl iblogic = new BlImplementation.Bl();
 
     private static BLoption menuCode;
 
@@ -49,7 +50,6 @@ class MainBL
                     default:
                         throw new Exception("Unvalide choice press any key to continue...");
                         break;
-                        break;
                 }
             }
             catch (Exception ex)
@@ -59,42 +59,66 @@ class MainBL
 
         } while (menuCode != BLoption.Exit);
 
+    }
 
+    static void ProductMenue()
+    {
 
-        private static void ProductMenue()
+        BLproduct productCode = new BLproduct();
+        
+
+        do
         {
-
-
-
-            do
+            Console.WriteLine(@"For get list tap 1");
+            Console.WriteLine(@"For get product manager tap 2");
+            Console.WriteLine(@"For get details product client tap 3");
+            Console.WriteLine(@"For add product tap 4");
+            Console.WriteLine(@"For product deletion tap 5");
+            Console.WriteLine(@"For Update Details Product tap 6");
+            Console.WriteLine(@"For return to menu tap 0 ");
+            int id;
+            BLproduct.TryParse(Console.ReadLine(), out productCode);
+            try
             {
-                Console.WriteLine(@"For see list a products tap 1");
-                Console.WriteLine(@"For see product tap 2");
-                Console.WriteLine(@"For see details product 3");
-                Console.WriteLine(@"For add product tap 4");
-                Console.WriteLine(@"For deletion product tap 5");
-                Console.WriteLine(@"For update details product tap 6");
-                Console.WriteLine(@"For return to menu press 0");
-
-                BLproduct productCode;
-                BLproduct.TryParse(Console.ReadLine(), out productCode);
                 switch (productCode)
                 {
-                    case CraudMethod.Add:
-                        Console.WriteLine(@"Enter the product ID number that you want to add");
-                        int id;
+                    case BLproduct.GetListProduct:
+                        IEnumerable <BO.ProductForList> ProductList = iblogic.Product.GetList();
+                        foreach (var item in ProductList)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        break;
+                    case BLproduct.GetProduct:
+                        
+                        Console.WriteLine(@"Enter the product ID number that you want to see his details");
                         int.TryParse(Console.ReadLine(), out id);
+                        BO.Product product = iblogic.Product.GetForManager(id);
+                        Console.WriteLine(product);
+                        break;
+                    case BLproduct.GetDetailsProduct:
+          
+                        Console.WriteLine(@"Enter the product ID number that you want to see his details");
+                        int.TryParse(Console.ReadLine(), out id);
+                        BO.ProductItem product1 = iblogic.Product.GetForManager(id, Maincart);///what??
+                        Console.WriteLine(product1);
+                        break;
+
+                    case BLproduct.AddProduct:
+                        Console.WriteLine(@"Enter the product ID number that you want to add");
+                        int id1;
+                        int.TryParse(Console.ReadLine(), out id1);
                         Console.WriteLine(@"Enter a product name that you want to add");
                         string name;
                         name = Console.ReadLine();
                         Console.WriteLine(@"Enter a product category that you want to add");
                         Console.WriteLine(
                         $@"
-                Sport = 0
-                Hike =  1
-                Sandals = 2
-                Elegant = 3
-                Boots = 4 ");
+                            Sport = 0
+                            Hike =  1
+                            Sandals = 2
+                            Elegant = 3
+                            Boots = 4 ");
                         int catgory;
                         int.TryParse(Console.ReadLine(), out catgory);
 
@@ -104,47 +128,44 @@ class MainBL
                         int tmpAmount;
                         Console.WriteLine(@"Enter a product Amount in stok that you want to add");
                         int.TryParse(Console.ReadLine(), out tmpAmount);
-                        Product addedProduct = new Product()
+                        BO.Product addedProduct = new BO.Product()
                         {
-                            ID = id,
+                            ID = id1,
                             Name = name,
                             Category = (Category)catgory,
                             Price = tmpPrice,
                             InStock = tmpAmount
                         };
-                        int? addedProductId = DalList.Product.Add(addedProduct);
-                        Console.WriteLine("The Product id: {0}", addedProductId);
-                        break;
-                    case CraudMethod.View:
-                        Console.WriteLine(@"Enter the product ID number that you want to see his details");
-                        int.TryParse(Console.ReadLine(), out id);
-                        Product productToShow = new Product();
-                        productToShow = DalList.Product.Get(id);
-                        Console.WriteLine(productToShow);
-                        break;
-                    case CraudMethod.ViewAll:
-                        IEnumerable<Product> productsList = DalList.Product.GetAll();
-                        foreach (var item in productsList)
-                        {
-                            Console.WriteLine(item);
-                        }
+
+                        iblogic.Product.Add(addedProduct);
+                        Console.WriteLine(addedProduct);
+
 
                         break;
-                    case CraudMethod.Update:
-                        Console.WriteLine(@"Enter the product ID number that you want to update his details");
+                    case BLproduct.DeleteProduct:
+                        Console.WriteLine(@"Enter the product ID number that you want to delete");
                         int.TryParse(Console.ReadLine(), out id);
-                        Product oldProduct = DalList.Product.Get(id);
+                        iblogic.Product.Delete(id);
+                        ///chack if delete
+                        Console.WriteLine(iblogic.Product.GetForManager(id));
+
+                        break;
+                    case BLproduct.UpdateDetailsProduct:
+                        int id2;
+                        Console.WriteLine(@"Enter the product ID number that you want to update his details");
+                        int.TryParse(Console.ReadLine(), out id2);
+                        BO.Product oldProduct = iblogic.Product.GetForManager(id2);
                         Console.WriteLine(oldProduct);
                         Console.WriteLine(@"Enter the new name");
                         name = Console.ReadLine();
                         Console.WriteLine(@"Enter the new category");
                         Console.WriteLine(
                         $@"
-                Sport = 0
-                Hike =  1
-                Sandals = 2
-                Elegant = 3
-                Boots = 4 ");
+                            Sport = 0
+                            Hike =  1
+                            Sandals = 2
+                            Elegant = 3
+                            Boots = 4 ");
                         int tmpcatgory;
                         int.TryParse(Console.ReadLine(), out tmpcatgory);
                         Console.WriteLine(@"Enter The New new price");
@@ -153,39 +174,208 @@ class MainBL
                         int tmpAmount2;
                         Console.WriteLine(@"Enter the new amount in stok");
                         int.TryParse(Console.ReadLine(), out tmpAmount);
-                        Product Update = new Product()
+                        BO.Product Update = new BO.Product()
                         {
-                            ID = id,
+                            ID = id2,
                             Name = name,
                             Category = (Category)tmpcatgory,
                             Price = tmpPrice2,
                             InStock = tmpAmount
                         };
-                        DalList.Product.Update(Update);
+                        iblogic.Product.Update(Update);
+                        ///print update
+                        ///product
+                        Console.WriteLine(iblogic.Product.GetForManager(id2));
+
                         break;
-                    case CraudMethod.Delete:
-                        Console.WriteLine(@"Enter the product ID number that you want to remove");
-                        int.TryParse(Console.ReadLine(), out id);
-                        DalList.Product.Delete(id);
+                    case BLproduct.Exit:
                         break;
                     default:
-                        break;
+                        throw new Exception("Unvalide choice press any key to continue...");
+                        
                 }
-            } while (menuCode != StoreItem.Exit);
-            throw new NotImplementedException();
-        }
 
-        private static void OrderMenue()
-        {
-            throw new NotImplementedException();
-        }
 
-        private static void CartMenue()
-        {
-            throw new NotImplementedException();
-        }
+            }
+
+
+
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+
+
+
+
+        } while (productCode != BLproduct.Exit);
+
+        
     }
 
+    static void OrderMenue()
+    {
 
+        BLorder orderCode = new BLorder();
+        do
+        {
+            Console.WriteLine(@"For get list tap 1");
+            Console.WriteLine(@"For get order tap 2");
+            Console.WriteLine(@"For update ship tap 3");
+            Console.WriteLine(@"For Update Delivery tap 4");
+            Console.WriteLine(@"For Track Order tap 5");
+            Console.WriteLine(@"For Add Order tap 6");
+            Console.WriteLine(@"For Delete Order tap 7");
+            Console.WriteLine(@"For Change Amount tap 8");
+            Console.WriteLine(@"For return to menu tap 0 ");
+
+            BLorder.TryParse(Console.ReadLine(), out orderCode);
+            int id;
+            BO.Order OrderToShow;
+            try
+            {
+                switch (orderCode)
+                {
+                    case BLorder.GetListOrder:
+
+                        IEnumerable<BO.OrderForList> OrderList = iblogic.Order.GetList();
+                        foreach (var item in OrderList)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        break;
+                    case BLorder.GetOrder:
+                        Console.WriteLine(@"Enter the Order ID number that you want to see his details");
+                        while (!int.TryParse(Console.ReadLine(), out id)) ;
+                        OrderToShow = iblogic.Order.Get(id);
+                        Console.WriteLine(OrderToShow);
+                        break;
+                    case BLorder.UpdateShip:
+                        Console.WriteLine(@"Enter the Order ID number that you want to update the ship order");
+                        while (!int.TryParse(Console.ReadLine(), out id)) ;
+                        OrderToShow = iblogic.Order.UpdateShip(id);
+                        Console.WriteLine(OrderToShow);
+                        break;
+                    case BLorder.UpdateDelivery:
+                        Console.WriteLine(@"Enter the Order ID number that you want to update the Delivery order");
+                        while (!int.TryParse(Console.ReadLine(), out id)) ;
+                        OrderToShow = iblogic.Order.UpdateDelivery (id);
+                        Console.WriteLine(OrderToShow);
+                        break;
+                    case BLorder.TrackOrder:
+                        Console.WriteLine(@"Enter the Order ID number that you want to tracking");
+                        while (!int.TryParse(Console.ReadLine(), out id)) ;
+                        BO.OrderTracking OrderTracking = iblogic.Order.OrderTracking(id);
+                        Console.WriteLine(OrderTracking);
+
+                        break;
+                    case BLorder.AddOrder:
+
+                        break;
+                    case BLorder.DeleteOrder:
+
+                        break;
+                    case BLorder.ChangeAmount:
+
+                        break;
+                    case BLorder.Exit:
+                        break;
+                    default:
+                        throw new Exception("Unvalide choice press any key to continue...");
+
+                }
+
+            }
+
+
+
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+
+
+
+
+        } while (orderCode != BLorder.Exit);
+
+    }
+    static void CartMenue()
+    {
+        BO.Cart Tempcart;
+        int id, amount;
+        BLcart cartCode = new BLcart();
+        do
+        {
+            Console.WriteLine(@"For Add Product To Cart tap 1");
+            Console.WriteLine(@"For Update Ampunt Product tap 2");
+            Console.WriteLine(@"For Confirm Order tap 3");
+            Console.WriteLine(@"For return to menu tap 0 ");
+
+            BLcart.TryParse(Console.ReadLine(), out cartCode);
+            try
+            {
+                switch (cartCode)
+                {
+                    case BLcart.AddProductToCart:
+                        Console.WriteLine(@"Enter the product ID number that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out id)) ;
+                        Tempcart = iblogic.Cart.Add(Maincart, id);//cart
+                        Console.WriteLine(Tempcart);
+
+                        break;
+                    case BLcart.UpdateAmpuntProduct:
+                        Console.WriteLine(@"Enter the product ID number that you want to update");
+                        while (!int.TryParse(Console.ReadLine(), out id)) ;
+                        Console.WriteLine(@"Enter the amount products that you want to update");
+                        while (!int.TryParse(Console.ReadLine(), out amount)) ;
+                        Tempcart = iblogic.Cart.Update(Maincart, id, amount);//cart
+                        Console.WriteLine(Tempcart);
+
+                        break;
+                    case BLcart.ConfirmOrder:
+                        string name, mail, address;
+                        Console.WriteLine(@"Enter the name");
+                        name = Console.ReadLine();
+                        Console.WriteLine(@"Enter the mail");
+                        mail = Console.ReadLine();
+                        Console.WriteLine(@"Enter the adress");
+                        address = Console.ReadLine();
+                        Tuple<string?, string?, string?> tuple = new Tuple<string?, string?, string?>(name, mail, address);
+
+                        iblogic.Cart.ConfirmOrder(Maincart, tuple);
+                        break;
+                    case BLcart.Exit:
+                        break;
+                    default:
+                        throw new Exception("Unvalide choice press any key to continue...");
+                        
+                }
+
+            }
+
+
+
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+
+
+
+
+        } while (cartCode != BLcart.Exit);
+
+    }
 }
+
+
+
 
