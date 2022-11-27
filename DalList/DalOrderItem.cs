@@ -17,6 +17,7 @@ namespace Dal;
 /// and is metouds.
 /// this file is the connection beetwen the main to the Array of class OrderItem
 /// </summary>
+
 internal class DalOrderItem :IOrderItem
 {
     /// <summary>
@@ -24,13 +25,16 @@ internal class DalOrderItem :IOrderItem
     /// </summary>
     /// <param name="OI"></param>
     /// <returns>int</returns>
-  public int Add(OrderItem OI) 
+
+    private DataSource? ds = DataSource.Instance;
+
+    public int? Add(OrderItem OI) 
     {
-        OI.OrderItemID = DataSource.IDOrderItem;
+        OI.OrderItemID = ds.IDOrderItem;
 
-        DataSource.getID_OI();
+        ds?.getID_OI();
 
-        DataSource.Add(OI);
+        ds.Add(OI);
          
         return OI.OrderItemID;
        
@@ -41,7 +45,7 @@ internal class DalOrderItem :IOrderItem
     /// <param name="IDorderItem"></param>
     public OrderItem Get(int IDorderItem)
     {
-        foreach (var organ in DataSource.LOrderItem)
+        foreach (var organ in ds.LOrderItem)
         {
             if (organ.OrderItemID == IDorderItem)
             {
@@ -56,11 +60,11 @@ internal class DalOrderItem :IOrderItem
     /// <param name="id"></param>
     public void Delete(int id)
     {
-        foreach (var item in DataSource.LOrderItem)
+        foreach (var item in ds.LOrderItem)
         {
             if (item.OrderItemID == id)
             {
-                DataSource.LOrderItem.Remove(item);
+                ds.LOrderItem.Remove(item);
             }
         }
         throw new NotFoundException("the item not found");
@@ -71,7 +75,7 @@ internal class DalOrderItem :IOrderItem
     /// <returns></returns>
     public IEnumerable<OrderItem> GetAll()
     {
-        List<OrderItem> listOrderItem = new List<OrderItem>(DataSource.LOrderItem);
+        List<OrderItem> listOrderItem = new List<OrderItem>(ds.LOrderItem);
 
         return listOrderItem;
 
@@ -82,11 +86,11 @@ internal class DalOrderItem :IOrderItem
 
     public void Update(OrderItem orderItem)
     {
-        foreach (var item in DataSource.LOrderItem)
+        foreach (var item in ds.LOrderItem)
         {
             if (item.OrderItemID == orderItem.OrderItemID)
             {
-                DataSource.LOrderItem[DataSource.LOrderItem.IndexOf(item)] = orderItem;
+                ds.LOrderItem[ds.LOrderItem.IndexOf(item)] = orderItem;
             }
         }
         throw new NotFoundException("the item not found");
@@ -94,7 +98,7 @@ internal class DalOrderItem :IOrderItem
     }
     public OrderItem GetItemByOrderAndProduct(int orderId,int productId)
     {
-        foreach (OrderItem item in DataSource.LOrderItem)
+        foreach (OrderItem item in ds.LOrderItem)
         {
             if (item.OrderID ==orderId && item.ProdectID == productId)
             {
@@ -109,7 +113,7 @@ internal class DalOrderItem :IOrderItem
     {
         List<OrderItem> LOI = new List<OrderItem> ();
         bool flag = false;///if have minimum one organ in new array
-        foreach (OrderItem item in DataSource.LOrderItem)
+        foreach (OrderItem item in ds.LOrderItem)
         {
             if (item.OrderID == orderId)
             {

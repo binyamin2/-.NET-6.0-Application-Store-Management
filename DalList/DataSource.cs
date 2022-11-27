@@ -17,27 +17,33 @@ namespace Dal;
 /// this file contain all the Data base
 /// </summary>
 
-internal static class DataSource
+internal sealed class DataSource
 {
+    private static DataSource? instance = null;
+    public static DataSource? Instance { get => instance ?? (instance = new DataSource()); }
+
+    private DataSource()
+    {
+        s_Initialize();
+    }
 
 
     public readonly static Random RandomInt = new Random();
 
     ///Array
 
-    internal static List<OrderItem> LOrderItem = new List<OrderItem>();
+    internal List<OrderItem> LOrderItem = new List<OrderItem>();
 
-    internal static List<Order> LOrder = new List<Order>();
+    internal List<Order> LOrder = new List<Order>();
 
-    internal static List<Product> LProduct = new List<Product>();
+    internal List<Product> LProduct = new List<Product>();
 
 
-    static DataSource() ///static constractor
-    {
+    //static DataSource() ///static constractor
+    //{
+    //  instance = new DataSource();
       
-        s_Initialize();
-       
-    }
+    //}
 
     /// <summary>
     /// metouds of Initialize data base
@@ -172,7 +178,7 @@ internal static class DataSource
             OI.Amount = rnd.Next(1, 20);
 
             ///chack the price of the choosen prodect
-            foreach (var item in DataSource.LProduct)
+            foreach (var item in instance.LProduct)
             {
                 if(item.ID==OI.ProdectID)
                     OI.Price = item.Price;
@@ -189,17 +195,17 @@ internal static class DataSource
 
 
     ///metodes Add organ
-    internal static void AddOrder(Order NewOrder)
+    internal  void AddOrder(Order NewOrder)
     {
         LOrder.Add(NewOrder);
     }
     
-    internal static void Add(OrderItem NewOrderItem)
+    internal  void Add(OrderItem NewOrderItem)
     {
         LOrderItem.Add (NewOrderItem);
     }
 
-   internal static void Add(Product NewProduct)
+   internal  void Add(Product NewProduct)
     {
         LProduct.Add(NewProduct);
     }
@@ -215,14 +221,14 @@ internal static class DataSource
     /// metouds of get ID array
     /// </summary>
         
-       internal static void getIDOrder()
+       internal  void getIDOrder()
         {
             IDOrder++;          
         }
 
-        internal static int IDOrderItem = 0;
+        internal  int IDOrderItem = 0;
 
-        internal static void getID_OI()
+        internal  void getID_OI()
         {
             IDOrderItem++;
         }

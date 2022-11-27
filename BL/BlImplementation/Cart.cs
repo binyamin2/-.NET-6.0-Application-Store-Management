@@ -100,11 +100,11 @@ internal class Cart : BlApi.ICart
             NewO.CustomerAdress = DetailClient.Item3;
             NewO.OrderDate = DateTime.Now;
             //building new DO.orderItems
-            int OrderID =Dal.Order.Add(NewO);
+            int? OrderID =Dal.Order.Add(NewO);
             foreach (var item in cart.Items)
             {
                 DO.OrderItem NewDOOI = BuildOI(item);
-                NewDOOI.OrderID = OrderID;
+                NewDOOI.OrderID = OrderID ?? throw new NotFoundException("orderitem id null") ;
                 Dal.OrderItem.Add(NewDOOI);
             }
             foreach (var item in cart.Items)//for all order item in cart

@@ -316,7 +316,7 @@ internal class Order : BlApi.IOrder
     {
         BO.Order BOorder =new BO.Order();
 
-        BOorder.ID = order.ID;
+        BOorder.ID = order.ID ?? throw new NotFoundException("id  not exist");
         BOorder.CustomerName = order.CustomerName;
         BOorder.CustomerAdress = order.CustomerAdress;
         BOorder.CustomerEmail = order.CustomerEmail;

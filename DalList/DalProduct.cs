@@ -23,11 +23,14 @@ internal class DalProduct:IProduct
     /// </summary>
     /// <param name="p"></param>
     /// <returns>int</returns>
-    public int Add(Product p)
+
+    private DataSource? ds = DataSource.Instance;
+
+    public int? Add(Product p)
     {
         
         bool flag=false;
-        foreach (var item in DataSource.LProduct)
+        foreach (var item in ds.LProduct)
         {
             if (item.ID == p.ID)
             {
@@ -37,7 +40,7 @@ internal class DalProduct:IProduct
       
         if(!flag)
         {
-            DataSource.Add(p);
+            ds?.Add(p);
             return p.ID;
         }
         else
@@ -49,7 +52,7 @@ internal class DalProduct:IProduct
     
     public Product Get(int IDp)
     {
-        foreach (var item in DataSource.LProduct)
+        foreach (var item in ds.LProduct)
         {
             if(item.ID==IDp)
             {
@@ -62,11 +65,11 @@ internal class DalProduct:IProduct
 
     public void Delete(int id)
     {
-        foreach (var item in DataSource.LProduct)
+        foreach (var item in ds.LProduct)
         {
             if (item.ID==id)
             {
-                DataSource.LProduct.Remove(item);
+                ds.LProduct.Remove(item);
                 return;
             }
         }
@@ -78,7 +81,7 @@ internal class DalProduct:IProduct
     /// <returns></returns>
     public IEnumerable<Product> GetAll()
     {
-       List<Product> products = new List<Product>(DataSource.LProduct);
+       List<Product> products = new List<Product>(ds.LProduct);
 
         return products;
 
@@ -90,11 +93,11 @@ internal class DalProduct:IProduct
     public void Update(Product p)
     {
         
-        foreach (var item in DataSource.LProduct.ToList())
+        foreach (var item in ds.LProduct.ToList())
         { 
             if (item.ID==p.ID)
             {
-                DataSource.LProduct[DataSource.LProduct.IndexOf(item)] = p;
+                ds.LProduct[ds.LProduct.IndexOf(item)] = p;
                 return;
             }
         }

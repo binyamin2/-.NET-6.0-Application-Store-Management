@@ -26,14 +26,17 @@ internal class DalOrder:IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns>int?</returns>
-    public int Add(Order order)
+   
+    private DataSource? ds = DataSource.Instance;
+
+    public int? Add(Order order)
     {
 
         order.ID = DataSource.IDOrder;
 
-        DataSource.getIDOrder();
+        ds.getIDOrder();
 
-        DataSource.AddOrder(order);
+        ds.AddOrder(order);
 
         return order.ID;
     }
@@ -41,7 +44,7 @@ internal class DalOrder:IOrder
     public Order Get(int IDorder)
     {
        
-            foreach (var order in DataSource.LOrder)
+            foreach (var order in ds.LOrder)
             {
                 if (order.ID == IDorder)
                 {
@@ -60,7 +63,7 @@ internal class DalOrder:IOrder
     /// <returns></returns>
     public IEnumerable<Order> GetAll ()
     {
-        List<Order> listOrder = new List<Order>(DataSource.LOrder);
+        List<Order> listOrder = new List<Order>(ds.LOrder);
 
         return listOrder;
 
@@ -70,11 +73,11 @@ internal class DalOrder:IOrder
     /// </summary>
     public void Update(Order order )
     {
-        foreach (var organ in DataSource.LOrder)
+        foreach (var organ in ds.LOrder)
         {
             if (organ.ID == order.ID)
             {
-                DataSource.LOrder[DataSource.LOrder.IndexOf(organ)] = order;
+                ds.LOrder[ds.LOrder.IndexOf(organ)] = order;
               
                 return;
             }
@@ -85,11 +88,11 @@ internal class DalOrder:IOrder
 
     public void Delete(int id)
     {
-        foreach (var item in DataSource.LOrder)
+        foreach (var item in ds.LOrder)
         {
             if (item.ID == id )
             {
-                DataSource.LOrder.Remove(item);
+                ds.LOrder.Remove(item);
             }
         }
         throw new NotFoundException("the item not found");
