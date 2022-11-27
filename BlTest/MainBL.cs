@@ -291,9 +291,9 @@ class MainBL
                     case BLorder.DeleteOrder:
 
                         int productId1, orderId1;
-                        Console.WriteLine(@"Enter the productID number that you want to add");
+                        Console.WriteLine(@"Enter the productID number that you want to delete");
                         while (!int.TryParse(Console.ReadLine(), out productId1)) ;
-                        Console.WriteLine(@"Enter the Order Id that you want to add");
+                        Console.WriteLine(@"Enter the Order Id that you want to delete");
                         while (!int.TryParse(Console.ReadLine(), out orderId1)) ;
 
                         iblogic.Order.updateOIdelete(orderId1, productId1);
@@ -302,11 +302,11 @@ class MainBL
                         break;
                     case BLorder.ChangeAmount:
                         int productId2, orderId2, amount;
-                        Console.WriteLine(@"Enter the productID number that you want to add");
+                        Console.WriteLine(@"Enter the productID number that you want to update");
                         while (!int.TryParse(Console.ReadLine(), out productId2)) ;
-                        Console.WriteLine(@"Enter the Order Id that you want to add");
+                        Console.WriteLine(@"Enter the Order Id that you want to update");
                         while (!int.TryParse(Console.ReadLine(), out orderId2)) ;
-                        Console.WriteLine(@"Enter the amount that you want to add");
+                        Console.WriteLine(@"Enter the amount that you want to update");
                         while (!int.TryParse(Console.ReadLine(), out amount)) ;
 
                         iblogic.Order.updateOIAmount(orderId2, productId2, amount);

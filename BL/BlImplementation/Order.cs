@@ -219,7 +219,22 @@ internal class Order : BlApi.IOrder
         item.OrderID=orderID;
         try
         {
-            Dal.OrderItem.Add(item);
+            foreach (var i in Dal.Product.GetAll())
+            {
+                if(productID==i.ID)
+                {
+                    if(i.InStock<1)
+                        throw new BO.WorngOrderException("there is no enough amount instock");
+                    DO.Product Np = new DO.Product();
+                    Np.ID = i.ID;
+                    Np.Name = i.Name;
+                    Np.Price = i.Price;
+                    Np.Category = (DO.Category)i.Category;
+                    Np.InStock = i.InStock-1;
+                    Dal.Product.Update(Np);
+                    Dal.OrderItem.Add(item);
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -242,8 +257,21 @@ internal class Order : BlApi.IOrder
             {
                 if (item.OrderID == orderID && item.ProdectID == proudctID)
                 {
-                     Dal.OrderItem.Delete(item.OrderItemID);
-                     return;
+                    foreach (var i in Dal.Product.GetAll())
+                    {
+                        if (proudctID==i.ID)
+                        {
+                            DO.Product Np = new DO.Product();
+                            Np.ID = i.ID;
+                            Np.Name = i.Name;
+                            Np.Price = i.Price;
+                            Np.Category = (DO.Category)i.Category;
+                            Np.InStock =i.InStock+ item.Amount;
+                            Dal.Product.Update(Np);
+                            Dal.OrderItem.Delete(item.OrderItemID);
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -297,7 +325,7 @@ internal class Order : BlApi.IOrder
                 Np.Name = item.Name;
                 Np.Price=item.Price;
                 Np.Category= (DO.Category)item.Category;
-                Np.InStock-= (amount - current_amount);
+                Np.InStock=item.InStock- (amount - current_amount);
                 Dal.Product.Update(Np);
                 break;
             }
