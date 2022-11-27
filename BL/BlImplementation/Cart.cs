@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using BO;
 using Dal;
 using DalApi;
 
@@ -128,7 +129,7 @@ internal class Cart : BlApi.ICart
         }
         catch(Exception ex)
         {
-            throw ex;
+            throw  new WrongCartDeteilsException(ex.Message,ex);
         }
 
     }

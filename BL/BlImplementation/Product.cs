@@ -122,14 +122,15 @@ internal class Product : BlApi.IProduct
     {
         if (id < 100000 || id > 999999)
             throw new BO.WorngProductException("id not valid");
+        //try to get the right product 
         try
         {
             DO.Product DP = Dal.Product.Get(id);
-            BO.Product BP=new BO.Product();
+            BO.Product BP = new BO.Product();
             BP.ID = DP.ID;
             BP.Name = DP.Name;
             BP.Price = DP.Price;
-            BP.InStock= DP.InStock;
+            BP.InStock = DP.InStock;
             BP.Category = (BO.Category)DP.Category;
             return BP;
         }
@@ -147,7 +148,7 @@ internal class Product : BlApi.IProduct
     {
         IEnumerable<DO.Product> list = Dal.Product.GetAll();
         List<BO.ProductForList> list2 = new List<BO.ProductForList>();
-        foreach (DO.Product item in list)
+        foreach (DO.Product item in list)//converting from product to product for list
         {
             BO.ProductForList PFLItem = new BO.ProductForList();
             PFLItem.ID = item.ID;
@@ -165,6 +166,7 @@ internal class Product : BlApi.IProduct
     /// <param name="product"></param>
     public void Update(BO.Product product)
     {
+        //check the input
         if (product.ID < 100000 || product.ID > 999999)
             throw new BO.WorngProductException("id not valid");
         if (product.Name == null)
@@ -173,13 +175,14 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("price not valid");
         if (product.InStock < 0)
             throw new BO.WorngProductException("InStock not valid");
+        //build new product for update
         DO.Product p_DO = new DO.Product();
         p_DO.ID = product.ID;
         p_DO.Name = product.Name;
         p_DO.Price = product.Price;
         p_DO.InStock = product.InStock;
         p_DO.Category = (DO.Category)product.Category;
-        try
+        try//asking from dal to update deteils
         {
             Dal.Product.Update(p_DO);
         }
