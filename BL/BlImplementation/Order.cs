@@ -207,12 +207,12 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Order</returns>
-    public void UpdateOIADD(int orderID, int producID)
+    public void UpdateOIADD(int orderID, int productID)
     {
-        if(Dal.OrderItem.GetAll().Any(i=>i.OrderID==orderID&&i.ProdectID==oi.ProdectID))
+        if(Dal.OrderItem.GetAll().Any(i=>i.OrderID==orderID&&i.ProdectID==productID))
             throw new WorngOrderException("the order item already exist in item");
         BO.OrderItem newOi=new BO.OrderItem();
-        newOi= buildOIFromP(orderID, producID);
+        newOi= buildOIFromP(orderID, productID);
         DO.OrderItem item = new DO.OrderItem();
         item.ProdectID = newOi.ProdectID;
         item.Amount = newOi.Amount;
