@@ -89,11 +89,13 @@ internal class DalProduct:IProduct
    
     public void Update(Product p)
     {
-        foreach (var item in DataSource.LProduct)
+        
+        foreach (var item in DataSource.LProduct.ToList())
         { 
             if (item.ID==p.ID)
             {
                 DataSource.LProduct[DataSource.LProduct.IndexOf(item)] = p;
+                return;
             }
         }
         throw new NotFoundException();

@@ -20,6 +20,7 @@ class MainBL
     static BlApi.IBl iblogic = new BlImplementation.Bl();
 
     private static BLoption menuCode;
+    static Cart Maincart = new Cart(); 
 
     static void Main(string[] args)
     {
@@ -100,7 +101,7 @@ class MainBL
           
                         Console.WriteLine(@"Enter the product ID number that you want to see his details");
                         int.TryParse(Console.ReadLine(), out id);
-                        BO.ProductItem product1 = iblogic.Product.GetForManager(id, Maincart);///what??
+                        BO.ProductItem product1 = iblogic.Product.GetForClient(id, Maincart);///what??
                         Console.WriteLine(product1);
                         break;
 
@@ -146,8 +147,7 @@ class MainBL
                         Console.WriteLine(@"Enter the product ID number that you want to delete");
                         int.TryParse(Console.ReadLine(), out id);
                         iblogic.Product.Delete(id);
-                        ///chack if delete
-                        Console.WriteLine(iblogic.Product.GetForManager(id));
+                       
 
                         break;
                     case BLproduct.UpdateDetailsProduct:

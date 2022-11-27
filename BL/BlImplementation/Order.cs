@@ -87,7 +87,7 @@ internal class Order : BlApi.IOrder
 
     public BO.OrderTracking OrderTracking(int id)
     {
-        if (0 <= id)
+        if (0 >= id)
         {
             throw new InputUnvalidException("ID not valid");
         }

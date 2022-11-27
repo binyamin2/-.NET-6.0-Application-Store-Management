@@ -91,12 +91,15 @@ internal class Product : BlApi.IProduct
             else
                 PItem.InStock = false;
             PItem.Amount = 0;
-            foreach (var item in cart.Items)
+            if (cart.Items.Count != 0)
             {
-                if (item.ProdectID==id)
+                foreach (var item in cart.Items)
                 {
-                    PItem.Amount = item.Amount;
-                    break;
+                    if (item.ProdectID == id)
+                    {
+                        PItem.Amount = item.Amount;
+                        break;
+                    }
                 }
             }
             return PItem;

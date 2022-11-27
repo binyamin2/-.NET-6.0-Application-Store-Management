@@ -200,6 +200,7 @@ internal class Cart : BlApi.ICart
             {
                 item.Amount+=amount;
                 item.TotalPrice+=item.Price*amount;
+                cart.TotalPrice += item.Price * amount;
                 return;
             }
 
