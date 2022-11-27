@@ -134,7 +134,7 @@ class MainBL
                         {
                             ID = id1,
                             Name = name,
-                            Category = (Category)catgory,
+                            Category = (BO.Category)catgory,
                             Price = tmpPrice,
                             InStock = tmpAmount
                         };
@@ -179,7 +179,7 @@ class MainBL
                         {
                             ID = id2,
                             Name = name,
-                            Category = (Category)tmpcatgory,
+                            Category = (BO.Category)tmpcatgory,
                             Price = tmpPrice2,
                             InStock = tmpAmount
                         };

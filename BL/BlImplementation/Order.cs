@@ -263,21 +263,34 @@ internal class Order : BlApi.IOrder
 
     public void updateOIAmount(int orderID, int proudctID, int amount)
     {
+        if (!Dal.OrderItem.GetAll().Any(i => i.OrderID == orderID && i.ProdectID == proudctID))
+            throw new BO.WorngOrderException("the order item to update not exist");
+        int current_amount=0;
+        foreach (var item in Dal.Product.GetAll())
+        {
+            if(item.ID==proudctID)
+            {
+                current_amount = item.InStock;
+                break;
+            }
+        }
+        if (current_amount < amount)
+        {
+            throw new BO.WorngOrderException("there is no enough amount instock");
+        }
             foreach (var item in Dal.OrderItem.GetAll())
             {
-                if (item.ProdectID == proudctID&&item.OrderID==orderID)
-                {
-                 DO.OrderItem NOI = new DO.OrderItem();
-                 NOI.OrderID = orderID;
-                 NOI.Amount = amount;
+               if (item.ProdectID == proudctID&&item.OrderID==orderID)
+               {
+                DO.OrderItem NOI = new DO.OrderItem();
+                NOI.OrderID = orderID;
+                NOI.Amount = amount;
                 NOI.Price = item.Price;
                 NOI.ProdectID = proudctID;
                 NOI.OrderItemID=item.OrderItemID;
                 Dal.OrderItem.Update(NOI);
                 return;
-                }
-
-
+               }
             }
     }
 
