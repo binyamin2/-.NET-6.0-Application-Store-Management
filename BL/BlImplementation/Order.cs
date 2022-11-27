@@ -236,7 +236,23 @@ internal class Order : BlApi.IOrder
     /// <param name="proudctID"></param>
     public void updateOIdelete(int orderID, int proudctID)
     {
+        IEnumerable<DO.OrderItem> list = Dal.OrderItem.GetAll();
+        try
+        {
+            foreach (var item in list.ToList())
+            {
+                if (item.OrderID == orderID && item.ProdectID == proudctID)
+                {
+                     Dal.OrderItem.Delete(item.OrderItemID);
+                     return;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
 
+            throw new WorngOrderException(ex.Message, ex);
+        }
     }
 
     /// <summary>
@@ -246,7 +262,7 @@ internal class Order : BlApi.IOrder
     /// <param name="orderID"></param>
     /// <param name="proudctID"></param>
 
-    public void updateOIAmount(int orderID, int proudctID)
+    public void updateOIAmount(int orderID, int proudctID, int amount)
     {
 
     }
