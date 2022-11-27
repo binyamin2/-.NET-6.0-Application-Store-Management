@@ -200,30 +200,33 @@ internal class Order : BlApi.IOrder
 
     //bounos method
 
-    /// <summary>
-    /// bonus Update Order item amount  add
-    /// for manager
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns>BO.Order</returns>
+   /// <summary>
+   /// adding orderitem to order    manger
+   /// </summary>
+   /// <param name="orderID"></param>
+   /// <param name="productID"></param>
+   /// <exception cref="BO.WorngOrderException"></exception>
     public void UpdateOIADD(int orderID, int productID)
     {
+        //exception if the orderitem already exist
         if(Dal.OrderItem.GetAll().Any(i=>i.OrderID==orderID&&i.ProdectID==productID))
             throw new BO.WorngOrderException("the order item already exist in item");
         BO.OrderItem newOi=new BO.OrderItem();
-        newOi= buildOIFromP(orderID, productID);
+        newOi= buildOIFromP(orderID, productID);//build order item from product
         DO.OrderItem item = new DO.OrderItem();
+        //build DO order item from BO oi
         item.ProdectID = newOi.ProdectID;
         item.Amount = newOi.Amount;
         item.Price = newOi.Price;
         item.OrderID=orderID;
         try
         {
-            foreach (var i in Dal.Product.GetAll())
+            //updating the datasource in amounts
+            foreach (var i in Dal.Product.GetAll().ToList())
             {
                 if(productID==i.ID)
                 {
-                    if(i.InStock<1)
+                    if(i.InStock<1)//if have no enough in stock
                         throw new BO.WorngOrderException("there is no enough amount instock");
                     DO.Product Np = new DO.Product();
                     Np.ID = i.ID;
@@ -243,7 +246,7 @@ internal class Order : BlApi.IOrder
         }
     }
     /// <summary>
-    /// bonus Update Order item delete
+    /// delete order item from order      manager
     /// for manager
     /// </summary>
     /// <param name="orderID"></param>
@@ -255,9 +258,10 @@ internal class Order : BlApi.IOrder
         {
             foreach (var item in list.ToList())
             {
-                if (item.OrderID == orderID && item.ProdectID == proudctID)
+                if (item.OrderID == orderID && item.ProdectID == proudctID)//if found the correct order item
                 {
-                    foreach (var i in Dal.Product.GetAll())
+                    //updating the product data and the order item data
+                    foreach (var i in Dal.Product.GetAll().ToList())
                     {
                         if (proudctID==i.ID)
                         {
@@ -274,6 +278,7 @@ internal class Order : BlApi.IOrder
                     }
                 }
             }
+            throw new BO.WorngOrderException("the order item not found");
         }
         catch (Exception ex)
         {
@@ -291,17 +296,18 @@ internal class Order : BlApi.IOrder
 
     public void updateOIAmount(int orderID, int proudctID, int amount)
     {
+        //exception if the order item not found in the order
         if (!Dal.OrderItem.GetAll().Any(i => i.OrderID == orderID && i.ProdectID == proudctID))
             throw new BO.WorngOrderException("the order item to update not exist");
         int current_amount=0,prInstock=0;
-        foreach (var item in Dal.OrderItem.GetAll())
+        foreach (var item in Dal.OrderItem.GetAll())//get the current amont in order item
         {
             if (item.ProdectID == proudctID && item.OrderID == orderID)
             {
                 current_amount=item.Amount;
             }
         }
-        foreach (var item in Dal.Product.GetAll())
+        foreach (var item in Dal.Product.GetAll())//get the amount of the product in stock
         {
             if(item.ID==proudctID)
             {
@@ -309,14 +315,15 @@ internal class Order : BlApi.IOrder
                 break;
             }
         }
-        if (current_amount < amount)
+        if (current_amount < amount)//if we wont to rise the amount
         {
-            if (amount - current_amount > prInstock)
+            if (amount - current_amount > prInstock)//if there is no enough in stock
             {
                 throw new BO.WorngOrderException("there is no enough amount instock");
             }
         }
-        foreach (var item in Dal.Product.GetAll())
+        //update the amount in stock
+        foreach (var item in Dal.Product.GetAll().ToList())
         {
             if (item.ID == proudctID)
             {
@@ -330,8 +337,8 @@ internal class Order : BlApi.IOrder
                 break;
             }
         }
-
-        foreach (var item in Dal.OrderItem.GetAll())
+        //update the order item details
+        foreach (var item in Dal.OrderItem.GetAll().ToList())
         {
             if (item.ProdectID == proudctID&&item.OrderID==orderID)
             {
@@ -348,7 +355,7 @@ internal class Order : BlApi.IOrder
     }
 
 
-    ///Help method
+    ///Help methods
 
 
     /// <summary>

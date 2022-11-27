@@ -124,8 +124,8 @@ internal class Cart : BlApi.ICart
                         Dal.Product.Update(UpdateProduct);
                     }
                 }
-
             }
+            cartZero(cart);
         }
         catch(Exception ex)
         {
@@ -219,5 +219,14 @@ internal class Cart : BlApi.ICart
         item.Amount = BOOI.Amount;
         item.Price = BOOI.Price;
         return item;
+    }
+
+    public void cartZero(BO.Cart cart)
+    {
+        cart.Items.Clear();
+        cart.CustomerAdress = "";
+        cart.CustomerName = "";
+        cart.CustomerEmail = "";
+        cart.TotalPrice = 0;
     }
 }
