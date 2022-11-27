@@ -265,33 +265,58 @@ internal class Order : BlApi.IOrder
     {
         if (!Dal.OrderItem.GetAll().Any(i => i.OrderID == orderID && i.ProdectID == proudctID))
             throw new BO.WorngOrderException("the order item to update not exist");
-        int current_amount=0;
+        int current_amount=0,prInstock=0;
+        foreach (var item in Dal.OrderItem.GetAll())
+        {
+            if (item.ProdectID == proudctID && item.OrderID == orderID)
+            {
+                current_amount=item.Amount;
+            }
+        }
         foreach (var item in Dal.Product.GetAll())
         {
             if(item.ID==proudctID)
             {
-                current_amount = item.InStock;
+                prInstock = item.InStock;
                 break;
             }
         }
         if (current_amount < amount)
         {
-            throw new BO.WorngOrderException("there is no enough amount instock");
-        }
-            foreach (var item in Dal.OrderItem.GetAll())
+            if (amount - current_amount > prInstock)
             {
-               if (item.ProdectID == proudctID&&item.OrderID==orderID)
-               {
-                DO.OrderItem NOI = new DO.OrderItem();
-                NOI.OrderID = orderID;
-                NOI.Amount = amount;
-                NOI.Price = item.Price;
-                NOI.ProdectID = proudctID;
-                NOI.OrderItemID=item.OrderItemID;
-                Dal.OrderItem.Update(NOI);
-                return;
-               }
+                throw new BO.WorngOrderException("there is no enough amount instock");
             }
+        }
+        foreach (var item in Dal.Product.GetAll())
+        {
+            if (item.ID == proudctID)
+            {
+                DO.Product Np=new DO.Product();
+                Np.ID = item.ID;
+                Np.Name = item.Name;
+                Np.Price=item.Price;
+                Np.Category= (DO.Category)item.Category;
+                Np.InStock-= (amount - current_amount);
+                Dal.Product.Update(Np);
+                break;
+            }
+        }
+
+        foreach (var item in Dal.OrderItem.GetAll())
+        {
+            if (item.ProdectID == proudctID&&item.OrderID==orderID)
+            {
+             DO.OrderItem NOI = new DO.OrderItem();
+             NOI.OrderID = orderID;
+             NOI.Amount = amount;
+             NOI.Price = item.Price;
+             NOI.ProdectID = proudctID;
+             NOI.OrderItemID=item.OrderItemID;
+             Dal.OrderItem.Update(NOI);
+             return;
+            }
+        }
     }
 
 
