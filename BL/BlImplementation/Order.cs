@@ -207,9 +207,26 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Order</returns>
-    public void UpdateOIADD(int orderID, int proudctID)
+    public void UpdateOIADD(int orderID, int producID)
     {
-       
+        if(Dal.OrderItem.GetAll().Any(i=>i.OrderID==orderID&&i.ProdectID==oi.ProdectID))
+            throw new WorngOrderException("the order item already exist in item");
+        BO.OrderItem newOi=new BO.OrderItem();
+        newOi= buildOIFromP(orderID, producID);
+        DO.OrderItem item = new DO.OrderItem();
+        item.ProdectID = newOi.ProdectID;
+        item.Amount = newOi.Amount;
+        item.Price = newOi.Price;
+        item.OrderID=orderID;
+        try
+        {
+            Dal.OrderItem.Add(item);
+        }
+        catch (Exception ex)
+        {
+
+            throw new WorngOrderException(ex.Message,ex);
+        }
     }
     /// <summary>
     /// bonus Update Order item delete
@@ -229,7 +246,7 @@ internal class Order : BlApi.IOrder
     /// <param name="orderID"></param>
     /// <param name="proudctID"></param>
 
-    public void updateOIchangeAmount(int orderID, int proudctID)
+    public void updateOIAmount(int orderID, int proudctID)
     {
 
     }
@@ -360,6 +377,36 @@ internal class Order : BlApi.IOrder
             Status = BO.OrderStatus.Confirmed;
 
         return Status;
+    }
+
+    public BO.OrderItem buildOIFromP(int OId ,int PId)
+    {
+        //check if the product exist
+        if (Dal.Product.GetAll().Any(i => i.ID == PId))
+        {
+            BO.Product product = new BO.Product();
+            foreach (var item in Dal.Product.GetAll())
+            {
+                if (item.ID == PId)
+                {
+                    product.ID = item.ID;
+                    product.Name = item.Name;
+                    product.Price = item.Price;
+                    product.InStock = item.InStock;
+                    product.Category = (BO.Category)item.Category;
+                    break;
+                }
+            }
+            BO.OrderItem newOI = new BO.OrderItem();
+            newOI.Price = product.Price;
+            newOI.Name = product.Name;
+            newOI.ProdectID = product.ID;
+            newOI.Amount = 1;
+            newOI.TotalPrice = newOI.Price;
+            return newOI;  
+        }
+        else
+            throw new BO.WrongCartDeteilsException("the product is not exist");
     }
 }
 

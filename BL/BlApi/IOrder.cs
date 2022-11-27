@@ -52,7 +52,7 @@ public interface IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Order</returns>
-    public void UpdateOIADD (int orderID, int proudctID);
+    public void UpdateOIADD (int orderID, int producID);
     /// <summary>
     /// bonus Update Order item delete
     /// for manager
@@ -68,6 +68,6 @@ public interface IOrder
     /// <param name="orderID"></param>
     /// <param name="proudctID"></param>
 
-    public void updateOIchangeAmount(int orderID, int proudctID);
+    public void updateOIAmount(int orderID, int proudctID);
 
 }
