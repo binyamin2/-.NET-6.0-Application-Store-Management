@@ -68,6 +68,6 @@ public interface IOrder
     /// <param name="orderID"></param>
     /// <param name="proudctID"></param>
 
-    public void updateOIchangeAmount(int orderID, int proudctID);
+    public void updateOIAmount(int orderID, int proudctID, int amount);
 
 }

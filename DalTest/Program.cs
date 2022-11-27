@@ -277,7 +277,7 @@ class Program
         switch (OrderItem)
         {
             case ItemOrderMenu.Add:
-        
+
                 Console.WriteLine(@"Enter the productID number that you want to add");
                 while (!int.TryParse(Console.ReadLine(), out productId)) ;
                 Console.WriteLine(@"Enter the Order Id that you want to add");
@@ -290,7 +290,7 @@ class Program
                 OrderItem addedOrderItem = new OrderItem()
                 {
                     OrderItemID = 0,///the function add give him id OI
-                    ProdectID= productId,
+                    ProdectID = productId,
                     OrderID = orderId,
                     Amount = Amount,
                     Price = price

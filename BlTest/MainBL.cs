@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BlApi;
 using BO;
 using Dal;
+using DO;
 
 namespace BlTest;
 enum BLoption { Cart = 1, Order, Product, Exit = 0 }
@@ -233,9 +234,12 @@ class MainBL
 
             BLorder.TryParse(Console.ReadLine(), out orderCode);
             int id;
+           
+
             BO.Order OrderToShow;
             try
             {
+
                 switch (orderCode)
                 {
                     case BLorder.GetListOrder:
@@ -274,11 +278,39 @@ class MainBL
                         break;
                     case BLorder.AddOrder:
 
+                        int productId, orderId;
+                        Console.WriteLine(@"Enter the productID number that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out productId)) ;
+                        Console.WriteLine(@"Enter the Order Id that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out orderId)) ;
+
+                        iblogic.Order.UpdateOIADD(orderId, productId);
+
+
                         break;
                     case BLorder.DeleteOrder:
 
+                        int productId1, orderId1;
+                        Console.WriteLine(@"Enter the productID number that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out productId1)) ;
+                        Console.WriteLine(@"Enter the Order Id that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out orderId1)) ;
+
+                        iblogic.Order.updateOIdelete(orderId1, productId1);
+
+
                         break;
                     case BLorder.ChangeAmount:
+                        int productId2, orderId2, amount;
+                        Console.WriteLine(@"Enter the productID number that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out productId2)) ;
+                        Console.WriteLine(@"Enter the Order Id that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out orderId2)) ;
+                        Console.WriteLine(@"Enter the amount that you want to add");
+                        while (!int.TryParse(Console.ReadLine(), out amount)) ;
+
+                        iblogic.Order.updateOIAmount(orderId2, productId2, amount);
+
 
                         break;
                     case BLorder.Exit:
