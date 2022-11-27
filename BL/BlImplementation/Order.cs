@@ -33,10 +33,10 @@ internal class Order : BlApi.IOrder
 
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
-            throw;
+            throw new WorngOrderException(ex.Message, ex) ;
         }
     }
 
@@ -94,24 +94,25 @@ internal class Order : BlApi.IOrder
 
         try
         {
+            ///build order and ordertracking
             DO.Order order = Dal.Order.Get(id);
             BO.OrderTracking orderTrack = new BO.OrderTracking();
             orderTrack.ID = order.ID;
             //method help "CheckStatus"
             orderTrack.Status = CheckStatus(order);
-            
+            ///if not order
             if (order.OrderDate != null)
             {
                 Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order.OrderDate, "The order created");
                 orderTrack.DateList.Add(DateOrder);
             }
-
+            ///if not ship
             if (order.ShipDate != null)
             {
                 Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order.ShipDate, "The order shiped");
                 orderTrack.DateList.Add(DateOrder);
             }
-
+            ///if not delivery
             if (order.DeliveryDate != null)
             {
                 Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order.DeliveryDate, "The order delivered");
@@ -121,10 +122,10 @@ internal class Order : BlApi.IOrder
             return orderTrack;
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
-            throw;
+            throw new WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -153,10 +154,10 @@ internal class Order : BlApi.IOrder
 
             return BOorder;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
-            throw;
+            throw new WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -191,10 +192,10 @@ internal class Order : BlApi.IOrder
 
             return BOorder;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
-            throw;
+            throw new WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -259,7 +260,11 @@ internal class Order : BlApi.IOrder
         return Tuple.Create(AmountItems, TotalPrice);
 
     }
-
+    /// <summary>
+    /// convert BO.order to DO.order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
     public BO.Order BuildOrderBO(DO.Order order)
     {
         BO.Order BOorder =new BO.Order();
@@ -272,6 +277,8 @@ internal class Order : BlApi.IOrder
         BOorder.ShipDate = order.ShipDate;
         BOorder.DeliveryDate = order.DeliveryDate;
         BOorder.PaymentDate = BOorder.OrderDate;
+
+        ///chack the status
 
         if (order.DeliveryDate != null)
             BOorder.Status = BO.OrderStatus.Deliverd;
@@ -336,7 +343,11 @@ internal class Order : BlApi.IOrder
 
         return BOorderItem;
     }
-
+    /// <summary>
+    /// help function to chack status
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     internal BO.OrderStatus CheckStatus(DO.Order item)
     {
         BO.OrderStatus Status =new OrderStatus();

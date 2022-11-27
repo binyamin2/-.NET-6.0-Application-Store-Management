@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using BlApi;
+using BO;
 using Dal;
 using DalApi;
 
@@ -39,10 +40,10 @@ internal class Product : BlApi.IProduct
         {
             Dal.Product.Add(p_DO);
         }
-        catch (AllreadyExistException ex)
+        catch (Exception ex)
         {
             //Console.WriteLine(ex.Message); 
-            throw ex;
+            throw new WorngProductException(ex.Message, ex);
         }
     
     }
@@ -63,9 +64,10 @@ internal class Product : BlApi.IProduct
         {
             Dal.Product.Delete(id);
         }
-        catch(NotFoundException ex)
+        catch (Exception ex)
         {
-            throw ex;
+            //Console.WriteLine(ex.Message); 
+            throw new WorngProductException(ex.Message, ex);
         }
     }
     /// <summary>
@@ -104,9 +106,10 @@ internal class Product : BlApi.IProduct
             }
             return PItem;
         }
-        catch(NotFoundException ex)
+        catch (Exception ex)
         {
-            throw ex;
+            
+            throw new WorngProductException(ex.Message, ex);
         }
 
     }
@@ -130,9 +133,10 @@ internal class Product : BlApi.IProduct
             BP.Category = (BO.Category)DP.Category;
             return BP;
         }
-        catch (NotFoundException ex)
+        catch (Exception ex)
         {
-            throw ex;
+
+            throw new WorngProductException(ex.Message, ex);
         }
     }
     /// <summary>
@@ -179,10 +183,10 @@ internal class Product : BlApi.IProduct
         {
             Dal.Product.Update(p_DO);
         }
-        catch (AllreadyExistException ex)
+        catch (Exception ex)
         {
-            //Console.WriteLine(ex.Message); 
-            throw ex;
+
+            throw new WorngProductException(ex.Message, ex);
         }
     }
 
