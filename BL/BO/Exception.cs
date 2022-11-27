@@ -50,7 +50,7 @@ public class NotInStockException : Exception
     public NotInStockException(string message, Exception inner) : base(message, inner) { }
     protected NotInStockException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
-
+[Serializable]
 public class WrongCartDeteilsException : Exception
 {
     public WrongCartDeteilsException() : base() { }

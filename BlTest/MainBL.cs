@@ -191,7 +191,7 @@ class MainBL
                     case BLproduct.Exit:
                         break;
                     default:
-                        throw new Exception("Unvalide choice press any key to continue...");
+                        throw new Exception("invalide choice press any key to continue...");
                         
                 }
 

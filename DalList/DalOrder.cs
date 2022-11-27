@@ -48,9 +48,10 @@ internal class DalOrder:IOrder
                     return order;
                 }
             }
-            throw new NotFoundException("the ID not found");
-      
-    
+            throw new NotFoundException("the item not found");
+
+
+
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ internal class DalOrder:IOrder
                 return;
             }
         }
-        throw new NotFoundException();
+        throw new NotFoundException("the item not found");
       
     }
 
@@ -91,7 +92,7 @@ internal class DalOrder:IOrder
                 DataSource.LOrder.Remove(item);
             }
         }
-        throw new NotFoundException();
+        throw new NotFoundException("the item not found");
     }
     /// <summary>
     /// return current index

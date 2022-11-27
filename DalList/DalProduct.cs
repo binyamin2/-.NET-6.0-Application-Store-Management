@@ -42,7 +42,7 @@ internal class DalProduct:IProduct
         }
         else
         {
-            throw new AllreadyExistException();
+            throw new AllreadyExistException("the item is allready exist");
         }
 
     }
@@ -57,7 +57,7 @@ internal class DalProduct:IProduct
             }
 
         }
-        throw new NotFoundException();
+        throw new NotFoundException("the item not found");
     }
 
     public void Delete(int id)
@@ -98,7 +98,7 @@ internal class DalProduct:IProduct
                 return;
             }
         }
-        throw new NotFoundException();
+        throw new NotFoundException("the item not found");
 
 
     }
