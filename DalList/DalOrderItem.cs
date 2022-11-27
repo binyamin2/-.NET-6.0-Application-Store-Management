@@ -125,9 +125,11 @@ internal class DalOrderItem :IOrderItem
         
     }
     /// <summary>
-    /// return current index
+    /// 
     /// </summary>
-    /// <returns></returns>
+    /// <param name="orderItem"></param>
+    /// <exception cref="NotFoundException"></exception>
+ 
 
 }
 

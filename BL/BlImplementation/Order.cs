@@ -5,10 +5,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
 using Dal;
 using DalApi;
-using DO;
+
 
 namespace BlImplementation;
 
@@ -36,7 +35,7 @@ internal class Order : BlApi.IOrder
         catch (Exception ex)
         {
 
-            throw new WorngOrderException(ex.Message, ex) ;
+            throw new BO.WorngOrderException(ex.Message, ex) ;
         }
     }
 
@@ -89,7 +88,7 @@ internal class Order : BlApi.IOrder
     {
         if (0 >= id)
         {
-            throw new InputUnvalidException("ID not valid");
+            throw new BO.InputUnvalidException("ID not valid");
         }
 
         try
@@ -125,7 +124,7 @@ internal class Order : BlApi.IOrder
         catch (Exception ex)
         {
 
-            throw new WorngOrderException(ex.Message, ex);
+            throw new BO.WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -157,7 +156,7 @@ internal class Order : BlApi.IOrder
         catch (Exception ex)
         {
 
-            throw new WorngOrderException(ex.Message, ex);
+            throw new BO.WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -195,7 +194,7 @@ internal class Order : BlApi.IOrder
         catch (Exception ex)
         {
 
-            throw new WorngOrderException(ex.Message, ex);
+            throw new BO.WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -210,7 +209,7 @@ internal class Order : BlApi.IOrder
     public void UpdateOIADD(int orderID, int productID)
     {
         if(Dal.OrderItem.GetAll().Any(i=>i.OrderID==orderID&&i.ProdectID==productID))
-            throw new WorngOrderException("the order item already exist in item");
+            throw new BO.WorngOrderException("the order item already exist in item");
         BO.OrderItem newOi=new BO.OrderItem();
         newOi= buildOIFromP(orderID, productID);
         DO.OrderItem item = new DO.OrderItem();
@@ -225,7 +224,7 @@ internal class Order : BlApi.IOrder
         catch (Exception ex)
         {
 
-            throw new WorngOrderException(ex.Message,ex);
+            throw new BO.WorngOrderException(ex.Message,ex);
         }
     }
     /// <summary>
@@ -251,7 +250,7 @@ internal class Order : BlApi.IOrder
         catch (Exception ex)
         {
 
-            throw new WorngOrderException(ex.Message, ex);
+            throw new BO.WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -264,7 +263,22 @@ internal class Order : BlApi.IOrder
 
     public void updateOIAmount(int orderID, int proudctID, int amount)
     {
+            foreach (var item in Dal.OrderItem.GetAll())
+            {
+                if (item.ProdectID == proudctID&&item.OrderID==orderID)
+                {
+                 DO.OrderItem NOI = new DO.OrderItem();
+                 NOI.OrderID = orderID;
+                 NOI.Amount = amount;
+                NOI.Price = item.Price;
+                NOI.ProdectID = proudctID;
+                NOI.OrderItemID=item.OrderItemID;
+                Dal.OrderItem.Update(NOI);
+                return;
+                }
 
+
+            }
     }
 
 
@@ -383,7 +397,7 @@ internal class Order : BlApi.IOrder
     /// <returns></returns>
     internal BO.OrderStatus CheckStatus(DO.Order item)
     {
-        BO.OrderStatus Status =new OrderStatus();
+        BO.OrderStatus Status =new BO.OrderStatus();
 
         if (item.DeliveryDate != null)
             Status = BO.OrderStatus.Deliverd;
@@ -422,7 +436,7 @@ internal class Order : BlApi.IOrder
             return newOI;  
         }
         else
-            throw new BO.WrongCartDeteilsException("the product is not exist");
+            throw new BO.WorngOrderException("the product is not exist");
     }
 }
 
