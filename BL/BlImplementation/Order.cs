@@ -300,14 +300,15 @@ internal class Order : BlApi.IOrder
         if (!Dal.OrderItem.GetAll().Any(i => i.OrderID == orderID && i.ProdectID == proudctID))
             throw new BO.WorngOrderException("the order item to update not exist");
         int current_amount=0,prInstock=0;
-        foreach (var item in Dal.OrderItem.GetAll())//get the current amont in order item
+        foreach (var item in Dal.OrderItem.GetAll().ToList())//get the current amont in order item
         {
             if (item.ProdectID == proudctID && item.OrderID == orderID)
             {
                 current_amount=item.Amount;
+                break;
             }
         }
-        foreach (var item in Dal.Product.GetAll())//get the amount of the product in stock
+        foreach (var item in Dal.Product.GetAll().ToList())//get the amount of the product in stock
         {
             if(item.ID==proudctID)
             {
@@ -488,7 +489,7 @@ internal class Order : BlApi.IOrder
         if (Dal.Product.GetAll().Any(i => i.ID == PId))
         {
             BO.Product product = new BO.Product();
-            foreach (var item in Dal.Product.GetAll())
+            foreach (var item in Dal.Product.GetAll().ToList())
             {
                 if (item.ID == PId)
                 {
