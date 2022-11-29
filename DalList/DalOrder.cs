@@ -58,13 +58,26 @@ internal class DalOrder:IOrder
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> GetAll (Func<Order?, bool?>? predict = null)
+    public IEnumerable<Order> GetAll (Func<Order?, bool>? predict = null)
     {
-        List<Order> listOrder = new List<Order>(DataSource.LOrder);
+        if (predict == null)
+        {
+            List<Order> listOrder = new List<Order>(DataSource.LOrder);
+            return listOrder;
+        }
+        else
+        {
+            List<Order> listOrder = (from Order in DataSource.LOrder
+                                     where predict(Order) == true
+                                     select Order).ToList();
+            return listOrder;
+        }
 
-        return listOrder;
+        
 
     }
+
+
     /// <summary>
     /// update the product
     /// </summary>
@@ -94,6 +107,19 @@ internal class DalOrder:IOrder
         }
         throw new NotFoundException("the item not found");
     }
+
+    public Order Get(Func<Order?, bool>? predict)
+    {
+        foreach (var item in DataSource.LOrder)
+        {
+            if (predict(item) == true)
+            {
+                return item;
+            }
+        }
+        throw new NotFoundException("the item not found");
+    }
+
     /// <summary>
     /// return current index
     /// </summary>

@@ -69,12 +69,21 @@ internal class DalOrderItem :IOrderItem
     /// return new array of all OrderItem
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem> GetAll(Func<OrderItem?, bool?>? predict = null)
+    public IEnumerable<OrderItem> GetAll(Func<OrderItem?, bool>? predict = null)
     {
-        List<OrderItem> listOrderItem = new List<OrderItem>(DataSource.LOrderItem);
+        if (predict == null)
+        {
+            List<OrderItem> listOrderItem = new List<OrderItem>(DataSource.LOrderItem);
+            return listOrderItem;
+        }
 
-        return listOrderItem;
-
+        else
+        {
+            List<OrderItem> listOrderItem = (from OrderItem in DataSource.LOrderItem
+                                     where predict(OrderItem) == true
+                                     select OrderItem).ToList();
+            return listOrderItem;
+        }
     }
     /// <summary>
     /// update the product
@@ -124,12 +133,25 @@ internal class DalOrderItem :IOrderItem
         return LOI;
         
     }
+
+    public OrderItem Get(Func<OrderItem?, bool>? predict)
+    {
+        foreach (var item in DataSource.LOrderItem)
+        {
+            if (predict(item) == true)
+            {
+                return item;
+            }
+        }
+        throw new NotFoundException("the item not found");
+    }
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="orderItem"></param>
     /// <exception cref="NotFoundException"></exception>
- 
+
 
 }
 

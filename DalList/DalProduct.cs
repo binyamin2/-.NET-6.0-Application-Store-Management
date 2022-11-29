@@ -76,11 +76,21 @@ internal class DalProduct:IProduct
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetAll(Func<Product?, bool?>? predict = null)
+    public IEnumerable<Product> GetAll(Func<Product?, bool>? predict = null)
     {
-       List<Product> products = new List<Product>(DataSource.LProduct);
+        if( predict == null)
+        { 
+            List<Product> products = new List<Product>(DataSource.LProduct);
 
-        return products;
+            return products;
+        }
+        else
+        {
+            List<Product> listProduct = (from Product in DataSource.LProduct
+                                     where predict(Product) == true
+                                     select Product).ToList();
+            return listProduct;
+        }
 
     }
     /// <summary>
@@ -102,6 +112,17 @@ internal class DalProduct:IProduct
 
 
     }
-  
 
+    public Product Get(Func<Product?, bool>? predict)
+    {
+     
+        foreach (var item in DataSource.LProduct)
+        {
+            if (predict(item) == true)
+            {
+                return item;
+            }
+        }
+        throw new NotFoundException("the item not found");
+    }
 }
