@@ -10,19 +10,10 @@ namespace BO;
 /// </summary>
 public class ProductForList
 {
-    public int? ID { get; set; }
+    public int ID { get; set; }
     public string? Name { get; set; }
-    public double? Price { get; set; }
-    public Category Category { get; set; }
-
-    public ProductForList() { }
-    public ProductForList(DO.Product p)
-    {
-        ID = p.ID;
-        Name = p.Name;
-        Price = p.Price;
-        Category = (BO.Category)p.Category;
-    }
+    public double Price { get; set; }
+    public Category? Category { get; set; }
 
 
     public override string ToString() => $@"

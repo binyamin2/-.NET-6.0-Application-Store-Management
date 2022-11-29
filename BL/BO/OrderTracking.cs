@@ -10,11 +10,11 @@ namespace BO;
 
 public class OrderTracking
 {
-    public int? ID { get; set; }
+    public int ID { get; set; }
     
     public OrderStatus? Status { get; set; }
 
-    public List<Tuple<DateTime?, String>> DateList { get; set; } = new List<Tuple<DateTime?, String>>();
+    public List<Tuple<DateTime?, String?>?>? DateList { get; set; } = new List<Tuple<DateTime?, String?>?>();
 
     public override string ToString() => $@"
         Product ID :{ID}

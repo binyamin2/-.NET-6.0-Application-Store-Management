@@ -12,7 +12,7 @@ public interface ICrud<T> where T : struct
     public void Delete(int value);
     public T Get(int id);
 
-    public IEnumerable<T> GetAll();
+    public IEnumerable<T> GetAll(Func<T?,bool?>? predict =null);
 
 
 

@@ -69,7 +69,7 @@ internal class DalOrderItem :IOrderItem
     /// return new array of all OrderItem
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem> GetAll(Func<OrderItem?, bool?>? predict = null)
     {
         List<OrderItem> listOrderItem = new List<OrderItem>(DataSource.LOrderItem);
 

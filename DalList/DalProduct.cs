@@ -76,7 +76,7 @@ internal class DalProduct:IProduct
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product> GetAll(Func<Product?, bool?>? predict = null)
     {
        List<Product> products = new List<Product>(DataSource.LProduct);
 

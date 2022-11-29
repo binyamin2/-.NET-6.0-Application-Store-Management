@@ -11,7 +11,7 @@ public class Cart
     public string? CustomerName { get; set; }
     public string? CustomerEmail { get; set; }
     public string? CustomerAdress { get; set; }
-    public List<OrderItem?> Items { get; set; } = new List<OrderItem?>();
+    public List<OrderItem?>? Items { get; set; } = new List<OrderItem?>();
 
     public double? TotalPrice { get; set; } = 0;
 
