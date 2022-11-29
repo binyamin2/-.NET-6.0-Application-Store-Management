@@ -39,11 +39,11 @@ internal class DalOrderItem :IOrderItem
     /// get orderitem by id
     /// </summary>
     /// <param name="IDorderItem"></param>
-    public OrderItem Get(int IDorderItem)
+    public OrderItem? Get(int IDorderItem)
     {
         foreach (var organ in DataSource.LOrderItem)
         {
-            if (organ.OrderItemID == IDorderItem)
+            if (organ?.OrderItemID == IDorderItem)
             {
                 return organ;
             }
@@ -58,7 +58,7 @@ internal class DalOrderItem :IOrderItem
     {
         foreach (var item in DataSource.LOrderItem)
         {
-            if (item.OrderItemID == id)
+            if (item?.OrderItemID == id)
             {
                 DataSource.LOrderItem.Remove(item);
             }
@@ -69,17 +69,17 @@ internal class DalOrderItem :IOrderItem
     /// return new array of all OrderItem
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem> GetAll(Func<OrderItem?, bool>? predict = null)
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predict = null)
     {
         if (predict == null)
         {
-            List<OrderItem> listOrderItem = new List<OrderItem>(DataSource.LOrderItem);
+            List<OrderItem?> listOrderItem = new List<OrderItem?>(DataSource.LOrderItem);
             return listOrderItem;
         }
 
         else
         {
-            List<OrderItem> listOrderItem = (from OrderItem in DataSource.LOrderItem
+            List<OrderItem?> listOrderItem = (from OrderItem in DataSource.LOrderItem
                                      where predict(OrderItem) == true
                                      select OrderItem).ToList();
             return listOrderItem;
@@ -93,7 +93,7 @@ internal class DalOrderItem :IOrderItem
     {
         foreach (var item in DataSource.LOrderItem)
         {
-            if (item.OrderItemID == orderItem.OrderItemID)
+            if (item?.OrderItemID == orderItem.OrderItemID)
             {
                 DataSource.LOrderItem[DataSource.LOrderItem.IndexOf(item)] = orderItem;
             }
@@ -134,7 +134,7 @@ internal class DalOrderItem :IOrderItem
         
     }
 
-    public OrderItem Get(Func<OrderItem?, bool>? predict)
+    public OrderItem? Get(Func<OrderItem?, bool>? predict)
     {
         foreach (var item in DataSource.LOrderItem)
         {

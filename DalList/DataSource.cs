@@ -25,11 +25,11 @@ internal static class DataSource
 
     ///Array
 
-    internal static List<OrderItem> LOrderItem = new List<OrderItem>();
+    internal static List<OrderItem?> LOrderItem = new List<OrderItem?>();
 
-    internal static List<Order> LOrder = new List<Order>();
+    internal static List<Order?> LOrder = new List<Order?>();
 
-    internal static List<Product> LProduct = new List<Product>();
+    internal static List<Product?> LProduct = new List<Product?>();
 
 
     static DataSource() ///static constractor
@@ -174,8 +174,8 @@ internal static class DataSource
             ///chack the price of the choosen prodect
             foreach (var item in DataSource.LProduct)
             {
-                if(item.ID==OI.ProdectID)
-                    OI.Price = item.Price;
+                if(item?.ID==OI.ProdectID)
+                    OI.Price = (double)item?.Price;
             }
             
             ///put the new organ into the array

@@ -29,7 +29,7 @@ internal class DalProduct:IProduct
         bool flag=false;
         foreach (var item in DataSource.LProduct)
         {
-            if (item.ID == p.ID)
+            if (item?.ID == p.ID)
             {
                 flag = true;
             }
@@ -47,11 +47,11 @@ internal class DalProduct:IProduct
 
     }
     
-    public Product Get(int IDp)
+    public Product? Get(int IDp)
     {
         foreach (var item in DataSource.LProduct)
         {
-            if(item.ID==IDp)
+            if(item?.ID==IDp)
             {
                 return item;    
             }
@@ -64,7 +64,7 @@ internal class DalProduct:IProduct
     {
         foreach (var item in DataSource.LProduct)
         {
-            if (item.ID==id)
+            if (item?.ID==id)
             {
                 DataSource.LProduct.Remove(item);
                 return;
@@ -76,17 +76,17 @@ internal class DalProduct:IProduct
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetAll(Func<Product?, bool>? predict = null)
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? predict = null)
     {
         if( predict == null)
         { 
-            List<Product> products = new List<Product>(DataSource.LProduct);
+            List<Product?> products = new List<Product?>(DataSource.LProduct);
 
             return products;
         }
         else
         {
-            List<Product> listProduct = (from Product in DataSource.LProduct
+            List<Product?> listProduct = (from Product in DataSource.LProduct
                                      where predict(Product) == true
                                      select Product).ToList();
             return listProduct;
@@ -102,7 +102,7 @@ internal class DalProduct:IProduct
         
         foreach (var item in DataSource.LProduct.ToList())
         { 
-            if (item.ID==p.ID)
+            if (item?.ID==p.ID)
             {
                 DataSource.LProduct[DataSource.LProduct.IndexOf(item)] = p;
                 return;
@@ -113,7 +113,7 @@ internal class DalProduct:IProduct
 
     }
 
-    public Product Get(Func<Product?, bool>? predict)
+    public Product? Get(Func<Product?, bool>? predict)
     {
      
         foreach (var item in DataSource.LProduct)

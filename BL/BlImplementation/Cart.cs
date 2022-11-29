@@ -27,12 +27,12 @@ internal class Cart : BlApi.ICart
         if(!exist)
         {
             //check if the product exist
-            if (Dal.Product.GetAll().Any(i => i.ID == id))
+            if (Dal.Product.GetAll().Any(i => i?.ID == id))
             {
                 BO.Product product = new BO.Product();
                 foreach (var item in Dal.Product.GetAll())
                 {
-                    if (item.ID == id)
+                    if (item?.ID == id)
                     {
                         product.ID = item.ID;
                         product.Name = item.Name;

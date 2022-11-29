@@ -38,12 +38,12 @@ internal class DalOrder:IOrder
         return order.ID;
     }
 
-    public Order Get(int IDorder)
+    public Order? Get(int IDorder)
     {
        
             foreach (var order in DataSource.LOrder)
             {
-                if (order.ID == IDorder)
+                if (order?.ID == IDorder)
                 {
                     return order;
                 }
@@ -58,16 +58,16 @@ internal class DalOrder:IOrder
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> GetAll (Func<Order?, bool>? predict = null)
+    public IEnumerable<Order?> GetAll (Func<Order?, bool>? predict = null)
     {
         if (predict == null)
         {
-            List<Order> listOrder = new List<Order>(DataSource.LOrder);
+            List<Order?> listOrder = new List<Order?>(DataSource.LOrder);
             return listOrder;
         }
         else
         {
-            List<Order> listOrder = (from Order in DataSource.LOrder
+            List<Order?> listOrder = (from Order in DataSource.LOrder
                                      where predict(Order) == true
                                      select Order).ToList();
             return listOrder;
@@ -85,7 +85,7 @@ internal class DalOrder:IOrder
     {
         foreach (var organ in DataSource.LOrder)
         {
-            if (organ.ID == order.ID)
+            if (organ?.ID == order.ID)
             {
                 DataSource.LOrder[DataSource.LOrder.IndexOf(organ)] = order;
               
@@ -100,7 +100,7 @@ internal class DalOrder:IOrder
     {
         foreach (var item in DataSource.LOrder)
         {
-            if (item.ID == id )
+            if (item?.ID == id )
             {
                 DataSource.LOrder.Remove(item);
             }
@@ -108,7 +108,7 @@ internal class DalOrder:IOrder
         throw new NotFoundException("the item not found");
     }
 
-    public Order Get(Func<Order?, bool>? predict)
+    public Order? Get(Func<Order?, bool>? predict)
     {
         foreach (var item in DataSource.LOrder)
         {
