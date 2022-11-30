@@ -31,10 +31,11 @@ internal class Product : BlApi.IProduct
         if (product.InStock < 0)
             throw new BO.WorngProductException("InStock not valid");
         DO.Product p_DO = new DO.Product();
-        p_DO.ID = product.ID;
-        p_DO.Name = product.Name;
-        p_DO.Price = product.Price;
-        p_DO.InStock = product.InStock;
+        CopyProperties<DO.Product,BO.Product>.Copy(p_DO, product);
+        //p_DO.ID = product.ID;
+        //p_DO.Name = product.Name;
+        //p_DO.Price = product.Price;
+        //p_DO.InStock = product.InStock;
         p_DO.Category = (DO.Category)product.Category;
         try
         {
@@ -57,7 +58,7 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("id not valid");
         foreach(var item in Dal.OrderItem.GetAll())
         {
-            if (item.ProdectID == id)
+            if (item?.ProdectID == id)
                 throw new BO.WorngProductException("the product to delete is in a order");
         }
         try 
@@ -82,13 +83,14 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("id not valid");
         try
         {
-            DO.Product DP = Dal.Product.Get(id);
+            DO.Product? DP = Dal.Product.Get(id);
             BO.ProductItem PItem = new BO.ProductItem();
-            PItem.ID = DP.ID;
-            PItem.Name = DP.Name;
-            PItem.Price = DP.Price;
-            PItem.Category = (BO.Category)DP.Category;//convertion
-            if (DP.InStock > 0)
+            CopyProperties<BO.ProductItem, DO.Product?>.Copy( PItem,DP);
+            //PItem.ID = DP?.ID;
+            //PItem.Name = DP.Name;
+            //PItem.Price = DP.Price;
+            PItem.Category = (BO.Category)DP?.Category;//convertion
+            if (DP?.InStock > 0)
                 PItem.InStock = true;
             else
                 PItem.InStock = false;
@@ -125,13 +127,14 @@ internal class Product : BlApi.IProduct
         //try to get the right product 
         try
         {
-            DO.Product DP = Dal.Product.Get(id);
+            DO.Product? DP = Dal.Product.Get(id);
             BO.Product BP = new BO.Product();
-            BP.ID = DP.ID;
-            BP.Name = DP.Name;
-            BP.Price = DP.Price;
-            BP.InStock = DP.InStock;
-            BP.Category = (BO.Category)DP.Category;
+            CopyProperties<BO.Product, DO.Product?>.Copy( BP, DP);
+            //BP.ID = DP.ID;
+            //BP.Name = DP.Name;
+            //BP.Price = DP.Price;
+            //BP.InStock = DP.InStock;
+            BP.Category = (BO.Category)DP?.Category;
             return BP;
         }
         catch (Exception ex)
@@ -146,14 +149,15 @@ internal class Product : BlApi.IProduct
     /// <returns>IEnumerable<BO.Product></returns>
     public IEnumerable<BO.ProductForList> GetList()
     {
-        IEnumerable<DO.Product> list = Dal.Product.GetAll();
+        IEnumerable<DO.Product?> list = Dal.Product.GetAll();
         List<BO.ProductForList> list2 = new List<BO.ProductForList>();
         foreach (DO.Product item in list)//converting from product to product for list
         {
             BO.ProductForList PFLItem = new BO.ProductForList();
-            PFLItem.ID = item.ID;
-            PFLItem.Name = item.Name;
-            PFLItem.Price = item.Price;
+            CopyProperties<BO.ProductForList,DO.Product>.Copy(PFLItem, item);
+            //PFLItem.ID = item.ID;
+            //PFLItem.Name = item.Name;
+            //PFLItem.Price = item.Price;
             PFLItem.Category = (BO.Category)item.Category;
             list2.Add(PFLItem);
         }
@@ -177,10 +181,11 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("InStock not valid");
         //build new product for update
         DO.Product p_DO = new DO.Product();
-        p_DO.ID = product.ID;
-        p_DO.Name = product.Name;
-        p_DO.Price = product.Price;
-        p_DO.InStock = product.InStock;
+        CopyProperties<DO.Product, BO.Product>.Copy(p_DO, product);
+        //p_DO.ID = product.ID;
+        //p_DO.Name = product.Name;
+        //p_DO.Price = product.Price;
+        //p_DO.InStock = product.InStock;
         p_DO.Category = (DO.Category)product.Category;
         try//asking from dal to update deteils
         {

@@ -161,7 +161,7 @@ internal static class DataSource
         for (int i = 0; i < 40; i++)
         {
             OrderItem OI = new OrderItem();
-            OI.OrderItemID = i;
+            OI.ID = i;
             OI.ProdectID = rnd.Next(111111, 111131);
 
             if ((float)i % 2.0 == 0 )

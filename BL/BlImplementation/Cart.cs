@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
 using Dal;
 using DalApi;
 
@@ -34,11 +33,12 @@ internal class Cart : BlApi.ICart
                 {
                     if (item?.ID == id)
                     {
-                        product.ID = item.ID;
-                        product.Name = item.Name;
-                        product.Price = item.Price;
-                        product.InStock = item.InStock;
-                        product.Category = (BO.Category)item.Category;
+                        CopyProperties<BO.Product, DO.Product?>.Copy(product, item);
+                        //product.ID = item.ID;
+                        //product.Name = item.Name;
+                        //product.Price = item.Price;
+                        //product.InStock = item.InStock;
+                        product.Category = (BO.Category)item?.Category;
                         break;
                     }
                 }
@@ -60,9 +60,9 @@ internal class Cart : BlApi.ICart
         bool instock = false;
         foreach (var item in Dal.Product.GetAll())
         {
-            if (item.ID == id)
+            if (item?.ID == id)
             {
-                if (item.InStock > 0)
+                if (item?.InStock > 0)
                 {
                     instock = true;
                     break;
@@ -111,15 +111,15 @@ internal class Cart : BlApi.ICart
             {
                 foreach (var i in Dal.Product.GetAll())//run in all product to find the 1 who needs update
                 {
-                    if(item.ProdectID==i.ID)
+                    if(item.ProdectID==i?.ID)
                     {
-                        if (item.Amount>i.InStock)//exeption
+                        if (item.Amount>i?.InStock)//exeption
                         {
                             throw new BO.WrongCartDeteilsException("the product is out of stock");
                         }
                         //update the data 
                         DO.Product UpdateProduct = new DO.Product();
-                        UpdateProduct = i;
+                        UpdateProduct = (DO.Product)i;
                         UpdateProduct.InStock-=item.Amount;
                         Dal.Product.Update(UpdateProduct);
                     }
@@ -129,7 +129,7 @@ internal class Cart : BlApi.ICart
         }
         catch(Exception ex)
         {
-            throw  new WrongCartDeteilsException(ex.Message,ex);
+            throw  new BO.WrongCartDeteilsException(ex.Message,ex);
         }
 
     }
@@ -146,14 +146,14 @@ internal class Cart : BlApi.ICart
         bool exist = cart.Items.Any(i => i.ProdectID == id);//Check if the product in the cart
         if (!exist)
             throw new BO.WrongCartDeteilsException("the product is not in the cart");
-        if (!Dal.Product.GetAll().Any(i => i.ID == id))//Check if the product exist
+        if (!Dal.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
             throw new BO.WrongCartDeteilsException("the product is not exist");
         int currentInStock=0;
         foreach (var item in Dal.Product.GetAll())//find how match in stock
         {
-            if (item.ID == id)
+            if (item?.ID == id)
             {
-                currentInStock = item.InStock;
+                currentInStock = (int)item?.InStock;
                 break;
             }
         }

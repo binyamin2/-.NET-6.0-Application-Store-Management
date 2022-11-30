@@ -26,13 +26,13 @@ internal class DalOrderItem :IOrderItem
     /// <returns>int</returns>
   public int Add(OrderItem OI) 
     {
-        OI.OrderItemID = DataSource.IDOrderItem;
+        OI.ID = DataSource.IDOrderItem;
 
         DataSource.getID_OI();
 
         DataSource.Add(OI);
          
-        return OI.OrderItemID;
+        return OI.ID;
        
     }
     /// <summary>
@@ -43,7 +43,7 @@ internal class DalOrderItem :IOrderItem
     {
         foreach (var organ in DataSource.LOrderItem)
         {
-            if (organ?.OrderItemID == IDorderItem)
+            if (organ?.ID == IDorderItem)
             {
                 return organ;
             }
@@ -58,7 +58,7 @@ internal class DalOrderItem :IOrderItem
     {
         foreach (var item in DataSource.LOrderItem)
         {
-            if (item?.OrderItemID == id)
+            if (item?.ID == id)
             {
                 DataSource.LOrderItem.Remove(item);
             }
@@ -93,7 +93,7 @@ internal class DalOrderItem :IOrderItem
     {
         foreach (var item in DataSource.LOrderItem)
         {
-            if (item?.OrderItemID == orderItem.OrderItemID)
+            if (item?.ID == orderItem.ID)
             {
                 DataSource.LOrderItem[DataSource.LOrderItem.IndexOf(item)] = orderItem;
             }

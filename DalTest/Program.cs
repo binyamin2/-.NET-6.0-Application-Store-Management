@@ -289,7 +289,7 @@ class Program
 
                 OrderItem addedOrderItem = new OrderItem()
                 {
-                    OrderItemID = 0,///the function add give him id OI
+                    ID = 0,///the function add give him id OI
                     ProdectID = productId,
                     OrderID = orderId,
                     Amount = Amount,
@@ -328,7 +328,7 @@ class Program
                 while (!double.TryParse(Console.ReadLine(), out price)) ;
                 OrderItem updateItemOrder = new OrderItem()
                 {
-                    OrderItemID = oldItemOrder.OrderItemID,
+                    ID = oldItemOrder.ID,
                     ProdectID= productId,
                     OrderID = orderId,
                     Amount = Amount,
