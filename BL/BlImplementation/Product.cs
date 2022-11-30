@@ -31,7 +31,7 @@ internal class Product : BlApi.IProduct
         if (product.InStock < 0)
             throw new BO.WorngProductException("InStock not valid");
         DO.Product p_DO = new DO.Product();
-        CopyProperties<DO.Product,BO.Product>.Copy(p_DO, product);
+        CopyProperties<DO.Product,BO.Product>.Copy( ref p_DO, product);
         //p_DO.ID = product.ID;
         //p_DO.Name = product.Name;
         //p_DO.Price = product.Price;
@@ -85,7 +85,7 @@ internal class Product : BlApi.IProduct
         {
             DO.Product? DP = Dal.Product.Get(id);
             BO.ProductItem PItem = new BO.ProductItem();
-            CopyProperties<BO.ProductItem, DO.Product?>.Copy( PItem,DP);
+            CopyProperties<BO.ProductItem, DO.Product?>.Copy( ref PItem,DP);
             //PItem.ID = DP?.ID;
             //PItem.Name = DP.Name;
             //PItem.Price = DP.Price;
@@ -129,7 +129,7 @@ internal class Product : BlApi.IProduct
         {
             DO.Product? DP = Dal.Product.Get(id);
             BO.Product BP = new BO.Product();
-            CopyProperties<BO.Product, DO.Product?>.Copy( BP, DP);
+            CopyProperties<BO.Product, DO.Product?>.Copy(ref BP, DP);
             //BP.ID = DP.ID;
             //BP.Name = DP.Name;
             //BP.Price = DP.Price;
@@ -154,7 +154,7 @@ internal class Product : BlApi.IProduct
         foreach (DO.Product item in list)//converting from product to product for list
         {
             BO.ProductForList PFLItem = new BO.ProductForList();
-            CopyProperties<BO.ProductForList,DO.Product>.Copy(PFLItem, item);
+            CopyProperties<BO.ProductForList,DO.Product>.Copy(ref PFLItem, item);
             //PFLItem.ID = item.ID;
             //PFLItem.Name = item.Name;
             //PFLItem.Price = item.Price;
@@ -181,7 +181,7 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("InStock not valid");
         //build new product for update
         DO.Product p_DO = new DO.Product();
-        CopyProperties<DO.Product, BO.Product>.Copy(p_DO, product);
+        CopyProperties<DO.Product, BO.Product>.Copy(ref p_DO, product);
         //p_DO.ID = product.ID;
         //p_DO.Name = product.Name;
         //p_DO.Price = product.Price;

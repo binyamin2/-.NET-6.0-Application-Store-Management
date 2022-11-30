@@ -33,7 +33,7 @@ internal class Cart : BlApi.ICart
                 {
                     if (item?.ID == id)
                     {
-                        CopyProperties<BO.Product, DO.Product?>.Copy(product, item);
+                        CopyProperties<BO.Product, DO.Product?>.Copy(ref product, item);
                         //product.ID = item.ID;
                         //product.Name = item.Name;
                         //product.Price = item.Price;

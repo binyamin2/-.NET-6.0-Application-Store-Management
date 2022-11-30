@@ -229,7 +229,7 @@ internal class Order : BlApi.IOrder
                     if(i?.InStock<1)//if have no enough in stock
                         throw new BO.WorngOrderException("there is no enough amount instock");
                     DO.Product Np = new DO.Product();
-                    CopyProperties<DO.Product, DO.Product?>.Copy(Np, i);
+                    CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
                     //Np.ID = i.ID;
                     //Np.Name = i.Name;
                     //Np.Price = i.Price;
@@ -267,7 +267,7 @@ internal class Order : BlApi.IOrder
                         if (proudctID==i?.ID)
                         {
                             DO.Product Np = new DO.Product();
-                            CopyProperties<DO.Product, DO.Product?>.Copy(Np, i);
+                            CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
                             //Np.ID = i.ID;
                             //Np.Name = i.Name;
                             //Np.Price = i.Price;
@@ -331,7 +331,7 @@ internal class Order : BlApi.IOrder
             if (item?.ID == proudctID)
             {
                 DO.Product Np=new DO.Product();
-                CopyProperties<DO.Product, DO.Product?>.Copy(Np, item);
+                CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, item);
                 //Np.ID = item.ID;
                 //Np.Name = item.Name;
                 //Np.Price=item.Price;
@@ -347,16 +347,17 @@ internal class Order : BlApi.IOrder
             if (item?.ProdectID == proudctID&&item?.OrderID==orderID)
             {
              DO.OrderItem NOI = new DO.OrderItem();
-             NOI.Amount = amount;
-             CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(NOI, item);
+             CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(ref NOI, item);
              //NOI.OrderID = orderID;
              //NOI.Price = item.Price;
              //NOI.ProdectID = proudctID;
              //NOI.ID=item.ID;
+             NOI.Amount = amount;
              Dal.OrderItem.Update(NOI);
              return;
             }
         }
+        //update order
     }
 
 
@@ -393,7 +394,7 @@ internal class Order : BlApi.IOrder
     public BO.Order BuildOrderBO(DO.Order order)
     {
         BO.Order BOorder =new BO.Order();
-        CopyProperties<BO.Order,DO.Order>.Copy(BOorder,order);
+        CopyProperties<BO.Order,DO.Order>.Copy(ref BOorder,order);
         //BOorder.ID = order.ID;
         //BOorder.CustomerName = order.CustomerName;
         //BOorder.CustomerAdress = order.CustomerAdress;
@@ -443,7 +444,7 @@ internal class Order : BlApi.IOrder
     public BO.OrderItem BuildOrderItemBO(DO.OrderItem? orderItem)
     {
         BO.OrderItem BOorderItem = new BO.OrderItem();
-        CopyProperties<BO.OrderItem,DO.OrderItem?>.Copy(BOorderItem, orderItem);
+        CopyProperties<BO.OrderItem,DO.OrderItem?>.Copy(ref BOorderItem, orderItem);
 
         //BOorderItem.ID = orderItem.ID;
         //BOorderItem.ProdectID = orderItem.ProdectID;
@@ -498,7 +499,7 @@ internal class Order : BlApi.IOrder
             {
                 if (item?.ID == PId)
                 {
-                    CopyProperties<BO.Product, DO.Product?>.Copy(product, item);
+                    CopyProperties<BO.Product, DO.Product?>.Copy(ref product, item);
                     //product.ID = item.ID;
                     //product.Name = item.Name;
                     //product.Price = item.Price;
