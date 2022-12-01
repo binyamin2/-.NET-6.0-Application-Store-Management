@@ -19,15 +19,8 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
         </Grid>
-
- 
-        <ComboBox Name="ID" HorizontalAlignment="stretch"  VerticalAlignment="stretch" Grid.Column="1"/>
-        <ListView x:Name="PruductListView" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <ComboBox Name="catagorySelector" HorizontalAlignment="stretch"  VerticalAlignment="stretch" Grid.Column="1" SelectionChanged="catagorySelector_SelectionChanged" 
+                  />
+        <ListView x:Name="PruductsListView" Grid.Row="1"> </ListView>
     </Grid>
 </Window>

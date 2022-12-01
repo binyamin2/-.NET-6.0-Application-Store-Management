@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
 
 namespace PL.Products
 {
@@ -19,9 +20,23 @@ namespace PL.Products
     /// </summary>
     public partial class ProductForList : Window
     {
+        BlApi.IBl bl = new BlImplementation.Bl();
         public ProductForList()
         {
             InitializeComponent();
+
+            PruductsListView.ItemsSource = bl.Product.GetList();
+            catagorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+
+        }
+
+        private void catagorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ///if ((BO.Category)catagorySelector.SelectedItem) ;
+            ///PruductsListView.ItemsSource = bl.Product.GetList(BOOLFunction)
+
+
+
         }
     }
 }
