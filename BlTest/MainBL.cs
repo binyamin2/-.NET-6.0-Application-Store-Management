@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -88,7 +89,9 @@ class MainBL
                         IEnumerable <BO.ProductForList> ProductList = iblogic.Product.GetList();
                         foreach (var item in ProductList)
                         {
-                            Console.WriteLine(item);
+                           PrintReflection<BO.ProductForList>.printAllProperties(item);
+                           Console.WriteLine('\n');
+                           //Console.WriteLine(item);
                         }
                         break;
                     case BLproduct.GetProduct:
@@ -96,14 +99,17 @@ class MainBL
                         Console.WriteLine(@"Enter the product ID number that you want to see his details");
                         int.TryParse(Console.ReadLine(), out id);
                         BO.Product product = iblogic.Product.GetForManager(id);
-                        Console.WriteLine(product);
+
+                        PrintReflection<BO.Product>.printAllProperties(product);
+                       
                         break;
                     case BLproduct.GetDetailsProduct:
           
                         Console.WriteLine(@"Enter the product ID number that you want to see his details");
                         int.TryParse(Console.ReadLine(), out id);
                         BO.ProductItem product1 = iblogic.Product.GetForClient(id, Maincart);///what??
-                        Console.WriteLine(product1);
+                        PrintReflection<BO.ProductItem>.printAllProperties(product1);
+                        
                         break;
 
                     case BLproduct.AddProduct:
@@ -140,7 +146,8 @@ class MainBL
                         };
 
                         iblogic.Product.Add(addedProduct);
-                        Console.WriteLine(addedProduct);
+                        PrintReflection<BO.Product>.printAllProperties(addedProduct);
+                       
 
 
                         break;
@@ -156,7 +163,8 @@ class MainBL
                         Console.WriteLine(@"Enter the product ID number that you want to update his details");
                         int.TryParse(Console.ReadLine(), out id2);
                         BO.Product oldProduct = iblogic.Product.GetForManager(id2);
-                        Console.WriteLine(oldProduct);
+
+                        PrintReflection<BO.Product>.printAllProperties(oldProduct);
                         Console.WriteLine(@"Enter the new name");
                         name = Console.ReadLine();
                         Console.WriteLine(@"Enter the new category");
@@ -186,7 +194,9 @@ class MainBL
                         iblogic.Product.Update(Update);
                         ///print update
                         ///product
-                        Console.WriteLine(iblogic.Product.GetForManager(id2));
+                        PrintReflection<BO.Product>.printAllProperties(iblogic.Product.GetForManager(id2));
+                      
+                        
 
                         break;
                     case BLproduct.Exit:
@@ -247,7 +257,7 @@ class MainBL
                         IEnumerable<BO.OrderForList> OrderList = iblogic.Order.GetList();
                         foreach (var item in OrderList)
                         {
-                            Console.WriteLine(item);
+                            PrintReflection<BO.OrderForList>.printAllProperties(item);
                         }
 
                         break;
@@ -255,25 +265,25 @@ class MainBL
                         Console.WriteLine(@"Enter the Order ID number that you want to see his details");
                         while (!int.TryParse(Console.ReadLine(), out id)) ;
                         OrderToShow = iblogic.Order.Get(id);
-                        Console.WriteLine(OrderToShow);
+                        PrintReflection<BO.Order>.printAllProperties(OrderToShow);
                         break;
                     case BLorder.UpdateShip:
                         Console.WriteLine(@"Enter the Order ID number that you want to update the ship order");
                         while (!int.TryParse(Console.ReadLine(), out id)) ;
                         OrderToShow = iblogic.Order.UpdateShip(id);
-                        Console.WriteLine(OrderToShow);
+                        PrintReflection<BO.Order>.printAllProperties(OrderToShow);
                         break;
                     case BLorder.UpdateDelivery:
                         Console.WriteLine(@"Enter the Order ID number that you want to update the Delivery order");
                         while (!int.TryParse(Console.ReadLine(), out id)) ;
                         OrderToShow = iblogic.Order.UpdateDelivery (id);
-                        Console.WriteLine(OrderToShow);
+                        PrintReflection<BO.Order>.printAllProperties(OrderToShow);
                         break;
                     case BLorder.TrackOrder:
                         Console.WriteLine(@"Enter the Order ID number that you want to tracking");
                         while (!int.TryParse(Console.ReadLine(), out id)) ;
                         BO.OrderTracking OrderTracking = iblogic.Order.OrderTracking(id);
-                        Console.WriteLine(OrderTracking);
+                        PrintReflection<BO.OrderTracking>.printAllProperties(OrderTracking);
 
                         break;
                     case BLorder.AddOrder:
@@ -358,7 +368,7 @@ class MainBL
                         Console.WriteLine(@"Enter the product ID number that you want to add");
                         while (!int.TryParse(Console.ReadLine(), out id)) ;
                         Tempcart = iblogic.Cart.Add(Maincart, id);//cart
-                        Console.WriteLine(Tempcart);
+                        PrintReflection<BO.Cart>.printAllProperties(Tempcart);
 
                         break;
                     case BLcart.UpdateAmpuntProduct:
@@ -367,7 +377,7 @@ class MainBL
                         Console.WriteLine(@"Enter the amount products that you want to update");
                         while (!int.TryParse(Console.ReadLine(), out amount)) ;
                         Tempcart = iblogic.Cart.Update(Maincart, id, amount);//cart
-                        Console.WriteLine(Tempcart);
+                        PrintReflection<BO.Cart>.printAllProperties(Tempcart);
 
                         break;
                     case BLcart.ConfirmOrder:
@@ -407,7 +417,6 @@ class MainBL
 
     }
 }
-
 
 
 

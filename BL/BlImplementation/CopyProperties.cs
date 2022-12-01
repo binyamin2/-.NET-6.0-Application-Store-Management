@@ -37,6 +37,9 @@ internal static class CopyProperties<T, K>
             }
         }
     }
+
+
+
 }
 
 
