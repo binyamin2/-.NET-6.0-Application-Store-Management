@@ -71,6 +71,19 @@ internal class Product : BlApi.IProduct
             throw new WorngProductException(ex.Message, ex);
         }
     }
+
+    public IEnumerable<ProductForList> GetCategory(CategoryUI category)
+    {
+        if (category == BO.CategoryUI.All)
+        {
+            return GetList();
+        }
+        return (from ProductForList in GetList()
+                where (int)category == (int)ProductForList.Category
+                select ProductForList).ToList();
+    }
+
+
     /// <summary>
     /// get product details for client
     /// </summary>
@@ -164,6 +177,8 @@ internal class Product : BlApi.IProduct
         return list2;
        
     }
+
+
     /// <summary>
     /// update a product   for manager
     /// </summary>

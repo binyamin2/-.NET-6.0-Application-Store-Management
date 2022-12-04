@@ -21,22 +21,46 @@ namespace PL.Products
     public partial class ProductForList : Window
     {
         BlApi.IBl bl = new BlImplementation.Bl();
+        /// <summary>
+        /// empty ctor
+        /// </summary>
         public ProductForList()
         {
             InitializeComponent();
 
             PruductsListView.ItemsSource = bl.Product.GetList();
-            catagorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            
+            catagorySelector.ItemsSource = Enum.GetValues(typeof(BO.CategoryUI));
+
+            catagorySelector.Text = BO.CategoryUI.All.ToString();
+
 
         }
-
+        /// <summary>
+        /// select category in combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void catagorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ///if ((BO.Category)catagorySelector.SelectedItem) ;
-            ///PruductsListView.ItemsSource = bl.Product.GetList(BOOLFunction)
 
-
+            PruductsListView.ItemsSource = bl.Product.GetCategory((BO.CategoryUI)catagorySelector.SelectedItem);
 
         }
+
+        /// <summary>
+        /// button for add product 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddButton_Click(object sender, RoutedEventArgs e) => new PL.Products.ProductWindow().Show();
+
+        /// <summary>
+        /// button for update spesific product 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListView_DoubleClick(object sender, MouseButtonEventArgs e) => new PL.Products.ProductWindow(((BO.ProductForList)PruductsListView.SelectedItem).ID).Show();
+
     }
 }

@@ -22,12 +22,19 @@ namespace PL
     public partial class MainWindow : Window
     {
         BlApi.IBl bl = new BlImplementation.Bl();
+        /// <summary>
+        /// ctor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
 
         }
-
+        /// <summary>
+        /// admin actions button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new PL.Products.ProductForList().Show();
 
     }

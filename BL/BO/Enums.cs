@@ -13,6 +13,7 @@ public enum Category
     Sandals,
     Elegant,
     Boots
+    
 }
 
 public enum OrderStatus
@@ -21,4 +22,14 @@ public enum OrderStatus
     Shiped,
     Deliverd
 
+}
+
+public enum CategoryUI
+{
+    Sport,
+    Hike,
+    Sandals,
+    Elegant,
+    Boots,
+    All
 }

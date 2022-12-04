@@ -18,6 +18,8 @@ public interface IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Product</returns>
+    /// 
+    public IEnumerable<BO.ProductForList> GetCategory(BO.CategoryUI category);
     public BO.Product GetForManager(int id);
     /// <summary>
     /// get product details for client

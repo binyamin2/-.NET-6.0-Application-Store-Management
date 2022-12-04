@@ -76,7 +76,7 @@ internal class DalProduct:IProduct
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? predict = null)
+    public IEnumerable<Product?> GetAll(Func<DO.Product?, bool>? predict = null)
     {
         if( predict == null)
         { 
