@@ -13,7 +13,8 @@ namespace BO;
 /// </summary>
 public class OrderItem
 {
-    private IDal Dal = new DalList();
+    private IDal? Dal = Factory.Get();
+
     public int ID { get; set; }
     public int ProdectID { get; set; }
     public string? Name { get; set; }

@@ -13,8 +13,8 @@ namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    private IDal Dal = new DalList();
-
+    private IDal? Dal = Factory.Get();
+     
     public BO.Order Get(int id)
     {
         if (0 >= id)

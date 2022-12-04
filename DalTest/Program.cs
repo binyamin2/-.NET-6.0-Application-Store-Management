@@ -18,8 +18,7 @@ enum ItemOrderMenu { Add = 1, View, ViewAll, Update, Delete, itemByOrderAndProdu
 
 class Program
 {
-    static DalList DalList = new DalList();
-
+    static IDal? DalList = Factory.Get();
     private static StoreItem menuCode;
     static void Main(string[] args)
     {
@@ -109,12 +108,12 @@ class Program
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the product ID number that you want to see his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Product productToShow = new Product();
+                Product? productToShow = new Product();
                 productToShow = DalList.Product.Get(id);
                 Console.WriteLine(productToShow);
                 break;
             case CraudMethod.ViewAll:
-                IEnumerable<Product> productsList = DalList.Product.GetAll();
+                IEnumerable<Product?> productsList = DalList.Product.GetAll();
                 foreach (var item in productsList)
                 {
                     Console.WriteLine(item);
@@ -124,7 +123,7 @@ class Program
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the product ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Product oldProduct = DalList.Product.Get(id);
+                Product? oldProduct = DalList.Product.Get(id);
                 Console.WriteLine(oldProduct);
                 Console.WriteLine(@"Enter the new name");
                 name = Console.ReadLine();
@@ -193,7 +192,7 @@ class Program
                 orderCreate = DateTime.Now;
                 Order addedOrder = new Order()
                 {
-                    ID= null,
+                    ID= 0,
                     CustomerAdress = adress,
                     CustomerEmail = email,
                     CustomerName = customeName,
@@ -207,12 +206,12 @@ class Program
             case CraudMethod.View:
                 Console.WriteLine(@"Enter the Order ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out id)) ;
-                Order OrderToShow = new Order();
+                Order? OrderToShow = new Order();
                 OrderToShow = DalList.Order.Get(id);
                 Console.WriteLine(OrderToShow);
                 break;
             case CraudMethod.ViewAll:
-                IEnumerable<Order> productsList = DalList.Order.GetAll();
+                IEnumerable<Order?> productsList = DalList.Order.GetAll();
                 foreach (var item in productsList)
                 {
                     Console.WriteLine(item);
@@ -221,7 +220,7 @@ class Program
             case CraudMethod.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 int.TryParse(Console.ReadLine(), out id);
-                Order oldOrder = DalList.Order.Get(id);
+                Order? oldOrder = DalList.Order.Get(id);
                 Console.WriteLine(oldOrder);
                 Console.WriteLine(@"Enter the new CUSTOMER name");
                 customeName = Console.ReadLine();
@@ -301,12 +300,12 @@ class Program
             case ItemOrderMenu.View:
                 Console.WriteLine(@"Enter the Order Item ID number that you want to see his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
-                OrderItem OrderItemToShow = new OrderItem();
+                OrderItem? OrderItemToShow = new OrderItem();
                 OrderItemToShow = DalList.OrderItem.Get(orderId);
                 Console.WriteLine(OrderItemToShow);
                 break;
             case ItemOrderMenu.ViewAll:
-                IEnumerable<OrderItem> OrdersItemList = DalList.OrderItem.GetAll();
+                IEnumerable<OrderItem?> OrdersItemList = DalList.OrderItem.GetAll();
                 foreach (var item in OrdersItemList)
                 {
                     Console.WriteLine(item);
@@ -315,7 +314,7 @@ class Program
             case ItemOrderMenu.Update:
                 Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                 while (!int.TryParse(Console.ReadLine(), out orderId)) ;
-                OrderItem oldItemOrder = DalList.OrderItem.Get(orderId);
+                OrderItem? oldItemOrder = DalList.OrderItem.Get(orderId);
                 Console.WriteLine(oldItemOrder);
                 
                 Console.WriteLine(@"Enter the productID number that you want to update");
@@ -328,7 +327,7 @@ class Program
                 while (!double.TryParse(Console.ReadLine(), out price)) ;
                 OrderItem updateItemOrder = new OrderItem()
                 {
-                    ID = oldItemOrder.ID,
+                    ID = (int)oldItemOrder?.ID,
                     ProdectID= productId,
                     OrderID = orderId,
                     Amount = Amount,

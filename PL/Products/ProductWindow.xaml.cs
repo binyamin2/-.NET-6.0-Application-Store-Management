@@ -71,7 +71,7 @@ public partial class ProductWindow : Window
             try
             {
                 bl.Product.Add(UserProduct);
-                MessageBox.Show("The orgen added");
+                MessageBox.Show("The product added");
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ public partial class ProductWindow : Window
             try
             {
                 bl.Product.Update(UserProduct);
-                MessageBox.Show("The orgen updated");
+                MessageBox.Show("The product updated");
             }
             catch (Exception ex)
             {

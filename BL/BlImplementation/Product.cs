@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,9 @@ namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private IDal Dal = new DalList();
+    private IDal? Dal = Factory.Get();
+
+
     /// <summary>
     /// add a product for data base   for manager
     /// </summary>
