@@ -20,12 +20,15 @@ namespace PL.Products
     /// </summary>
     public partial class ProductForList : Window
     {
-        BlApi.IBl bl = new BlImplementation.Bl();
+        BlApi.IBl bl ;
         /// <summary>
         /// empty ctor
         /// </summary>
-        public ProductForList()
+        public ProductForList(BlApi.IBl bl)
         {
+           
+            this.bl = bl;
+
             InitializeComponent();
 
             PruductsListView.ItemsSource = bl.Product.GetList();
@@ -53,14 +56,14 @@ namespace PL.Products
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddButton_Click(object sender, RoutedEventArgs e) => new PL.Products.ProductWindow().Show();
+        private void AddButton_Click(object sender, RoutedEventArgs e) => new PL.Products.ProductWindow(bl).Show();
 
         /// <summary>
         /// button for update spesific product 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListView_DoubleClick(object sender, MouseButtonEventArgs e) => new PL.Products.ProductWindow(((BO.ProductForList)PruductsListView.SelectedItem).ID).Show();
+        private void ListView_DoubleClick(object sender, MouseButtonEventArgs e) => new PL.Products.ProductWindow(bl,((BO.ProductForList)PruductsListView.SelectedItem).ID).Show();
 
     }
 }

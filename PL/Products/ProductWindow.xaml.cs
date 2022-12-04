@@ -20,12 +20,13 @@ namespace PL.Products;
 /// </summary>
 public partial class ProductWindow : Window
 {
-    BlApi.IBl bl = new BlImplementation.Bl();
+    BlApi.IBl bl;
     /// <summary>
     /// empty ctor
     /// </summary>
-    public ProductWindow( )
+    public ProductWindow(BlApi.IBl bl)
     {
+        this.bl = bl;
         InitializeComponent();
         CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         //dont show update button
@@ -36,8 +37,9 @@ public partial class ProductWindow : Window
     /// ctor get id and show update window for the spesific product
     /// </summary>
     /// <param name="id"></param>
-    public ProductWindow( int id)
+    public ProductWindow(BlApi.IBl bl, int id)
     {
+        this.bl = bl;
         InitializeComponent();
         CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         //dont show add button
