@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using Dal;
+
 using DalApi;
 
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
 {
-    private IDal? Dal = Factory.Get();
+    private IDal? Dal = DalApi.Factory.Get();
     /// <summary>
     /// Add product to cart
     /// for catalog and Detail order

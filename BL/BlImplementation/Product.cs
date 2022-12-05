@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using BlApi;
-using BO;
-using Dal;
+
+
 using DalApi;
 
 
@@ -16,7 +16,7 @@ namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private IDal? Dal = Factory.Get();
+    private IDal? Dal = DalApi.Factory.Get();
 
 
     /// <summary>
@@ -47,7 +47,7 @@ internal class Product : BlApi.IProduct
         catch (Exception ex)
         {
             //Console.WriteLine(ex.Message); 
-            throw new WorngProductException(ex.Message, ex);
+            throw new BO.WorngProductException(ex.Message, ex);
         }
     
     }
@@ -71,11 +71,11 @@ internal class Product : BlApi.IProduct
         catch (Exception ex)
         {
             //Console.WriteLine(ex.Message); 
-            throw new WorngProductException(ex.Message, ex);
+            throw new BO.WorngProductException(ex.Message, ex);
         }
     }
 
-    public IEnumerable<ProductForList> GetCategory(CategoryUI category)
+    public IEnumerable<BO.ProductForList> GetCategory(BO.CategoryUI category)
     {
         if (category == BO.CategoryUI.All)
         {
@@ -127,7 +127,7 @@ internal class Product : BlApi.IProduct
         catch (Exception ex)
         {
             
-            throw new WorngProductException(ex.Message, ex);
+            throw new BO.WorngProductException(ex.Message, ex);
         }
 
     }
@@ -156,7 +156,7 @@ internal class Product : BlApi.IProduct
         catch (Exception ex)
         {
 
-            throw new WorngProductException(ex.Message, ex);
+            throw new BO.WorngProductException(ex.Message, ex);
         }
     }
     /// <summary>
@@ -212,7 +212,7 @@ internal class Product : BlApi.IProduct
         catch (Exception ex)
         {
 
-            throw new WorngProductException(ex.Message, ex);
+            throw new BO.WorngProductException(ex.Message, ex);
         }
     }
 

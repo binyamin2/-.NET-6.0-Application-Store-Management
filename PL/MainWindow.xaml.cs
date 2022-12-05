@@ -21,7 +21,9 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        BlApi.IBl bl = new BlImplementation.Bl();
+        BlApi.IBl bl = BlApi.Factory.Get();
+
+
         /// <summary>
         /// ctor
         /// </summary>

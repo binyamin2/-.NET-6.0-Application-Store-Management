@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using Dal;
+
 using DalApi;
 
 
@@ -13,7 +13,7 @@ namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    private IDal? Dal = Factory.Get();
+    private IDal? Dal = DalApi.Factory.Get();
      
     public BO.Order Get(int id)
     {
