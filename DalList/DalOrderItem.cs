@@ -41,14 +41,11 @@ internal class DalOrderItem :IOrderItem
     /// <param name="IDorderItem"></param>
     public OrderItem? Get(int IDorderItem)
     {
-        foreach (var organ in DataSource.LOrderItem)
-        {
-            if (organ?.ID == IDorderItem)
-            {
-                return organ;
-            }
-        }
-        throw new NotFoundException("the item not found");
+
+        DO.OrderItem? check = DataSource.LOrderItem.Find(i => i?.ID==IDorderItem);
+        if (check == null)
+            throw new NotFoundException("the orderitem not found");
+        return check;
     }
     /// <summary>
     /// delete organ
@@ -56,14 +53,10 @@ internal class DalOrderItem :IOrderItem
     /// <param name="id"></param>
     public void Delete(int id)
     {
-        foreach (var item in DataSource.LOrderItem)
-        {
-            if (item?.ID == id)
-            {
-                DataSource.LOrderItem.Remove(item);
-            }
-        }
-        throw new NotFoundException("the item not found");
+        DO.OrderItem? check = DataSource.LOrderItem.Find(i => i?.ID == id);
+        if (check == null)
+            throw new NotFoundException("the orderitem not found");
+        DataSource.LOrderItem = DataSource.LOrderItem.Where(x => x?.ID != id).ToList();
     }
     /// <summary>
     /// return new array of all OrderItem
@@ -98,59 +91,54 @@ internal class DalOrderItem :IOrderItem
                 DataSource.LOrderItem[DataSource.LOrderItem.IndexOf(item)] = orderItem;
             }
         }
-        throw new NotFoundException("the item not found");
+        throw new NotFoundException("the orderitem not found");
 
     }
-    public OrderItem GetItemByOrderAndProduct(int orderId,int productId)
+    /// <summary>
+    /// return order items according to order id and product id
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public OrderItem? GetItemByOrderAndProduct(int orderId,int productId)
     {
-        foreach (OrderItem item in DataSource.LOrderItem)
-        {
-            if (item.OrderID ==orderId && item.ProdectID == productId)
-            {
-                return item;
-            }
-        }
-
-        throw new NotFoundException("the item not found");
-    }
-
-    public IEnumerable<OrderItem> GetItemsListByOrderId(int orderId)
-    {
-        List<OrderItem> LOI = new List<OrderItem> ();
-        bool flag = false;///if have minimum one organ in new array
-        foreach (OrderItem item in DataSource.LOrderItem)
-        {
-            if (item.OrderID == orderId)
-            {
-                LOI.Add(item);
-                flag = true;    
-            }
-        }
-        if (!flag)///not found organ
-        {
-            throw new NotFoundException("the item not found");
-        }
-        return LOI;
         
+        DO.OrderItem? check = DataSource.LOrderItem.Find(i => i?.OrderID ==orderId&&i?.ProdectID==productId );
+        if (check == null)
+            throw new NotFoundException("the orderitem not found");
+        return check;
     }
-
+    /// <summary>
+    /// return order items according to order id
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public IEnumerable<OrderItem?> GetItemsListByOrderId(int orderId)
+    {
+       
+        DO.OrderItem? check = DataSource.LOrderItem.Find(i => i?.ID == orderId);
+        if (check == null)
+            throw new NotFoundException("the orderitem not found");
+        return DataSource.LOrderItem.Where(item => item?.OrderID == orderId);
+    }
+    /// <summary>
+    /// get order item from list according to some condition
+    /// </summary>
+    /// <param name="predict"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
     public OrderItem? Get(Func<OrderItem?, bool>? predict)
     {
-        foreach (var item in DataSource.LOrderItem)
-        {
-            if (predict(item) == true)
-            {
-                return item;
-            }
-        }
-        throw new NotFoundException("the item not found");
+ 
+        DO.OrderItem? check = DataSource.LOrderItem.Find(i => predict(i));
+        if (check == null)
+            throw new NotFoundException("the orderitem not found");
+        return check;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="orderItem"></param>
-    /// <exception cref="NotFoundException"></exception>
+ 
 
 
 }

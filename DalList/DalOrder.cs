@@ -40,18 +40,10 @@ internal class DalOrder:IOrder
 
     public Order? Get(int IDorder)
     {
-       
-            foreach (var order in DataSource.LOrder)
-            {
-                if (order?.ID == IDorder)
-                {
-                    return order;
-                }
-            }
-            throw new NotFoundException("the item not found");
-
-
-
+        DO.Order? check = DataSource.LOrder.Find(i => i?.ID==IDorder);
+        if (check == null)
+            throw new NotFoundException("the Order not found");
+        return check;
     }
 
     /// <summary>
@@ -98,26 +90,20 @@ internal class DalOrder:IOrder
 
     public void Delete(int id)
     {
-        foreach (var item in DataSource.LOrder)
-        {
-            if (item?.ID == id )
-            {
-                DataSource.LOrder.Remove(item);
-            }
-        }
-        throw new NotFoundException("the item not found");
+
+        DO.Order? check = DataSource.LOrder.Find(i => i?.ID == id);
+        if (check == null)
+            throw new NotFoundException("the Order not found");
+        DataSource.LOrder = DataSource.LOrder.Where(x => x?.ID != id).ToList();
     }
 
     public Order? Get(Func<Order?, bool>? predict)
     {
-        foreach (var item in DataSource.LOrder)
-        {
-            if (predict(item) == true)
-            {
-                return item;
-            }
-        }
-        throw new NotFoundException("the item not found");
+
+        DO.Order? check = DataSource.LOrder.Find(i => predict(i));
+        if (check == null)
+            throw new NotFoundException("the Order not found");
+        return check;
     }
 
     /// <summary>

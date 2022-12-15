@@ -35,10 +35,7 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("InStock not valid");
         DO.Product p_DO = new DO.Product();
         CopyProperties<DO.Product,BO.Product>.Copy( ref p_DO, product);
-        //p_DO.ID = product.ID;
-        //p_DO.Name = product.Name;
-        //p_DO.Price = product.Price;
-        //p_DO.InStock = product.InStock;
+
         p_DO.Category = (DO.Category)product.Category;
         try
         {
@@ -46,7 +43,6 @@ internal class Product : BlApi.IProduct
         }
         catch (Exception ex)
         {
-            //Console.WriteLine(ex.Message); 
             throw new BO.WorngProductException(ex.Message, ex);
         }
     
@@ -69,8 +65,7 @@ internal class Product : BlApi.IProduct
             Dal.Product.Delete(id);
         }
         catch (Exception ex)
-        {
-            //Console.WriteLine(ex.Message); 
+        { 
             throw new BO.WorngProductException(ex.Message, ex);
         }
     }
@@ -83,6 +78,7 @@ internal class Product : BlApi.IProduct
         }
         return (from ProductForList in GetList()
                 where (int)category == (int)ProductForList.Category
+                orderby ProductForList.ID
                 select ProductForList).ToList();
     }
 
@@ -102,9 +98,6 @@ internal class Product : BlApi.IProduct
             DO.Product? DP = Dal.Product.Get(id);
             BO.ProductItem PItem = new BO.ProductItem();
             CopyProperties<BO.ProductItem, DO.Product?>.Copy( ref PItem,DP);
-            //PItem.ID = DP?.ID;
-            //PItem.Name = DP.Name;
-            //PItem.Price = DP.Price;
             PItem.Category = (BO.Category)DP?.Category;//convertion
             if (DP?.InStock > 0)
                 PItem.InStock = true;
@@ -146,10 +139,6 @@ internal class Product : BlApi.IProduct
             DO.Product? DP = Dal.Product.Get(id);
             BO.Product BP = new BO.Product();
             CopyProperties<BO.Product, DO.Product?>.Copy(ref BP, DP);
-            //BP.ID = DP.ID;
-            //BP.Name = DP.Name;
-            //BP.Price = DP.Price;
-            //BP.InStock = DP.InStock;
             BP.Category = (BO.Category)DP?.Category;
             return BP;
         }
@@ -171,12 +160,9 @@ internal class Product : BlApi.IProduct
         {
             BO.ProductForList PFLItem = new BO.ProductForList();
             CopyProperties<BO.ProductForList,DO.Product>.Copy(ref PFLItem, item);
-            //PFLItem.ID = item.ID;
-            //PFLItem.Name = item.Name;
-            //PFLItem.Price = item.Price;
             PFLItem.Category = (BO.Category)item.Category;
             list2.Add(PFLItem);
-        }
+        }   
         return list2;
        
     }
@@ -200,10 +186,6 @@ internal class Product : BlApi.IProduct
         //build new product for update
         DO.Product p_DO = new DO.Product();
         CopyProperties<DO.Product, BO.Product>.Copy(ref p_DO, product);
-        //p_DO.ID = product.ID;
-        //p_DO.Name = product.Name;
-        //p_DO.Price = product.Price;
-        //p_DO.InStock = product.InStock;
         p_DO.Category = (DO.Category)product.Category;
         try//asking from dal to update deteils
         {

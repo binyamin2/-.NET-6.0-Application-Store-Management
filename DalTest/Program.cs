@@ -345,13 +345,13 @@ class Program
                 int.TryParse(Console.ReadLine(), out orderId);
                 Console.WriteLine(@"Enter the product ID number that you want to see his details");
                 int.TryParse(Console.ReadLine(), out productId);
-                OrderItem itemToShowByProductAndOrder = DalList.OrderItem.GetItemByOrderAndProduct(orderId, productId);
+                OrderItem? itemToShowByProductAndOrder = DalList.OrderItem.GetItemByOrderAndProduct(orderId, productId);
                 Console.WriteLine(itemToShowByProductAndOrder);
                 break;
             case ItemOrderMenu.itemListByOrder:
                 Console.WriteLine(@"Enter the Order ID number that you want to see Item Order that belogs to him");
                 int.TryParse(Console.ReadLine(), out orderId);
-                IEnumerable<OrderItem> ordersItemsList = DalList.OrderItem.GetItemsListByOrderId(orderId);
+                IEnumerable<OrderItem?> ordersItemsList = DalList.OrderItem.GetItemsListByOrderId(orderId);
                 foreach (OrderItem item in ordersItemsList)
                     Console.WriteLine(item);
                 break;

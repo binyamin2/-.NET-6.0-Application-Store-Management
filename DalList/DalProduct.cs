@@ -59,18 +59,18 @@ internal class DalProduct:IProduct
         }
         throw new NotFoundException("the item not found");
     }
-
+    /// <summary>
+    /// delete product from list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="NotFoundException"></exception>
     public void Delete(int id)
     {
-        foreach (var item in DataSource.LProduct)
-        {
-            if (item?.ID==id)
-            {
-                DataSource.LProduct.Remove(item);
-                return;
-            }
-        }
-        throw new NotFoundException("the item not found");
+
+        DO.Product? check = DataSource.LProduct.Find(i => i?.ID == id);
+        if(check == null)
+            throw new NotFoundException("the product not found");
+        DataSource.LProduct= DataSource.LProduct.Where(x => x?.ID!=id).ToList();
     }
     /// <summary>
     /// return new array of all product
@@ -87,8 +87,9 @@ internal class DalProduct:IProduct
         else
         {
             List<Product?> listProduct = (from Product in DataSource.LProduct
-                                     where predict(Product) == true
-                                     select Product).ToList();
+                                          where predict(Product) == true
+                                          orderby Product?.ID 
+                                          select Product).ToList();
             return listProduct;
         }
 
@@ -108,21 +109,22 @@ internal class DalProduct:IProduct
                 return;
             }
         }
-        throw new NotFoundException("the item not found");
-
+         throw new NotFoundException("the product not found");
+        
 
     }
-
+    /// <summary>
+    /// get product from list according to some condition
+    /// </summary>
+    /// <param name="predict"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
     public Product? Get(Func<Product?, bool>? predict)
     {
-     
-        foreach (var item in DataSource.LProduct)
-        {
-            if (predict(item) == true)
-            {
-                return item;
-            }
-        }
-        throw new NotFoundException("the item not found");
+
+        DO.Product? check = DataSource.LProduct.Find(i => predict(i));
+        if (check == null)
+            throw new NotFoundException("the item not found");
+        return check;
     }
 }

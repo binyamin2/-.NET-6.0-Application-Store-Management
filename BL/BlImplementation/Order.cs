@@ -27,14 +27,10 @@ internal class Order : BlApi.IOrder
 
             ///build the new organ with constractor of Order
             BO.Order NewOrder = BuildOrderBO((DO.Order)order);
-
             return NewOrder;
-
-
         }
         catch (Exception ex)
         {
-
             throw new BO.WorngOrderException(ex.Message, ex) ;
         }
     }
@@ -230,9 +226,6 @@ internal class Order : BlApi.IOrder
                         throw new BO.WorngOrderException("there is no enough amount instock");
                     DO.Product Np = new DO.Product();
                     CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
-                    //Np.ID = i.ID;
-                    //Np.Name = i.Name;
-                    //Np.Price = i.Price;
                     Np.Category = (DO.Category)i?.Category;
                     Np.InStock =(int)( i?.InStock - 1);
                     Dal.Product.Update(Np);
@@ -268,9 +261,6 @@ internal class Order : BlApi.IOrder
                         {
                             DO.Product Np = new DO.Product();
                             CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
-                            //Np.ID = i.ID;
-                            //Np.Name = i.Name;
-                            //Np.Price = i.Price;
                             Np.Category = (DO.Category)i?.Category;
                             Np.InStock =(int)(i?.InStock+ item?.Amount);
                             Dal.Product.Update(Np);
@@ -332,9 +322,6 @@ internal class Order : BlApi.IOrder
             {
                 DO.Product Np=new DO.Product();
                 CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, item);
-                //Np.ID = item.ID;
-                //Np.Name = item.Name;
-                //Np.Price=item.Price;
                 Np.Category= (DO.Category)item?.Category;
                 Np.InStock=(int)(item?.InStock- (amount - current_amount));
                 Dal.Product.Update(Np);
@@ -348,10 +335,6 @@ internal class Order : BlApi.IOrder
             {
              DO.OrderItem NOI = new DO.OrderItem();
              CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(ref NOI, item);
-             //NOI.OrderID = orderID;
-             //NOI.Price = item.Price;
-             //NOI.ProdectID = proudctID;
-             //NOI.ID=item.ID;
              NOI.Amount = amount;
              Dal.OrderItem.Update(NOI);
              return;
@@ -395,13 +378,6 @@ internal class Order : BlApi.IOrder
     {
         BO.Order BOorder =new BO.Order();
         CopyProperties<BO.Order,DO.Order>.Copy(ref BOorder,order);
-        //BOorder.ID = order.ID;
-        //BOorder.CustomerName = order.CustomerName;
-        //BOorder.CustomerAdress = order.CustomerAdress;
-        //BOorder.CustomerEmail = order.CustomerEmail;
-        //BOorder.OrderDate = order.OrderDate;
-        //BOorder.ShipDate = order.ShipDate;
-        //BOorder.DeliveryDate = order.DeliveryDate;
         BOorder.PaymentDate = BOorder.OrderDate;
 
         ///chack the status
@@ -445,11 +421,6 @@ internal class Order : BlApi.IOrder
     {
         BO.OrderItem BOorderItem = new BO.OrderItem();
         CopyProperties<BO.OrderItem,DO.OrderItem?>.Copy(ref BOorderItem, orderItem);
-
-        //BOorderItem.ID = orderItem.ID;
-        //BOorderItem.ProdectID = orderItem.ProdectID;
-        //BOorderItem.Price = orderItem.Price;
-        //BOorderItem.Amount = orderItem.Amount;
         BOorderItem.TotalPrice = (double)(orderItem?.Price * orderItem?.Amount);
 
 
@@ -467,7 +438,6 @@ internal class Order : BlApi.IOrder
                 break;
             }
         }
-
         return BOorderItem;
     }
     /// <summary>
@@ -500,10 +470,6 @@ internal class Order : BlApi.IOrder
                 if (item?.ID == PId)
                 {
                     CopyProperties<BO.Product, DO.Product?>.Copy(ref product, item);
-                    //product.ID = item.ID;
-                    //product.Name = item.Name;
-                    //product.Price = item.Price;
-                    //product.InStock = item.InStock;
                     product.Category = (BO.Category)item?.Category;
                     break;
                 }
