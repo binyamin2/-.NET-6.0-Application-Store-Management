@@ -76,10 +76,18 @@ internal class Product : BlApi.IProduct
         {
             return GetList();
         }
-        return (from ProductForList in GetList()
-                where (int)category == (int)ProductForList.Category
-                orderby ProductForList.ID
-                select ProductForList).ToList();
+
+        var result = from ProductForList in GetList()
+                     group ProductForList by ProductForList.Category into categorys
+                     select categorys;
+
+
+        return result.First(i => (int)i.Key == (int)category);
+
+        //return (from ProductForList in GetList()
+        //        where (int)category == (int)ProductForList.Category
+        //        orderby ProductForList.ID
+        //        select ProductForList).ToList();
     }
 
 
@@ -106,14 +114,17 @@ internal class Product : BlApi.IProduct
             PItem.Amount = 0;
             if (cart.Items.Count != 0)
             {
-                foreach (var item in cart.Items)
-                {
-                    if (item.ProdectID == id)
-                    {
-                        PItem.Amount = item.Amount;
-                        break;
-                    }
-                }
+                PItem.Amount = cart.Items.First(i => i.ProdectID == id).Amount;
+
+
+                //foreach (var item in cart.Items)
+                //{
+                //    if (item.ProdectID == id)
+                //    {
+                //        PItem.Amount = item.Amount;
+                //        break;
+                //    }
+                //}
             }
             return PItem;
         }
