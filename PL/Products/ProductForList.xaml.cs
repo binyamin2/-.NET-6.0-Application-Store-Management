@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,11 @@ namespace PL.Products
 
             InitializeComponent();
 
-            PruductsListView.ItemsSource = bl.Product.GetList();
+            ObservableCollection<BO.ProductForList> _myCollection = new ObservableCollection<BO.ProductForList>(bl.Product.GetList());
+
+            this.DataContext = _myCollection;
+
+            PruductsListView.ItemsSource = _myCollection;
             
             catagorySelector.ItemsSource = Enum.GetValues(typeof(BO.CategoryUI));
 

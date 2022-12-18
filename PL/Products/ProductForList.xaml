@@ -23,7 +23,7 @@
        </Grid>
 
         <Grid Name="CenterGrid" Grid.Row="1" >
-            <ListView x:Name="PruductsListView" Grid.Row="1" MouseDoubleClick="ListView_DoubleClick"></ListView>
+            <ListView x:Name="PruductsListView" Grid.Row="1" MouseDoubleClick="ListView_DoubleClick"  ItemsSource="{Binding}"></ListView>
 
         </Grid>
 

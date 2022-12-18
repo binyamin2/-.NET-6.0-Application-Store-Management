@@ -79,6 +79,8 @@ public partial class ProductWindow : Window
 
             }
         }
+
+
       
     }
     /// <summary>
