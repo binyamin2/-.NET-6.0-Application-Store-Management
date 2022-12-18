@@ -144,15 +144,21 @@ internal class Cart : BlApi.ICart
             throw new BO.WrongCartDeteilsException("the product is not in the cart");
         if (!Dal.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
             throw new BO.WrongCartDeteilsException("the product is not exist");
-        int currentInStock=0;
-        foreach (var item in Dal.Product.GetAll())//find how match in stock
-        {
-            if (item?.ID == id)
-            {
-                currentInStock = (int)item?.InStock;
-                break;
-            }
-        }
+        int? currentInStock=0;
+
+        //find how match in stock
+        currentInStock = Dal.Product.GetAll().First(item => item?.ID == id)?.InStock;
+
+        //foreach (var item in Dal.Product.GetAll())
+        //{
+        //    if (item?.ID == id)
+        //    {
+        //        currentInStock = (int)item?.InStock;
+        //        break;
+        //    }
+        //}
+
+
         foreach (var item in cart.Items)//adding/updating the product
         {
             if (item.ProdectID==id)

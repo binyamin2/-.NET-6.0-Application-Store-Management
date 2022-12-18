@@ -60,7 +60,8 @@ internal class DalOrder:IOrder
         else
         {
             List<Order?> listOrder = (from Order in DataSource.LOrder
-                                     where predict(Order) == true
+                                     let flag = true
+                                     where predict(Order) == flag
                                      select Order).ToList();
             return listOrder;
         }

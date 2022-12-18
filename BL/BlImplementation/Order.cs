@@ -291,23 +291,31 @@ internal class Order : BlApi.IOrder
         //exception if the order item not found in the order
         if (!Dal.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProdectID == proudctID))
             throw new BO.WorngOrderException("the order item to update not exist");
-        int current_amount=0,prInstock=0;
-        foreach (var item in Dal.OrderItem.GetAll().ToList())//get the current amont in order item
-        {
-            if (item?.ProdectID == proudctID && item?.OrderID == orderID)
-            {
-                current_amount=(int)item?.Amount;
-                break;
-            }
-        }
-        foreach (var item in Dal.Product.GetAll().ToList())//get the amount of the product in stock
-        {
-            if(item?.ID==proudctID)
-            {
-                prInstock =(int) item?.InStock;
-                break;
-            }
-        }
+        int? current_amount=0,prInstock=0;
+
+        //get the current amont in order item
+        current_amount = Dal.OrderItem.GetAll().First(item => item?.ProdectID == proudctID && item?.OrderID == orderID)?.Amount;
+
+        //foreach (var item in Dal.OrderItem.GetAll().ToList())
+        //{
+        //    if (item?.ProdectID == proudctID && item?.OrderID == orderID)
+        //    {
+        //        current_amount=(int)item?.Amount;
+        //        break;
+        //    }
+        //}
+
+        //get the amount of the product in stock
+        prInstock = Dal.Product.GetAll().First(item => item?.ID == proudctID)?.InStock;
+
+        //foreach (var item in Dal.Product.GetAll().ToList())
+        //{
+        //    if(item?.ID==proudctID)
+        //    {
+        //        prInstock =(int) item?.InStock;
+        //        break;
+        //    }
+        //}
         if (current_amount < amount)//if we wont to rise the amount
         {
             if (amount - current_amount > prInstock)//if there is no enough in stock
@@ -429,15 +437,16 @@ internal class Order : BlApi.IOrder
         IEnumerable<DO.Product?> ListOrderItem = Dal.Product.GetAll();
 
 
+        BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ID == item?.ID)?.Name;
 
-        foreach (var item in ListOrderItem)
-        {
-            if (BOorderItem.ID == item?.ID)
-            {
-                BOorderItem.Name = item?.Name;
-                break;
-            }
-        }
+        //foreach (var item in ListOrderItem)
+        //{
+        //    if (BOorderItem.ID == item?.ID)
+        //    {
+        //        BOorderItem.Name = item?.Name;
+        //        break;
+        //    }
+        //}
         return BOorderItem;
     }
     /// <summary>
