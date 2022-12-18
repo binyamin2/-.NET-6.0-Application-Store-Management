@@ -74,7 +74,7 @@ internal class Cart : BlApi.ICart
       
     }
     /// <summary>
-    /// confirm the order and update the data
+    /// confirm the  order and update the data
     /// </summary>
     /// <param name="cart"></param>
     /// <param name="DetailClient"></param>
