@@ -37,7 +37,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new PL.Products.ProductForList(bl).Show();
+        private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new PL.Products.ProductForList(new ViewModel.ProductForListVM(bl)).Show();
 
     }
 }
