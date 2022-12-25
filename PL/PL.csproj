@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Carts\" />
-    <Folder Include="Orders\" />
   </ItemGroup>
 
 </Project>

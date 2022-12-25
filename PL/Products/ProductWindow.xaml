@@ -93,7 +93,7 @@
                 Width="120"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Text="{Binding Name}"
+                Text="{Binding Path=Name}"
                 TextWrapping="Wrap" />
             <TextBox
                 x:Name="PriceText"
