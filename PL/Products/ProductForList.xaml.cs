@@ -21,7 +21,8 @@ namespace PL.Products
     /// </summary>
     public partial class ProductForList : Window
     {
-        BlApi.IBl bl ;
+        BlApi.IBl bl;
+
         /// <summary>
         /// empty ctor
         /// </summary>
@@ -30,9 +31,9 @@ namespace PL.Products
            
             this.bl = bl;
 
-            InitializeComponent();
-
             ObservableCollection<BO.ProductForList> _myCollection = new ObservableCollection<BO.ProductForList>(bl.Product.GetList());
+
+            InitializeComponent();
 
             this.DataContext = _myCollection;
 
