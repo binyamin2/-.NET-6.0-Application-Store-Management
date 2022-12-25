@@ -38,8 +38,48 @@ public class Orders_VM
 
     public ICommand Update_Item => new RelayCommand<int>(ShowUpdate);
 
+    #region OrderWindow
+    private bool isUpdate;
+    public bool IsUpdate
+    {
+        get { return isUpdate; }
+        set { Set(ref isUpdate, value); }
+    }
+    private bool isAction;
+    public bool IsAction
+    {
+        get { return isAction; }
+        set { Set(ref isAction, value); }
+    }
 
+    private int id;
+    public int ID
+    {
+        get { return id; }
+        set { Set(ref id, value); }
+    }
 
+    private int productId;
+    public int ProductId
+    {
+        get { return productId; }
+        set { Set(ref productId, value); }
+    }
+
+    private int amount;
+    public int Amount
+    {
+        get { return amount; }
+        set { Set(ref amount, value); }
+    }
+    private string buttomText;
+
+    public string ButtomText
+    {
+        get { return buttomText; }
+        set { Set(ref buttomText, value); }
+    }
+    #endregion
 
     #region PropertyChanged
     private void Set<T>(ref T prop, T val, [CallerMemberName] string? name = "")

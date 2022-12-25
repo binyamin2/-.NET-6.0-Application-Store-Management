@@ -107,7 +107,7 @@ public class ProductForListVM : INotifyPropertyChanged
         get { return id; }
         set { Set(ref id, value); }
     }
-
+   
     /// <summary>
     /// BO.CategoryUI for add and update button
     /// </summary>

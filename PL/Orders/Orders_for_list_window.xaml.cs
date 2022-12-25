@@ -28,4 +28,9 @@ public partial class Orders_for_list_window : Window
         DataContext = vm;
         InitializeComponent();
     }
+
+    private void update_item(object sender, MouseButtonEventArgs e)
+    {
+        MessageBox.Show("hi");
+    }
 }

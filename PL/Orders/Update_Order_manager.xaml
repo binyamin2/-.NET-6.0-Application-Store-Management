@@ -1,0 +1,107 @@
+﻿<Window x:Class="PL.Orders.Update_Order_manager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Orders"
+        mc:Ignorable="d"
+        Title="Update_Order_manager" Height="450" Width="800">
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition  Height="3*"/>
+        </Grid.RowDefinitions>
+        
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                
+                <ColumnDefinition />
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button
+            Width="90"
+            Height="55"
+            Content="update amount"
+            Grid.Row="0"
+            Grid.Column="0"/>
+            <Button
+            Width="90"
+            Height="55"
+            Content="delete item"
+            Grid.Row="0"
+            Grid.Column="1" />
+            <Button
+            Width="90"
+            Height="55"
+            Content="add item"
+            Grid.Row="0"
+            Grid.Column="2"/>
+        </Grid>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Content="Id:"
+                Visibility="{Binding Path=IsAction}"/>
+            <Label
+                Grid.Row="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="product id:"
+                Visibility="{Binding Path=IsAction}" />
+
+            <Label
+                Grid.Row="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Amount:"
+                Visibility="{Binding Path=IsUpdate}" />
+            <TextBox
+                x:Name="IDText"
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                IsReadOnly="True"
+                Text="{Binding ID}"
+                TextWrapping="Wrap" 
+                Visibility="{Binding Path=IsAction}"/>
+            <TextBox
+                x:Name="ProductIdText"
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Text="{Binding Path=ProductId}"
+                TextWrapping="Wrap"
+                Visibility="{Binding Path=IsAction}"
+                />
+            <TextBox
+                x:Name="AmountText"
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Text="{Binding Path=Amount}"
+                TextWrapping="Wrap" RenderTransformOrigin="0.51,1.102"
+                Visibility="{Binding Path=IsUpdate}" />
+            
+        </Grid>
+    
+    </Grid>
+</Window>
