@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
+using PL.ViewModel;
 
 namespace PL.Products
 {
@@ -21,55 +22,25 @@ namespace PL.Products
     /// </summary>
     public partial class ProductForList : Window
     {
-        BlApi.IBl bl;
+        private ProductForListVM vm;
+        private ProductWindow productWindow;
+        public ProductWindow ProductWindow => productWindow;
 
         /// <summary>
         /// empty ctor
         /// </summary>
-        public ProductForList(BlApi.IBl bl)
+        public ProductForList(ViewModel.ProductForListVM vm)
         {
-           
-            this.bl = bl;
-
-            ObservableCollection<BO.ProductForList> _myCollection = new ObservableCollection<BO.ProductForList>(bl.Product.GetList());
-
             InitializeComponent();
 
-            this.DataContext = _myCollection;
-
-            PruductsListView.ItemsSource = _myCollection;
-            
-            catagorySelector.ItemsSource = Enum.GetValues(typeof(BO.CategoryUI));
-
-            catagorySelector.Text = BO.CategoryUI.All.ToString();
-
-
+            this.vm = vm;
+            DataContext = vm;
+            productWindow = new() { DataContext = vm };
+            productWindow.IsVisibleChanged += (s, e) =>
+            {
+                if (productWindow.Visibility == Visibility.Collapsed)
+                    this.Focus();
+            };
         }
-        /// <summary>
-        /// select category in combobox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void catagorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            PruductsListView.ItemsSource = bl.Product.GetCategory((BO.CategoryUI)catagorySelector.SelectedItem);
-
-        }
-
-        /// <summary>
-        /// button for add product 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddButton_Click(object sender, RoutedEventArgs e) => new PL.Products.ProductWindow(bl).Show();
-
-        /// <summary>
-        /// button for update spesific product 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListView_DoubleClick(object sender, MouseButtonEventArgs e) => new PL.Products.ProductWindow(bl,((BO.ProductForList)PruductsListView.SelectedItem).ID).Show();
-
     }
 }
