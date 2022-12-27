@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.ViewModel;
+using BlImplementation;
 
 namespace PL.Orders;
 
@@ -31,6 +32,9 @@ public partial class Orders_for_list_window : Window
 
     private void update_item(object sender, MouseButtonEventArgs e)
     {
-        MessageBox.Show("hi");
+        PL.Orders.Update_Order_manager update = new PL.Orders.Update_Order_manager(vm) { DataContext = vm };
+        update.Show();
     }
+
 }
+        

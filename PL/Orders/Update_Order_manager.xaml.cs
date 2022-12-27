@@ -11,17 +11,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.ViewModel;
 
-namespace PL.Orders
+
+namespace PL.Orders;
+
+/// <summary>
+/// Interaction logic for Update_Order_manager.xaml
+/// </summary>
+public partial class Update_Order_manager : Window
 {
-    /// <summary>
-    /// Interaction logic for Update_Order_manager.xaml
-    /// </summary>
-    public partial class Update_Order_manager : Window
+    private Orders_VM vm;
+
+    public Update_Order_manager(ViewModel.Orders_VM vm)
     {
-        public Update_Order_manager()
-        {
-            InitializeComponent();
-        }
+        this.vm = vm;
+        InitializeComponent();
     }
+
 }

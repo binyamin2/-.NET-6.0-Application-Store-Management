@@ -39,13 +39,13 @@ public class Orders_VM
     public ICommand Update_Item => new RelayCommand<int>(ShowUpdate);
 
     #region OrderWindow
-    private bool isUpdate;
+    private bool isUpdate = false;
     public bool IsUpdate
     {
         get { return isUpdate; }
         set { Set(ref isUpdate, value); }
     }
-    private bool isAction;
+    private bool isAction = false;
     public bool IsAction
     {
         get { return isAction; }
@@ -72,13 +72,99 @@ public class Orders_VM
         get { return amount; }
         set { Set(ref amount, value); }
     }
-    private string buttomText;
+    private string buttomText = "";
 
     public string ButtomText
     {
         get { return buttomText; }
         set { Set(ref buttomText, value); }
     }
+    private string addText = "Add";
+
+    public string AddText
+    {
+        get { return addText; }
+        set { Set(ref addText, value); }
+    }
+    private string deleteText = "Delete";
+
+    public string DeleteText
+    {
+        get { return deleteText; }
+        set { Set(ref deleteText, value); }
+    }
+    private string updateText = "Update";
+
+    public string UpdateText
+    {
+        get { return updateText; }
+        set { Set(ref updateText, value); }
+    }
+    #endregion
+
+
+
+    #region Command
+
+    public ICommand AddCommand => new RelayCommand<string>(ShowDetails);
+    public ICommand UpdateCommand => new RelayCommand<string>(ShowDetails);
+
+    public ICommand DeleteCommand => new RelayCommand<string>(ShowDetails);
+    public ICommand Act => new RelayCommand(action);
+
+    private void action()
+    {
+        try
+        {
+            if (buttomText == "Add")
+            {
+                bl.Order?.UpdateOIADD(ID, ProductId);
+            }
+            else if (buttomText == "Delete")
+            {
+                bl.Order?.updateOIdelete(ID, ProductId);
+            }
+            else if (buttomText == "Update")
+            {
+                bl.Order?.updateOIAmount(ID,ProductId,Amount);
+            }
+            Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetList());
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+
+
+
+
+    }
+
+    private void ShowDetails(string str)
+    {
+        MessageBox.Show("Test");
+        if(str == "Add")
+        {
+            IsAction = true;
+            ButtomText = "Add";
+          
+
+        }
+        else if (str == "Update")
+        {
+            IsAction = true;
+            IsUpdate = true;
+            ButtomText = "Update";
+
+        }
+        else if (str == "Delete")
+        {
+            IsAction= true;
+            ButtomText = "Delete";
+        }
+    }
+
+
     #endregion
 
     #region PropertyChanged
