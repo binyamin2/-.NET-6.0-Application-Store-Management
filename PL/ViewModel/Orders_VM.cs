@@ -13,7 +13,7 @@ using BO;
 
 namespace PL.ViewModel;
 
-public class Orders_VM
+public class Orders_VM : INotifyPropertyChanged
 {
     BlApi.IBl bl;
 
@@ -142,7 +142,6 @@ public class Orders_VM
 
     private void ShowDetails(string str)
     {
-        MessageBox.Show("Test");
         if(str == "Add")
         {
             IsAction = true;
