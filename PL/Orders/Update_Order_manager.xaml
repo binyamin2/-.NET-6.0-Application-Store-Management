@@ -81,7 +81,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="product id:"
-                Visibility="{Binding Path=IsAction , Converter={StaticResource boolToVisibityConverter}}" />
+                Visibility="{Binding Path=IsAction , Converter={StaticResource boolToVisibityConverter},UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
                 Grid.Row="2"
