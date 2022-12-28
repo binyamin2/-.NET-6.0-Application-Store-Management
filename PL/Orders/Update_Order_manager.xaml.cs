@@ -27,6 +27,7 @@ public partial class Update_Order_manager : Window
     {
         this.vm = vm;
         InitializeComponent();
+
     }
 
 }
