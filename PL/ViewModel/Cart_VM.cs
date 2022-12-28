@@ -10,6 +10,14 @@ namespace PL.ViewModel;
 
 public class Cart_VM: INotifyPropertyChanged
 {
+    BlApi.IBl bl;
+    public Cart_VM(BlApi.IBl bl)
+    {
+        this.bl = bl;
+    }
+
+
+
     #region OrderWindow
     private int productId;
     public int ProductId

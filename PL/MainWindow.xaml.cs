@@ -39,5 +39,8 @@ namespace PL
         /// <param name="e"></param>
         private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new PL.Admin.Admin_Main_Window(bl).Show();
 
+        private void ShowListProductItem(object sender, RoutedEventArgs e) => new PL.Carts.ListProductItem(new ViewModel.Cart_VM(bl) ).Show();
+       
+
     }
 }
