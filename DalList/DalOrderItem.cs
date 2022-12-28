@@ -84,11 +84,12 @@ internal class DalOrderItem :IOrderItem
 
     public void Update(OrderItem orderItem)
     {
-        foreach (var item in DataSource.LOrderItem)
+        foreach (var item in DataSource.LOrderItem.ToList())
         {
             if (item?.ID == orderItem.ID)
             {
                 DataSource.LOrderItem[DataSource.LOrderItem.IndexOf(item)] = orderItem;
+                return;
             }
         }
         throw new NotFoundException("the orderitem not found");

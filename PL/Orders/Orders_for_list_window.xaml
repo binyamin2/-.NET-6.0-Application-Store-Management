@@ -19,5 +19,6 @@
             Grid.Row="1"
             HorizontalContentAlignment="Stretch"
             ItemsSource="{Binding Orders}" MouseDoubleClick="update_item"/>
+        
     </Grid>
 </Window>

@@ -146,7 +146,9 @@ public class Orders_VM : INotifyPropertyChanged
         {
             IsAction = true;
             ButtomText = "Add";
-          
+            IsUpdate = false;
+            
+
 
         }
         else if (str == "Update")
@@ -159,6 +161,7 @@ public class Orders_VM : INotifyPropertyChanged
         else if (str == "Delete")
         {
             IsAction= true;
+            IsUpdate = false;
             ButtomText = "Delete";
         }
     }

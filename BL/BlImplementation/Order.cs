@@ -324,30 +324,41 @@ internal class Order : BlApi.IOrder
             }
         }
         //update the amount in stock
-        foreach (var item in Dal.Product.GetAll().ToList())
+        try
         {
-            if (item?.ID == proudctID)
+            foreach (var item in Dal.Product.GetAll().ToList())
             {
-                DO.Product Np=new DO.Product();
-                CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, item);
-                Np.Category= (DO.Category)item?.Category;
-                Np.InStock=(int)(item?.InStock- (amount - current_amount));
-                Dal.Product.Update(Np);
-                break;
+                if (item?.ID == proudctID)
+                {
+                    DO.Product Np = new DO.Product();
+                    CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, item);
+                    Np.Category = (DO.Category)item?.Category;
+                    Np.InStock = (int)(item?.InStock - (amount - current_amount));
+                    Dal.Product.Update(Np);
+                    break;
+                }
+            }
+            //update the order item details
+            List<DO.OrderItem?> list = new List<DO.OrderItem?>(Dal.OrderItem.GetAll().ToList());
+            
+            foreach (var item in list)
+            {
+                if (item?.ProdectID == proudctID && item?.OrderID == orderID)
+                {
+                    DO.OrderItem NOI = new DO.OrderItem();
+                    CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(ref NOI, item);
+                    NOI.Amount = amount;
+                    Dal.OrderItem.Update(NOI);
+                    return;
+                }
             }
         }
-        //update the order item details
-        foreach (var item in Dal.OrderItem.GetAll().ToList())
+        catch (Exception ex)
         {
-            if (item?.ProdectID == proudctID&&item?.OrderID==orderID)
-            {
-             DO.OrderItem NOI = new DO.OrderItem();
-             CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(ref NOI, item);
-             NOI.Amount = amount;
-             Dal.OrderItem.Update(NOI);
-             return;
-            }
+
+            throw new BO.WorngOrderException(ex.Message, ex);
         }
+        
         //update order
     }
 

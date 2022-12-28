@@ -130,7 +130,7 @@
                 Content="{Binding Path=ButtomText }" />
 
         </Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="152,138,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding IsAction}" VerticalAlignment="Top"/>
+        
 
     </Grid>
 </Window>
