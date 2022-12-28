@@ -24,6 +24,7 @@ namespace PL.Products
         public Product_Item(Cart_VM vm)
         {
             this.vm = vm;
+            this.DataContext = vm;
             InitializeComponent();
         }
     }

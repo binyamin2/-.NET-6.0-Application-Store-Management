@@ -23,6 +23,7 @@ public partial class ListProductItem : Window
     public ListProductItem(ViewModel.Cart_VM vm)
     {
         this.vm = vm;
+        this.DataContext = vm;
         InitializeComponent();
     }
 }
