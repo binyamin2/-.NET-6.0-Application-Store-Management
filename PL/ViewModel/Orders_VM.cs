@@ -110,25 +110,27 @@ public class Orders_VM : INotifyPropertyChanged
     public ICommand UpdateCommand => new RelayCommand<string>(ShowDetails);
 
     public ICommand DeleteCommand => new RelayCommand<string>(ShowDetails);
-    public ICommand Act => new RelayCommand(action);
+    public ICommand Act => new RelayCommand<Window>(action);
 
-    private void action()
+    private void action(Window window)
     {
         try
         {
-            if (buttomText == "Add")
+            if (ButtomText == "Add")
             {
                 bl.Order?.UpdateOIADD(ID, ProductId);
             }
-            else if (buttomText == "Delete")
+            else if (ButtomText == "Delete")
             {
                 bl.Order?.updateOIdelete(ID, ProductId);
             }
-            else if (buttomText == "Update")
+            else if (ButtomText == "Update")
             {
                 bl.Order?.updateOIAmount(ID,ProductId,Amount);
             }
             Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetList());
+            MessageBox.Show("the organ is " + ButtomText + "Successfully");
+            window.Close();
         }
         catch (Exception ex)
         {
