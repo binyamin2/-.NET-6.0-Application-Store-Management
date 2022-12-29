@@ -127,7 +127,7 @@
                 Height="25"
                 HorizontalAlignment="Center"
                 Command="{Binding Act}"
-                CommandParameter="{Binding ElementName = Update_OI }"
+                CommandParameter="{Binding ElementName = Update_OI}"
                 Visibility ="{Binding IsAction , Converter={StaticResource boolToVisibityConverter}}"
                 Content="{Binding Path=ButtomText }" />
             

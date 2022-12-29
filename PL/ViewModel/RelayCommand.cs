@@ -28,3 +28,4 @@ public class RelayCommand<T> : ICommand
 
     public void Execute(object? parameter) => excecute((T)parameter);
 }
+

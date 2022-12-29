@@ -6,9 +6,13 @@
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
         Title="Product_Item" Height="450" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibityConverter" />
+    </Window.Resources>
     <Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
@@ -19,7 +23,8 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Label
                 Grid.Row="0"
@@ -29,7 +34,14 @@
                 Grid.Row="1"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="Category:" />
+                Content="Category:"
+                Visibility="{Binding IsPi , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Product id:"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"/>
             <Label
                 Grid.Row="2"
                 HorizontalAlignment="Left"
@@ -44,16 +56,40 @@
                 Grid.Row="4"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="In Stock" />
+                Content="In Stock"
+                Visibility="{Binding IsPi , Converter={StaticResource boolToVisibityConverter}}"/>
             <Label
-                x:Name="IDText"
+                Grid.Row="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Amount:"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Total Price:"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                x:Name="IDTextPi"
                 Grid.Row="0"
                 Grid.Column="1"
                 Width="120"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="{Binding ProductId}"
+                Visibility="{Binding IsPi , Converter={StaticResource boolToVisibityConverter}}"
                  />
+            <Label
+                x:Name="IDTextOi"
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="{Binding OiId}"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"
+                />
             <Label
                 x:Name="CategoryText"
                 Grid.Row="1"
@@ -62,6 +98,17 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="{Binding Category}"
+                Visibility="{Binding IsPi , Converter={StaticResource boolToVisibityConverter}}"
+                />
+            <Label
+                x:Name="ProductIdText"
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="{Binding ProductId}"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"
                 />
             <Label
                 x:Name="NameText"
@@ -87,27 +134,79 @@
                 Width="120"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="{Binding InstokText}" />
+                Content="{Binding InstokText}"
+                Visibility="{Binding IsPi , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                x:Name="AmountText"
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="{Binding Amount}"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"/>
+            
+            <Label
+                x:Name="TotalPriceText"
+                Grid.Row="5"
+                Grid.Column="1"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="{Binding TotalPrice}"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"/>
             <Button
                 x:Name="DeleteButton"
-                Grid.Row="5"
+                Grid.Row="7"
                 Grid.Column="1"
                 Width="100"
                 Height="22"
                 HorizontalAlignment="center"
                 VerticalAlignment="Center"
-                Command=""
-                Content="Delete item" />
+                Command="{Binding DeleteCommand}"
+                Content="Delete item"
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"/>
             <Button
                 x:Name="UpdateButton"
-                Grid.Row="5"
+                Grid.Row="7"
                 Grid.Column="0"
                 Width="100"
                 Height="22"
                 HorizontalAlignment="center"
                 VerticalAlignment="Center"
-                Command=""
-                Content="Update amount" />
+                Command="{Binding UpdateShow}"
+                Content="Update amount" 
+                Visibility="{Binding IsOi , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Button
+                x:Name="AddButton"
+                Grid.Row="6"
+                Grid.Column="1"
+                Width="100"
+                Height="22"
+                HorizontalAlignment="center"
+                VerticalAlignment="Center"
+                Command="{Binding AddAction}"
+                Content="Add" 
+                Visibility="{Binding IsPi , Converter={StaticResource boolToVisibityConverter}}"/>
         </Grid>
+        <Label Content="New amount:"
+               HorizontalAlignment="Left"
+               Margin="304,337,0,0" 
+               VerticalAlignment="Top"
+               Visibility="{Binding IsUpdate , Converter={StaticResource boolToVisibityConverter}}"/>
+        <TextBox HorizontalAlignment="Left"
+                 Margin="383,342,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding NewAmount}"
+                 VerticalAlignment="Top"
+                 Width="120"
+                 Visibility="{Binding IsUpdate , Converter={StaticResource boolToVisibityConverter}}"/>
+        <Button Content="Update"
+                HorizontalAlignment="Left"
+                Margin="508,340,0,0"
+                VerticalAlignment="Top"
+                Command=""
+                Visibility="{Binding IsUpdate , Converter={StaticResource boolToVisibityConverter}}"/>
+
     </Grid>
 </Window>
