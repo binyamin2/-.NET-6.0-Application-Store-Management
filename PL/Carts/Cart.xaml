@@ -1,0 +1,90 @@
+﻿<Window x:Class="PL.Carts.Cart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Carts"
+        mc:Ignorable="d"
+        Title="Cart" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="OrderItemTemplate">
+            <Grid
+                
+                Width="auto"
+                Height="auto"
+                HorizontalAlignment="Stretch"
+                Background="Transparent">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Path=ID}" />
+                <TextBlock Grid.Column="1" Text="{Binding Path=ProductID}" />
+                <TextBlock Grid.Column="2" Text="{Binding Path=Name}" />
+                <TextBlock Grid.Column="3" Text="{Binding Path=Price}" />
+                <TextBlock Grid.Column="4" Text="{Binding Path=Amount}" />
+                <TextBlock Grid.Column="5" Text="{Binding Path=TotalPrice}" />
+                <TextBlock Grid.Column="6" Text="Tap twice to show product and add it to cart"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="40*" />
+        </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Content="ID:" />
+            <Label
+                Grid.Column="1"
+                Content="Product id" />
+            <Label
+                Grid.Column="2"
+                Content="Name:" />
+            <Label
+                Grid.Column="3"
+                Content="Price:" />
+            <Label
+                Grid.Column="4"
+                Content="Amount:" />
+            <Label
+                Grid.Column="5"
+                Content="Total Price:" />
+
+        </Grid>
+        <Grid Name="ListGrid" Grid.Row="1">
+            <ListView
+                x:Name="OrderItemListView"
+                Grid.Row="1"
+                HorizontalContentAlignment="Stretch"
+                ItemTemplate="{StaticResource OrderItemTemplate}"
+                ItemsSource="{Binding ListOrderItems}" MouseDoubleClick="OpenOrderItem"
+                />
+
+        </Grid>
+
+    </Grid>
+</Window>

@@ -125,7 +125,7 @@
         </Grid>
 
         <Button
-            x:Name="AddButton"
+            x:Name="OpenCart"
             Grid.Row="3"
             Width="70"
             Margin="5"
