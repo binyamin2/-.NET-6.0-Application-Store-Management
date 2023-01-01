@@ -116,7 +116,7 @@
                                 HorizontalContentAlignment="Stretch"
                                 ItemTemplate="{StaticResource ProductItemTemplate}"
                                 ItemsSource="{Binding GroupProductItems}"
-                                MouseDoubleClick="OpenProductItemFromGroup"/>
+                                />
                         </Expander>
                     </DataTemplate>
                 </ListView.ItemTemplate>

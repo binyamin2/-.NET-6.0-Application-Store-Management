@@ -32,7 +32,4 @@ public partial class ListProductItem : Window
 
     private void OpenCart_Click(object sender, RoutedEventArgs e) => new PL.Carts.Cart(vm).Show();
 
-    private void OpenProductItemFromGroup(object sender, MouseButtonEventArgs e) => new PL.Products.Product_Item(vm, (BO.ProductItem)PruductsGroup.SelectedItem).Show();
-
-
 }
