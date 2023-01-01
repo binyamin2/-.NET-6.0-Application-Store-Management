@@ -75,7 +75,7 @@ public class Cart_VM: INotifyPropertyChanged
 
 
 
-    private Window w;
+    private Window w = new Window();
     public Window W
     {
         get { return w; }
@@ -143,11 +143,11 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref inStoct, value); }
     }
 
-     private string? inStoctText = "No";
-    public string? InStoctText
+     private string? inStockText = "No";
+    public string? InStockText
     {
-        get { return inStoctText; }
-        set { Set(ref inStoctText, value); }
+        get { return inStockText; }
+        set { Set(ref inStockText, value); }
     }
 
     private bool isUpdate = false;
