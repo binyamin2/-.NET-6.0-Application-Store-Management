@@ -65,6 +65,7 @@ public class Cart_VM: INotifyPropertyChanged
         {
             cart = bl.Cart.Add(cart, ProductId);
             listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+            MessageBox.Show("the product added");
         }
         catch (Exception ex)
         {
