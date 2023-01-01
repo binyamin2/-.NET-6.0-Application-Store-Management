@@ -48,4 +48,5 @@ public interface IProduct
     /// </summary>
     /// <returns></returns>
     public IEnumerable<BO.ProductItem> GetListProductItems();
+
 }

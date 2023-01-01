@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace PL.ViewModel;
 
@@ -18,15 +19,32 @@ public class Cart_VM: INotifyPropertyChanged
     {
         this.bl = bl;
         listproductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
+        grouplistproductItems = new ObservableCollection<Group>(this.MakeGrouping());
             }
     BO.Cart cart=new BO.Cart();
     
 
-    #region command
+    #region command 
     public ICommand DeleteCommand => new RelayCommand(DelOi);
     public ICommand AddAction => new RelayCommand(AddPi);
     public ICommand UpdateShow => new RelayCommand(ShowUpdate);
     public ICommand UpdateAction => new RelayCommand(UpdateOi);
+
+    public ICommand OrderByGrouping => new RelayCommand(orderByGrouping);
+
+    public ICommand OrderByRegular => new RelayCommand(orderByRegular);
+
+    private void orderByRegular()
+    {
+        IsRegularOrder = true;
+        IsGrouping = false;
+    }
+
+    private void orderByGrouping()
+    {
+        IsRegularOrder = false;
+        IsGrouping = true;
+    }
     private void DelOi()
     {
         try
@@ -171,12 +189,34 @@ public class Cart_VM: INotifyPropertyChanged
     #endregion
     #region Variable ListProducyItemWindoe
 
+    public ObservableCollection<Group> grouplistproductItems;
+
+    public ObservableCollection<Group> GroupListProductItems
+    {
+        get { return grouplistproductItems; }
+        set { Set(ref grouplistproductItems, value); }
+    }
+
     public ObservableCollection<BO.ProductItem> listproductItems;
 
     public ObservableCollection<BO.ProductItem> ListProductItems
     {
         get { return listproductItems; }
         set { Set(ref listproductItems, value); }
+    }
+
+    private bool isGrouping = false;
+    public bool IsGrouping
+    {
+        get { return isGrouping; }
+        set { Set(ref isGrouping, value); }
+    }
+
+    private bool isRegularOrder = true;
+    public bool IsRegularOrder
+    {
+        get { return isRegularOrder; }
+        set { Set(ref isRegularOrder, value); }
     }
 
     #endregion
@@ -192,4 +232,35 @@ public class Cart_VM: INotifyPropertyChanged
     }
     public event PropertyChangedEventHandler? PropertyChanged;
     #endregion
+
+    #region Help Class
+
+    public class Group
+    {
+        public BO.Category? TitleGroup  { get; set; }
+        public List<BO.ProductItem> GroupProductItems { get; set; }
+        public override string ToString() => $@"
+        {TitleGroup}
+            ddddddddd" ;
+    }
+    #endregion
+
+    private IEnumerable<Group> MakeGrouping()
+    {
+        var groups = bl.Product.GetListProductItems().GroupBy(ProductI => ProductI.Category);
+        List<Group> ListGroup = new List<Group>();
+        foreach (var group in groups)
+        {
+            ListGroup.Add(new Group()
+            {
+                TitleGroup = group.Key,
+                GroupProductItems = group.ToList()
+            });
+        }
+
+        return ListGroup;
+
+    }
+
 }
+

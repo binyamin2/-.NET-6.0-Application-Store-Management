@@ -10,9 +10,9 @@
     Height="450"
     mc:Ignorable="d">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibityConverter" />
         <DataTemplate x:Key="ProductItemTemplate">
             <Grid
-                
                 Width="auto"
                 Height="auto"
                 HorizontalAlignment="Stretch"
@@ -34,7 +34,7 @@
                 <TextBlock Grid.Column="2" Text="{Binding Path=Price}" />
                 <TextBlock Grid.Column="3" Text="{Binding Path=Category}" />
                 <TextBlock Grid.Column="4" Text="{Binding Path=InStock}" />
-                <TextBlock Grid.Column="5" Text="Tap twice to show product and add it to cart"/>
+                <TextBlock Grid.Column="5" Text="Tap twice to show product and add it to cart" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -73,7 +73,7 @@
                 Content="Category of products:"
                 FontWeight="Bold" />
         </Grid>
-        
+
         <Grid
             Grid.Row="1"
             HorizontalAlignment="Stretch"
@@ -86,32 +86,41 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
-            <Label
-                Grid.Column="0"
-                Content="ID:" />
-            <Label
-                Grid.Column="1"
-                Content="Name:" />
-            <Label
-                Grid.Column="2"
-                Content="Price:" />
-            <Label
-                Grid.Column="3"
-                Content="Category:" />
-            <Label
-                Grid.Column="4"
-                Content="Instock:" />
+            <Label Grid.Column="0" Content="ID:" />
+            <Label Grid.Column="1" Content="Name:" />
+            <Label Grid.Column="2" Content="Price:" />
+            <Label Grid.Column="3" Content="Category:" />
+            <Label Grid.Column="4" Content="Instock:" />
 
         </Grid>
 
-        <Grid Name="CenterGrid" Grid.Row="2">
+        <Grid Name="CenterGridRegalurList" Grid.Row="2">
             <ListView
                 x:Name="PruductsListView"
                 Grid.Row="1"
                 HorizontalContentAlignment="Stretch"
                 ItemTemplate="{StaticResource ProductItemTemplate}"
-                ItemsSource="{Binding ListProductItems}" MouseDoubleClick="OpenProductItem"
-                />
+                ItemsSource="{Binding ListProductItems}"
+                MouseDoubleClick="OpenProductItem"
+                Visibility="{Binding IsRegularOrder, Converter={StaticResource boolToVisibityConverter}}" />
+            <ListView
+                x:Name="PruductsListViewGroup"
+                Grid.Row="1"
+                HorizontalContentAlignment="Stretch"
+                ItemsSource="{Binding GroupListProductItems}"
+                Visibility="{Binding IsGrouping, Converter={StaticResource boolToVisibityConverter}}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Header="{Binding TitleGroup}">
+                            <ListView
+                                HorizontalContentAlignment="Stretch"
+                                ItemTemplate="{StaticResource ProductItemTemplate}"
+                                ItemsSource="{Binding GroupProductItems}"
+                                MouseDoubleClick="OpenProductItem"/>
+                        </Expander>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </Grid>
 
@@ -124,5 +133,23 @@
             HorizontalAlignment="Right"
             Command="{Binding MoveToCart}"
             Content="  Cart  " />
+
+        <Button
+            x:Name="GroupingButton"
+            Grid.Row="3"
+            Width="auto"
+            Margin="5"
+            Padding="5"
+            HorizontalAlignment="Center"
+            Command="{Binding OrderByGrouping}"
+            Content="Order by grouping" />
+        <Button
+            Grid.Row="3"
+            Width="auto"
+            Margin="5"
+            Padding="5"
+            HorizontalAlignment="Left"
+            Command="{Binding OrderByRegular}"
+            Content="Order by regular" />
     </Grid>
 </Window>
