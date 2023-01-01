@@ -209,6 +209,32 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException(ex.Message, ex);
         }
     }
+    /// <summary>
+    /// return list of ProductItem For window ListProductItem
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem> GetListProductItems()
+    {
+        IEnumerable<DO.Product?> list = Dal.Product.GetAll();
+        List<BO.ProductItem> list2 = new List<BO.ProductItem>();
 
+        foreach (var item in list)
+        {
+            BO.ProductItem PItem = new BO.ProductItem();
+            CopyProperties<BO.ProductItem, DO.Product?>.Copy(ref PItem, item);
+            PItem.Category = (BO.Category)item?.Category;
+            PItem.Amount = 0;
+            if (item?.InStock>0)
+            {
+                PItem.InStock = true;
+            }
+            else
+            {
+                PItem.InStock = false;
+            }
+            list2.Add(PItem);
+        }
+        return list2;
+    }
     
 }

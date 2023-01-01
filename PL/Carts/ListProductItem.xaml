@@ -28,9 +28,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Path= ID}" />
-                <TextBlock Grid.Column="1" Text="{Binding Path= Name}" />
-                <TextBlock Grid.Column="2" Text="{Binding Path= Price}" />
+                <TextBlock Grid.Column="0" Text="{Binding Path=ID}" />
+                <TextBlock Grid.Column="1" Text="{Binding Path=Name}" />
+                <TextBlock Grid.Column="2" Text="{Binding Path=Price}" />
                 <TextBlock Grid.Column="3" Text="{Binding Path=Category}" />
                 <TextBlock Grid.Column="4" Text="{Binding Path=InStock}" />
                 <TextBlock Grid.Column="5" Text="Tap twice to show product and add it to cart" />
@@ -41,7 +41,7 @@
     <Grid Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*" />
-            <RowDefinition Height="30*" />
+            <RowDefinition Height="40*" />
             <RowDefinition Height="500*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -70,14 +70,11 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Content="Category of products:"
-                FontSize="20"
                 FontWeight="Bold" />
         </Grid>
 
         <Grid
             Grid.Row="1"
-            Width="auto"
-            Height="auto"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -117,8 +114,8 @@
                 Grid.Row="1"
                 HorizontalContentAlignment="Stretch"
                 ItemTemplate="{StaticResource ProductItemTemplate}"
-                ItemsSource="{Binding ListProductItem}" 
-                MouseDoubleClick ="OpenProductWindow "/>
+                ItemsSource="{Binding ListProductItems}" MouseDoubleClick="OpenProductItem"
+                />
 
         </Grid>
 

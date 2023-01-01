@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,7 +17,8 @@ public class Cart_VM: INotifyPropertyChanged
     public Cart_VM(BlApi.IBl bl)
     {
         this.bl = bl;
-    }
+        listproductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
+            }
     BO.Cart cart=new BO.Cart();
     
 
@@ -69,7 +71,9 @@ public class Cart_VM: INotifyPropertyChanged
         W.Close();
     }
     #endregion
-    #region OrderWindow
+    #region Variable ProducyItemWindoe
+
+
 
     private Window w;
     public Window W//order item id
@@ -165,6 +169,18 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref isOi, value); }
     }
     #endregion
+    #region Variable ListProducyItemWindoe
+
+    public ObservableCollection<BO.ProductItem> listproductItems;
+
+    public ObservableCollection<BO.ProductItem> ListProductItems
+    {
+        get { return listproductItems; }
+        set { Set(ref listproductItems, value); }
+    }
+
+    #endregion
+
     #region PropertyChanged
     private void Set<T>(ref T prop, T val, [CallerMemberName] string? name = "")
     {

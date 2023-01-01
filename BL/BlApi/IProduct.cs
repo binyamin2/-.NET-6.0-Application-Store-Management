@@ -43,6 +43,9 @@ public interface IProduct
     /// </summary>
     /// <param name="product"></param>
     public void Update(BO.Product product);
-
-
+    /// <summary>
+    /// return list of ProductItem For window ListProductItem
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem> GetListProductItems();
 }
