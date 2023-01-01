@@ -34,6 +34,10 @@ namespace PL.Products
             {
                 vm.InStoctText = "Yes";
             }
+            else
+            {
+                vm.InStoctText = "Yes";
+            }
             vm.IsPi = true;
             vm.IsOi = false;
             this.vm = vm;

@@ -29,7 +29,8 @@
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
-                Content="Id:" />
+                Content="Id:"
+                />
             <Label
                 Grid.Row="1"
                 HorizontalAlignment="Left"
