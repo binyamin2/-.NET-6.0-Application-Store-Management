@@ -24,16 +24,20 @@ namespace PL.Products
         private Cart_VM vm;
         public Product_Item(Cart_VM vm,BO.ProductItem pi)
         {
+            this.DataContext = vm;
             vm.ProductId=pi.ID;
             vm.ProductName=pi.Name;
             vm.Price = pi.Price;
             vm.Category=pi.Category;
             vm.InStoct=pi.InStock;
+            if (vm.InStoct == true)
+            {
+                vm.InStoctText = "Yes";
+            }
             vm.IsPi = true;
             vm.IsOi = false;
             this.vm = vm;
             vm.W=this;
-            this.DataContext = vm;
             InitializeComponent();
         }
 
