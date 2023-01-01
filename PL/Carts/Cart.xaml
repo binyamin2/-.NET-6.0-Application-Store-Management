@@ -19,7 +19,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -27,13 +27,13 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Path=ID}" />
-                <TextBlock Grid.Column="1" Text="{Binding Path=ProdectID}" />
-                <TextBlock Grid.Column="2" Text="{Binding Path=Name}" />
-                <TextBlock Grid.Column="3" Text="{Binding Path=Price}" />
-                <TextBlock Grid.Column="4" Text="{Binding Path=Amount}" />
-                <TextBlock Grid.Column="5" Text="{Binding Path=TotalPrice}" />
-                <TextBlock Grid.Column="6" Text="Tap twice to show product and add it to cart"/>
+                
+                <TextBlock Grid.Column="0" Text="{Binding Path=ProdectID}" />
+                <TextBlock Grid.Column="1" Text="{Binding Path=Name}" />
+                <TextBlock Grid.Column="2" Text="{Binding Path=Price}" />
+                <TextBlock Grid.Column="3" Text="{Binding Path=Amount}" />
+                <TextBlock Grid.Column="4" Text="{Binding Path=TotalPrice}" />
+                <TextBlock Grid.Column="5" Text="Tap twice to show product and add it to cart"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -41,13 +41,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
             <RowDefinition Height="40*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         <Grid
             Grid.Row="0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -55,23 +56,22 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
+            
+
             <Label
                 Grid.Column="0"
-                Content="ID:" />
-            <Label
-                Grid.Column="1"
                 Content="Product id" />
             <Label
-                Grid.Column="2"
+                Grid.Column="1"
                 Content="Name:" />
             <Label
-                Grid.Column="3"
+                Grid.Column="2"
                 Content="Price:" />
             <Label
-                Grid.Column="4"
+                Grid.Column="3"
                 Content="Amount:" />
             <Label
-                Grid.Column="5"
+                Grid.Column="4"
                 Content="Total Price:" />
 
         </Grid>
@@ -85,6 +85,58 @@
                 />
 
         </Grid>
+        <Button Content="Create order"
+                HorizontalAlignment="Left" 
+                Margin="694,0,0,0" 
+                Grid.Row="2" 
+                VerticalAlignment="Center" 
+                RenderTransformOrigin="-0.05,-0.258" 
+                Width="87"
+                Command="{Binding CreateOrder}"
+                />
+        <Label Content="Name:"
+               HorizontalAlignment="Left"
+               Margin="10,0,0,0"
+               Grid.Row="2"
+               VerticalAlignment="Top"/>
+        <Label Content="Email:"
+               HorizontalAlignment="Left"
+               Margin="231,0,0,0" 
+               Grid.Row="2"
+               VerticalAlignment="Center"/>
+        <Label Content="Adress:"
+               HorizontalAlignment="Left"
+               Margin="434,0,0,0"
+               Grid.Row="2" 
+               VerticalAlignment="Center"/>
+        <TextBox x:Name="AdressText"
+                 HorizontalAlignment="Left"
+                 Margin="482,0,0,0"
+                 Grid.Row="2"
+                 TextWrapping="Wrap"
+                 Text="{Binding ClientAdress}"
+                 VerticalAlignment="Center"
+                 Width="158"/>
+        <TextBox x:Name="EmailText"
+                 HorizontalAlignment="Left" 
+                 Margin="277,0,0,0"
+                 Grid.Row="2" 
+                 TextWrapping="Wrap"
+                 Text="{Binding ClientEmail}"
+                 VerticalAlignment="Center" 
+                 Width="145"/>
+        <TextBox x:Name="NameText"
+                 HorizontalAlignment="Left"
+                 Margin="59,0,0,0" 
+                 Grid.Row="2" 
+                 TextWrapping="Wrap"
+                 Text="{Binding ClientName}"
+                 VerticalAlignment="Center"
+                 Width="142"/>
+
+
+
+
 
     </Grid>
 </Window>

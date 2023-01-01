@@ -20,7 +20,8 @@ public class Cart_VM: INotifyPropertyChanged
         this.bl = bl;
         listproductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
         grouplistproductItems = new ObservableCollection<Group>(this.MakeGrouping());
-            }
+        listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+    }
     BO.Cart cart=new BO.Cart();
     
 
@@ -29,6 +30,7 @@ public class Cart_VM: INotifyPropertyChanged
     public ICommand AddAction => new RelayCommand(AddPi);
     public ICommand UpdateShow => new RelayCommand(ShowUpdate);
     public ICommand UpdateAction => new RelayCommand(UpdateOi);
+    public ICommand CreateOrder => new RelayCommand(Create);
 
     public ICommand OrderByGrouping => new RelayCommand(orderByGrouping);
 
@@ -50,7 +52,7 @@ public class Cart_VM: INotifyPropertyChanged
         try
         {
             cart = bl.Cart.Update(cart, ProductId, 0);
-            listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+            ListOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
         }
         catch (Exception ex)
         {
@@ -61,10 +63,11 @@ public class Cart_VM: INotifyPropertyChanged
 
     private void AddPi()
     {
+
         try
         {
             cart = bl.Cart.Add(cart, ProductId);
-            listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+            ListOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
             MessageBox.Show("the product added");
         }
         catch (Exception ex)
@@ -84,7 +87,21 @@ public class Cart_VM: INotifyPropertyChanged
         try
         {
             cart = bl.Cart.Update(cart, ProductId, NewAmount);
-            listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+            ListOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        W.Close();
+    }
+    private void Create()
+    {
+        Tuple<string?, string?, string?> t = new Tuple<string?, string?, string?>(ClientName, ClientEmail, ClientAdress);
+        try
+        {
+            bl.Cart.ConfirmOrder(cart, t);
+            ListOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
         }
         catch (Exception ex)
         {
@@ -122,6 +139,24 @@ public class Cart_VM: INotifyPropertyChanged
     {
         get { return productName; }
         set { Set(ref productName, value); }
+    }
+    private string? clientName = "";
+    public string? ClientName
+    {
+        get { return clientName; }
+        set { Set(ref clientName, value); }
+    }
+    private string? clientEmail = "";
+    public string? ClientEmail
+    {
+        get { return clientEmail; }
+        set { Set(ref clientEmail, value); }
+    }
+    private string? clienAdress = "";
+    public string? ClientAdress
+    {
+        get { return clienAdress; }
+        set { Set(ref clienAdress, value); }
     }
 
     private double? price;

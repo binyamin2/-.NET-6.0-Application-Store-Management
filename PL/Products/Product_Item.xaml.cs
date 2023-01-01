@@ -40,6 +40,7 @@ namespace PL.Products
             }
             vm.IsPi = true;
             vm.IsOi = false;
+            vm.IsUpdate=false;
             this.vm = vm;
             InitializeComponent();
             vm.W = this;
@@ -55,7 +56,9 @@ namespace PL.Products
             vm.ProductName = oi.Name;
             vm.IsOi=true;
             vm.IsPi = false;
+            vm.IsUpdate = false;
             vm.W = this;
+            vm.NewAmount = 0;
             this.vm = vm;
             this.DataContext = vm;
             InitializeComponent();
