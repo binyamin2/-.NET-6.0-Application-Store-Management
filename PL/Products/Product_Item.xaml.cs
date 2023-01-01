@@ -32,7 +32,7 @@ namespace PL.Products
             vm.InStoct=pi.InStock;
             if (vm.InStoct == true)
             {
-                vm.InStoctText = "Yes";
+                vm.InStockText = "Yes";
             }
             else
             {
@@ -41,8 +41,8 @@ namespace PL.Products
             vm.IsPi = true;
             vm.IsOi = false;
             this.vm = vm;
-            vm.W=this;
             InitializeComponent();
+            vm.W = this;
         }
 
         public Product_Item(Cart_VM vm, BO.OrderItem oi)

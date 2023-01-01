@@ -224,6 +224,7 @@ internal class Product : BlApi.IProduct
             CopyProperties<BO.ProductItem, DO.Product?>.Copy(ref PItem, item);
             PItem.Category = (BO.Category)item?.Category;
             PItem.Amount = 0;
+            PItem.Price = item?.Price;
             if (item?.InStock>0)
             {
                 PItem.InStock = true;

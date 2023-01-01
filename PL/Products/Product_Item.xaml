@@ -135,7 +135,7 @@
                 Width="120"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="{Binding InstokText}"
+                Content="{Binding InStockText}"
                 Visibility="{Binding IsPi , Converter={StaticResource boolToVisibityConverter}}"/>
             <Label
                 x:Name="AmountText"

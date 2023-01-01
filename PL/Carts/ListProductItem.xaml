@@ -12,6 +12,7 @@
     <Window.Resources>
         <DataTemplate x:Key="ProductItemTemplate">
             <Grid
+                
                 Width="auto"
                 Height="auto"
                 HorizontalAlignment="Stretch"
@@ -33,7 +34,7 @@
                 <TextBlock Grid.Column="2" Text="{Binding Path=Price}" />
                 <TextBlock Grid.Column="3" Text="{Binding Path=Category}" />
                 <TextBlock Grid.Column="4" Text="{Binding Path=InStock}" />
-                <TextBlock Grid.Column="5" Text="Tap twice to show product and add it to cart" />
+                <TextBlock Grid.Column="5" Text="Tap twice to show product and add it to cart"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -72,7 +73,7 @@
                 Content="Category of products:"
                 FontWeight="Bold" />
         </Grid>
-
+        
         <Grid
             Grid.Row="1"
             HorizontalAlignment="Stretch"
@@ -87,23 +88,18 @@
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Column="0"
-                HorizontalContentAlignment="Center"
                 Content="ID:" />
             <Label
                 Grid.Column="1"
-                HorizontalContentAlignment="Center"
                 Content="Name:" />
             <Label
                 Grid.Column="2"
-                HorizontalContentAlignment="Center"
                 Content="Price:" />
             <Label
                 Grid.Column="3"
-                HorizontalContentAlignment="Center"
                 Content="Category:" />
             <Label
                 Grid.Column="4"
-                HorizontalContentAlignment="Center"
                 Content="Instock:" />
 
         </Grid>
