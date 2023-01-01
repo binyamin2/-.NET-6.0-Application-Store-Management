@@ -118,7 +118,7 @@
                 HorizontalContentAlignment="Stretch"
                 ItemTemplate="{StaticResource ProductItemTemplate}"
                 ItemsSource="{Binding ListProductItem}" 
-                MouseDoubleClick ="OpenProductWindow "/>
+                />
 
         </Grid>
 

@@ -72,7 +72,7 @@ public class Cart_VM: INotifyPropertyChanged
     #region OrderWindow
 
     private Window w;
-    public Window W//order item id
+    public Window W
     {
         get { return w; }
         set { Set(ref w, value); }
