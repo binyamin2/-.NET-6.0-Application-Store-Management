@@ -36,7 +36,7 @@ namespace PL.Products
             }
             else
             {
-                vm.InStoctText = "Yes";
+                vm.InStockText = "No";
             }
             vm.IsPi = true;
             vm.IsOi = false;
