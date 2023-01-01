@@ -104,7 +104,7 @@
                 MouseDoubleClick="OpenProductItem"
                 Visibility="{Binding IsRegularOrder, Converter={StaticResource boolToVisibityConverter}}" />
             <ListView
-                x:Name="PruductsListViewGroup"
+                x:Name="PruductsGroup"
                 Grid.Row="1"
                 HorizontalContentAlignment="Stretch"
                 ItemsSource="{Binding GroupListProductItems}"
@@ -112,11 +112,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Expander Header="{Binding TitleGroup}">
-                            <ListView
+                            <ListView x:Name="PruductsListViewGroup"
                                 HorizontalContentAlignment="Stretch"
                                 ItemTemplate="{StaticResource ProductItemTemplate}"
                                 ItemsSource="{Binding GroupProductItems}"
-                                MouseDoubleClick="OpenProductItem"/>
+                                MouseDoubleClick="OpenProductItemFromGroup"/>
                         </Expander>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -131,7 +131,7 @@
             Margin="5"
             Padding="5"
             HorizontalAlignment="Right"
-            Command="{Binding MoveToCart}"
+            Click = "OpenCart_Click" 
             Content="  Cart  " />
 
         <Button

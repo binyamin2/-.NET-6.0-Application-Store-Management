@@ -21,6 +21,22 @@ internal class Cart : BlApi.ICart
     /// <returns>BO.Cart</returns>
     public BO.Cart Add(BO.Cart cart, int id)
     {
+        bool instock = false;
+        foreach (var item in Dal.Product.GetAll())
+        {
+            if (item?.ID == id)
+            {
+                if (item?.InStock > 0)
+                {
+                    instock = true;
+                    break;
+                }
+            }
+        }
+        if (!instock)
+        {
+            throw new BO.NotInStockException("the product is over from stock");
+        }
         //return true if the product exist in the cart
         bool exist=cart.Items.Any(i => i.ProdectID == id);
         if(!exist)
@@ -46,29 +62,14 @@ internal class Cart : BlApi.ICart
                 newOI.TotalPrice = newOI.Price;
                 cart.Items.Add(newOI);
                 cart.TotalPrice += newOI.TotalPrice;
-                //return cart;
+                return cart;
 
             }
             else
                 throw new BO.WrongCartDeteilsException("the product is not exist");
         }
        
-        bool instock = false;
-        foreach (var item in Dal.Product.GetAll())
-        {
-            if (item?.ID == id)
-            {
-                if (item?.InStock > 0)
-                {
-                    instock = true;
-                    break;
-                }
-            }
-        }
-        if (!instock)
-        {
-            throw new BO.NotInStockException("the product is over from stock");
-        }
+        
         UpDateOI(cart, id,1);
         return cart;
       
