@@ -116,13 +116,12 @@
         </Grid>
 
         <Button
-            x:Name="AddButton"
+            x:Name="OpenCart"
             Grid.Row="3"
             Width="70"
             Margin="5"
             Padding="5"
             HorizontalAlignment="Right"
-            Command="{Binding MoveToCart}"
-            Content="  Cart  " />
+            Content="  Cart  " Click="OpenCart_Click" />
     </Grid>
 </Window>

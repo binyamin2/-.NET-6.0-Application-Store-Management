@@ -18,7 +18,8 @@ public class Cart_VM: INotifyPropertyChanged
     {
         this.bl = bl;
         listproductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
-            }
+        listOrderItems= new ObservableCollection<BO.OrderItem>(cart.Items);
+    }
     BO.Cart cart=new BO.Cart();
     
 
@@ -32,6 +33,7 @@ public class Cart_VM: INotifyPropertyChanged
         try
         {
             cart = bl.Cart.Update(cart, ProductId, 0);
+            listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
         }
         catch (Exception ex)
         {
@@ -45,6 +47,7 @@ public class Cart_VM: INotifyPropertyChanged
         try
         {
             cart = bl.Cart.Add(cart, ProductId);
+            listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
         }
         catch (Exception ex)
         {
@@ -63,6 +66,7 @@ public class Cart_VM: INotifyPropertyChanged
         try
         {
             cart = bl.Cart.Update(cart, ProductId, NewAmount);
+            listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
         }
         catch (Exception ex)
         {
@@ -179,6 +183,15 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref listproductItems, value); }
     }
 
+    #endregion
+    #region Variable ListOrderItem
+    public ObservableCollection<BO.OrderItem> listOrderItems;
+
+    public ObservableCollection<BO.OrderItem> ListOrderItems
+    {
+        get { return listOrderItems; }
+        set { Set(ref listOrderItems, value); }
+    }
     #endregion
 
     #region PropertyChanged

@@ -206,7 +206,7 @@
                 HorizontalAlignment="Left"
                 Margin="508,340,0,0"
                 VerticalAlignment="Top"
-                Command=""
+                Command="{Binding UpdateAction}"
                 Visibility="{Binding IsUpdate , Converter={StaticResource boolToVisibityConverter}}"/>
 
     </Grid>

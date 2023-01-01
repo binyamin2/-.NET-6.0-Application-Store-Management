@@ -46,7 +46,7 @@ internal class Cart : BlApi.ICart
                 newOI.TotalPrice = newOI.Price;
                 cart.Items.Add(newOI);
                 cart.TotalPrice += newOI.TotalPrice;
-                return cart;
+                //return cart;
 
             }
             else
