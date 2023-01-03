@@ -37,12 +37,12 @@
             Content="New Order" />
 
         <Button
+            Name="OrderTrack"
             Grid.Row="0"
             Grid.Column="1"
             Width="90"
             Height="55"
-            Click="ShowProductsButton_Click"
-            Content="Track your Order" />
+            Content="Track your Order" Click="OrderTrack_Click" />
 
         <Button
             Grid.Row="1"

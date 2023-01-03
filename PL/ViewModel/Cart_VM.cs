@@ -30,7 +30,9 @@ public class Cart_VM: INotifyPropertyChanged
     public ICommand AddAction => new RelayCommand(AddPi);
     public ICommand UpdateShow => new RelayCommand(ShowUpdate);
     public ICommand UpdateAction => new RelayCommand(UpdateOi);
-    public ICommand CreateOrder => new RelayCommand(Create);
+    public ICommand CreateOrder => new RelayCommand<Window>(Create);
+
+    
 
     public ICommand OrderByGrouping => new RelayCommand(orderByGrouping);
 
@@ -68,7 +70,6 @@ public class Cart_VM: INotifyPropertyChanged
         {
             cart = bl.Cart.Add(cart, ProductId);
             ListOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
-            MessageBox.Show("the product added");
         }
         catch (Exception ex)
         {
@@ -81,6 +82,8 @@ public class Cart_VM: INotifyPropertyChanged
     {
         IsUpdate = true;
     }
+
+ 
 
     private void UpdateOi()
     {
@@ -95,19 +98,22 @@ public class Cart_VM: INotifyPropertyChanged
         }
         W.Close();
     }
-    private void Create()
+    private void Create(Window wind)
     {
         Tuple<string?, string?, string?> t = new Tuple<string?, string?, string?>(ClientName, ClientEmail, ClientAdress);
         try
         {
             bl.Cart.ConfirmOrder(cart, t);
             ListOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+            ClientAdress = "";
+            ClientEmail = "";
+            ClientName = "";
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
-        W.Close();
+        wind.Close();
     }
     #endregion
     #region Variable ProducyItemWindoe
@@ -268,6 +274,7 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref listOrderItems, value); }
     }
     #endregion
+    
 
     #region PropertyChanged
     private void Set<T>(ref T prop, T val, [CallerMemberName] string? name = "")

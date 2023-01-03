@@ -31,12 +31,8 @@ public class Orders_VM : INotifyPropertyChanged
         set { Set(ref orders, value); }
     }
 
-    public void ShowUpdate(int id)
-    {
-        MessageBox.Show("hi");
-    }
 
-    public ICommand Update_Item => new RelayCommand<int>(ShowUpdate);
+   
 
     #region OrderWindow
     private bool isUpdate = false;
@@ -101,14 +97,50 @@ public class Orders_VM : INotifyPropertyChanged
         set { Set(ref updateText, value); }
     }
     #endregion
+    #region Variable Order Track
 
+    private bool isTrack = false;
+    public bool IsTrack
+    {
+        get { return isTrack; }
+        set { Set(ref isTrack, value); }
+    }
+
+    private string stat = "";
+    public string Stat
+    {
+        get { return stat; }
+        set { Set(ref stat, value); }
+    }
+    private DateTime date;
+    public DateTime Date
+    {
+        get { return date; }
+        set { Set(ref date, value); }
+    }
+    private BO.OrderTracking ot=new BO.OrderTracking();
+    public BO.OrderTracking OT
+    {
+        get { return ot; }
+        set { Set(ref ot, value); }
+    }
+    private List<Tuple<DateTime?, String?>?>? dateList= new List<Tuple<DateTime?, String?>?>();
+
+    public List<Tuple<DateTime?, String?>?>? DateList
+    {
+        get { return dateList; }
+        set { Set(ref dateList, value); }
+    }
+
+    #endregion
 
 
     #region Command
+    public ICommand Update_Item => new RelayCommand<int>(ShowUpdate);
 
     public ICommand AddCommand => new RelayCommand<string>(ShowDetails);
     public ICommand UpdateCommand => new RelayCommand<string>(ShowDetails);
-
+    public ICommand ShowTrack => new RelayCommand(TrackShow);
     public ICommand DeleteCommand => new RelayCommand<string>(ShowDetails);
     public ICommand Act => new RelayCommand<Window>(action);
 
@@ -166,6 +198,18 @@ public class Orders_VM : INotifyPropertyChanged
             IsUpdate = false;
             ButtomText = "Delete";
         }
+    }
+    public void ShowUpdate(int id)
+    {
+        MessageBox.Show("hi");
+    }
+
+
+    private void TrackShow()
+    {
+        OT=bl.Order.OrderTracking(ID);
+        DateList=OT.DateList;
+        IsTrack = true;
     }
 
 

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Carts"
         mc:Ignorable="d"
-        Title="Cart" Height="450" Width="800">
+        Title="Cart" Height="450" Width="800"
+        Name="CartWindow">
     <Window.Resources>
         <DataTemplate x:Key="OrderItemTemplate">
             <Grid
@@ -92,6 +93,7 @@
                 VerticalAlignment="Center" 
                 RenderTransformOrigin="-0.05,-0.258" 
                 Width="87"
+                CommandParameter="{Binding ElementName=CartWindow }"
                 Command="{Binding CreateOrder}"
                 />
         <Label Content="Name:"
