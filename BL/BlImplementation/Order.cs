@@ -17,7 +17,7 @@ internal class Order : BlApi.IOrder
      
     public BO.Order Get(int id)
     {
-        if (0 >= id)
+        if (0 > id)
             throw new BO.InputUnvalidException("ID not valid");
 
         ///try if id found in Orders list
@@ -448,7 +448,7 @@ internal class Order : BlApi.IOrder
         IEnumerable<DO.Product?> ListOrderItem = Dal.Product.GetAll();
 
 
-        BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ID == item?.ID)?.Name;
+        BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ProdectID == item?.ID)?.Name;
 
         //foreach (var item in ListOrderItem)
         //{

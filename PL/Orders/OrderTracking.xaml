@@ -27,6 +27,33 @@
 
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="OrderItemTemplate">
+            <Grid
+                
+                Width="auto"
+                Height="auto"
+                HorizontalAlignment="Stretch"
+                Background="Transparent">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="{Binding Path=ProdectID}" />
+                <TextBlock Grid.Column="1" Text="{Binding Path=Name}" />
+                <TextBlock Grid.Column="2" Text="{Binding Path=Price}" />
+                <TextBlock Grid.Column="3" Text="{Binding Path=Amount}" />
+                <TextBlock Grid.Column="4" Text="{Binding Path=TotalPrice}" />
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -132,11 +159,163 @@
                 Content="Show Order details"
                 HorizontalAlignment="Center"
                 Visibility="{Binding IsTrack, Converter={StaticResource boolToVisibityConverter}}"
+                Command="{Binding OrderDetailsShow}"
                 VerticalAlignment="Center" />
 
             </Grid>
 
 
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Content="Order Id:"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Content="Name:"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Content="Email:"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                Content="Adress:"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Content="Status:"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                Content="Total Price:"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Content="{Binding ID}"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Content="{Binding CustomerName}"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Content="{Binding CustomerEmail}"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="3"
+                Grid.Column="1"
+                Content="{Binding CustomerAdress}"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="4"
+                Grid.Column="1"
+                Content="{Binding OrderStatus}"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            <Label
+                Grid.Row="5"
+                Grid.Column="1"
+                Content="{Binding TotalPrice}"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Label
+                    Content="Order items list:"
+                    VerticalAlignment="Bottom"
+                    FontSize="20"
+                    Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            </Grid>
+            <Grid
+            Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+
+                </Grid.ColumnDefinitions>
+
+
+                <Label
+                Grid.Column="0"
+                Content="Product id"
+                VerticalAlignment="Bottom"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+                <Label
+                Grid.Column="1"
+                Content="Name:"
+                VerticalAlignment="Bottom"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+                <Label
+                Grid.Column="2"
+                Content="Price:"
+                VerticalAlignment="Bottom"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+                <Label
+                Grid.Column="3"
+                Content="Amount:"
+                VerticalAlignment="Bottom"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+                <Label
+                Grid.Column="4"
+                Content="Total Price:"
+                VerticalAlignment="Bottom"
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+
+            </Grid>
+            <Grid Grid.Row="2">
+                <ListView
+                x:Name="OrderItemListView"
+                Grid.Row="1"
+                HorizontalContentAlignment="Stretch"
+                ItemTemplate="{StaticResource OrderItemTemplate}"
+                ItemsSource="{Binding Items}" 
+                Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

@@ -105,6 +105,12 @@ public class Orders_VM : INotifyPropertyChanged
         get { return isTrack; }
         set { Set(ref isTrack, value); }
     }
+    private bool isOrderShow = false;
+    public bool IsOrderShow
+    {
+        get { return isOrderShow; }
+        set { Set(ref isOrderShow, value); }
+    }
 
     private string stat = "";
     public string Stat
@@ -131,6 +137,45 @@ public class Orders_VM : INotifyPropertyChanged
         get { return dateList; }
         set { Set(ref dateList, value); }
     }
+    private string? customerName = "";
+    public string? CustomerName
+    {
+        get { return customerName; }
+        set { Set(ref customerName, value); }
+    }
+    private string? customerEmail = "";
+    public string? CustomerEmail
+    {
+        get { return customerEmail; }
+        set { Set(ref customerEmail, value); }
+    }
+    private string? customerAdress = "";
+    public string? CustomerAdress
+    {
+        get { return customerAdress; }
+        set { Set(ref customerAdress, value); }
+    }
+    private OrderStatus? orderStatus ;
+    public OrderStatus? OrderStatus
+    {
+        get { return orderStatus; }
+        set { Set(ref orderStatus, value); }
+    }
+    private double? totalPrice;
+    public double? TotalPrice
+    {
+        get { return totalPrice; }
+        set { Set(ref totalPrice, value); }
+    }
+    private List<OrderItem?>? items= new List<OrderItem?>();
+    public List<OrderItem?>? Items
+    {
+        get { return items; }
+        set { Set(ref items, value); }
+    }
+
+
+
 
     #endregion
 
@@ -141,6 +186,7 @@ public class Orders_VM : INotifyPropertyChanged
     public ICommand AddCommand => new RelayCommand<string>(ShowDetails);
     public ICommand UpdateCommand => new RelayCommand<string>(ShowDetails);
     public ICommand ShowTrack => new RelayCommand(TrackShow);
+    public ICommand OrderDetailsShow => new RelayCommand(OrderShow);
     public ICommand DeleteCommand => new RelayCommand<string>(ShowDetails);
     public ICommand Act => new RelayCommand<Window>(action);
 
@@ -210,6 +256,28 @@ public class Orders_VM : INotifyPropertyChanged
         OT=bl.Order.OrderTracking(ID);
         DateList=OT.DateList;
         IsTrack = true;
+        IsOrderShow = false;
+    }
+    private void OrderShow()
+    {
+        try
+        {
+            BO.Order order = bl.Order.Get(ID);
+            ID= order.ID;
+            Items = order.Items;
+            CustomerName = order.CustomerName;
+            CustomerEmail = order.CustomerEmail;
+            CustomerAdress = order.CustomerAdress;
+            TotalPrice = order.TotalPrice;
+            OrderStatus = order.Status;
+            IsOrderShow = true;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        
+
     }
 
 

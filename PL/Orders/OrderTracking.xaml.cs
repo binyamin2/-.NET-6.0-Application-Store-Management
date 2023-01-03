@@ -25,6 +25,8 @@ public partial class OrderTracking : Window
     {
         this.vm = vm;
         DataContext = vm;
+        vm.IsOrderShow = false;
+        vm.IsTrack=false;
         InitializeComponent();
     }
 }
