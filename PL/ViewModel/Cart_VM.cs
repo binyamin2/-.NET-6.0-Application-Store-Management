@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlImplementation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,9 +19,10 @@ public class Cart_VM: INotifyPropertyChanged
     public Cart_VM(BlApi.IBl bl)
     {
         this.bl = bl;
-        listproductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
+        listProductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
         grouplistproductItems = new ObservableCollection<Group>(this.MakeGrouping());
         listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
+        categoryUI = BO.CategoryUI.All;
     }
     BO.Cart cart=new BO.Cart();
     
@@ -32,12 +34,27 @@ public class Cart_VM: INotifyPropertyChanged
     public ICommand UpdateAction => new RelayCommand(UpdateOi);
     public ICommand CreateOrder => new RelayCommand<Window>(Create);
 
-    
+    public ICommand ChangeCategory => new RelayCommand(changeCategory);
 
+   
     public ICommand OrderByGrouping => new RelayCommand(orderByGrouping);
 
     public ICommand OrderByRegular => new RelayCommand(orderByRegular);
 
+
+    private void changeCategory()
+    {
+        if (categoryUI == BO.CategoryUI.All)
+        {
+            ListProductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
+        }
+
+        ListProductItems = new ObservableCollection<BO.ProductItem>(from pi in bl.Product.GetListProductItems()
+                                                                    where (int)pi.Category == (int)categoryUI
+                                                                    select pi
+                                                                    );
+
+    }
     private void orderByRegular()
     {
         IsRegularOrder = true;
@@ -242,12 +259,12 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref grouplistproductItems, value); }
     }
 
-    public ObservableCollection<BO.ProductItem> listproductItems;
+    public ObservableCollection<BO.ProductItem> listProductItems;
 
     public ObservableCollection<BO.ProductItem> ListProductItems
     {
-        get { return listproductItems; }
-        set { Set(ref listproductItems, value); }
+        get { return listProductItems; }
+        set { Set(ref listProductItems, value); }
     }
 
     private bool isGrouping = false;
@@ -263,6 +280,15 @@ public class Cart_VM: INotifyPropertyChanged
         get { return isRegularOrder; }
         set { Set(ref isRegularOrder, value); }
     }
+
+    private BO.CategoryUI categoryUI;
+    public BO.CategoryUI CategoryUI
+    {
+        get { return categoryUI; }
+        set { Set(ref categoryUI, value); }
+    }
+
+    public IEnumerable<BO.CategoryUI> CategoriesUI => Enum.GetValues(typeof(BO.CategoryUI)).Cast<BO.CategoryUI>();
 
     #endregion
     #region Variable ListOrderItem

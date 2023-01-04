@@ -64,7 +64,16 @@
                 HorizontalAlignment="stretch"
                 VerticalAlignment="stretch"
                 ItemsSource="{Binding CategoriesUI}"
-                SelectedItem="{Binding CategoryUI}" />
+                SelectedItem="{Binding CategoryUI}"
+                
+                >
+                <ComboBox.InputBindings>
+                    <MouseBinding
+                                    Command="{Binding ChangeCategory}"
+                                    Gesture="LeftClick" />
+                </ComboBox.InputBindings>
+            </ComboBox>
+
             <Label
                 x:Name="CategoryLabel"
                 Grid.Column="0"
