@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.ViewModel;
+using static System.Collections.Specialized.BitVector32;
 
 
 namespace PL.Orders;
@@ -26,6 +27,8 @@ public partial class Update_Order_manager : Window
     public Update_Order_manager(ViewModel.Orders_VM vm)
     {
         this.vm = vm;
+        vm.IsAction = false;
+        vm.IsUpdate = false;
         InitializeComponent();
 
     }
