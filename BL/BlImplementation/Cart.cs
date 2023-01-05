@@ -150,16 +150,6 @@ internal class Cart : BlApi.ICart
         //find how match in stock
         currentInStock = Dal.Product.GetAll().First(item => item?.ID == id)?.InStock;
 
-        //foreach (var item in Dal.Product.GetAll())
-        //{
-        //    if (item?.ID == id)
-        //    {
-        //        currentInStock = (int)item?.InStock;
-        //        break;
-        //    }
-        //}
-
-
         foreach (var item in cart.Items)//adding/updating the product
         {
             if (item.ProdectID==id)
@@ -172,7 +162,7 @@ internal class Cart : BlApi.ICart
                 }
                 else if (item.Amount<amount)//if want biger amount
                 {
-                    if((amount - item.Amount) >currentInStock)//check if have enough product to add
+                    if((amount) >currentInStock)//check if have enough product to add
                     {
                         throw new BO.WrongCartDeteilsException("there no enough product in stock");
                     }

@@ -296,26 +296,10 @@ internal class Order : BlApi.IOrder
         //get the current amont in order item
         current_amount = Dal.OrderItem.GetAll().First(item => item?.ProdectID == proudctID && item?.OrderID == orderID)?.Amount;
 
-        //foreach (var item in Dal.OrderItem.GetAll().ToList())
-        //{
-        //    if (item?.ProdectID == proudctID && item?.OrderID == orderID)
-        //    {
-        //        current_amount=(int)item?.Amount;
-        //        break;
-        //    }
-        //}
 
         //get the amount of the product in stock
         prInstock = Dal.Product.GetAll().First(item => item?.ID == proudctID)?.InStock;
 
-        //foreach (var item in Dal.Product.GetAll().ToList())
-        //{
-        //    if(item?.ID==proudctID)
-        //    {
-        //        prInstock =(int) item?.InStock;
-        //        break;
-        //    }
-        //}
         if (current_amount < amount)//if we wont to rise the amount
         {
             if (amount - current_amount > prInstock)//if there is no enough in stock
