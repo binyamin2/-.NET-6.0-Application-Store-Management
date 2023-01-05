@@ -24,11 +24,14 @@ public partial class Update_Order_manager : Window
 {
     private Orders_VM vm;
 
-    public Update_Order_manager(ViewModel.Orders_VM vm)
+    public Update_Order_manager(ViewModel.Orders_VM vm, BO.OrderForList orderForList)
     {
         this.vm = vm;
         vm.IsAction = false;
         vm.IsUpdate = false;
+        vm.ID = (int)orderForList?.ID;
+        vm.ProductId = 0;
+        vm.Amount = 0;
         InitializeComponent();
 
     }

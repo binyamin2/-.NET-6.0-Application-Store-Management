@@ -98,6 +98,7 @@
                 VerticalAlignment="Top"
                 Text="{Binding ID}"
                 TextWrapping="Wrap"
+                IsReadOnly="True"
                 Visibility="{Binding Path=IsAction , Converter={StaticResource boolToVisibityConverter}}" />
             <TextBox
                 x:Name="ProductIdText"

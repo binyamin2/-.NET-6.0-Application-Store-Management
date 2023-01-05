@@ -15,10 +15,65 @@
             <RowDefinition Height="500*" />
         </Grid.RowDefinitions>
 
-        <ListView
+        <Grid
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="ID:" />
+            <Label Grid.Column="1" Content="Name:" />
+            <Label Grid.Column="2" Content="Status:" />
+            <Label Grid.Column="3" Content="Amount:" />
+            <Label Grid.Column="4" Content="Total Price:" />
+
+        </Grid>
+
+        <ListView x:Name="ListViewOrderForList"
             Grid.Row="1"
             HorizontalContentAlignment="Stretch"
-            ItemsSource="{Binding Orders}" MouseDoubleClick="update_item"/>
-        
+            ItemsSource="{Binding Orders}"
+            MouseDoubleClick="update_item">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        Width="auto"
+                        Height="auto"
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Path=ID}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Path=CustomerName}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Path=Status}" />
+                        <TextBlock Grid.Column="3" Text="{Binding Path=AmountOfItems}" />
+                        <TextBlock Grid.Column="4" Text="{Binding Path=TotalPrice}" />
+                        <TextBlock
+                            Grid.Column="5"
+                            FontWeight="Bold"
+                            Foreground="Red"
+                            Text="Tap twice to show order and edit it" />
+                    </Grid>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+        </ListView>
+
     </Grid>
 </Window>

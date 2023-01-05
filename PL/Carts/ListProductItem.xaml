@@ -34,7 +34,11 @@
                 <TextBlock Grid.Column="2" Text="{Binding Path=Price}" />
                 <TextBlock Grid.Column="3" Text="{Binding Path=Category}" />
                 <TextBlock Grid.Column="4" Text="{Binding Path=InStock}" />
-                <TextBlock Grid.Column="5" Text="Tap twice to show product and add it to cart" />
+                <TextBlock
+                    Grid.Column="5"
+                    FontWeight="Bold"
+                    Foreground="Red"
+                    Text="Tap twice to show product and add it to cart" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -84,7 +88,6 @@
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-                <!--<MouseBinding MouseAction="LeftClick"  Command="{Binding ChangeCategory}"  />-->
 
             </ComboBox>
 
