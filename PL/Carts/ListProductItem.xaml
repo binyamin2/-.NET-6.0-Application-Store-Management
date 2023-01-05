@@ -64,7 +64,9 @@
                 HorizontalAlignment="stretch"
                 VerticalAlignment="stretch"
                 HorizontalContentAlignment="Stretch"
-                ItemsSource="{Binding CategoriesUI}">
+                ItemsSource="{Binding CategoriesUI}"
+                Visibility="{Binding IsRegularOrder, Converter={StaticResource boolToVisibityConverter}}">
+
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -92,7 +94,8 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Content="Category of products:"
-                FontWeight="Bold" />
+                FontWeight="Bold"
+                Visibility="{Binding IsRegularOrder, Converter={StaticResource boolToVisibityConverter}}" />
         </Grid>
 
         <Grid
