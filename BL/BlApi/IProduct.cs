@@ -47,6 +47,6 @@ public interface IProduct
     /// return list of ProductItem For window ListProductItem
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.ProductItem> GetListProductItems();
+    public IEnumerable<BO.ProductItem> GetListProductItems(BO.CategoryUI category = CategoryUI.All);
 
 }

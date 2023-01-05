@@ -63,15 +63,27 @@
                 Grid.Column="1"
                 HorizontalAlignment="stretch"
                 VerticalAlignment="stretch"
-                ItemsSource="{Binding CategoriesUI}"
-                SelectedItem="{Binding CategoryUI}"
-                
-                >
-                <ComboBox.InputBindings>
-                    <MouseBinding
-                                    Command="{Binding ChangeCategory}"
+                HorizontalContentAlignment="Stretch"
+                ItemsSource="{Binding CategoriesUI}">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="Transparent">
+                            <StackPanel.InputBindings>
+                                <MouseBinding
+                                    Command="{Binding Path=DataContext.ChangeCategory, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}"
+                                    CommandParameter="{Binding}"
                                     Gesture="LeftClick" />
-                </ComboBox.InputBindings>
+                            </StackPanel.InputBindings>
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                <!--<MouseBinding MouseAction="LeftClick"  Command="{Binding ChangeCategory}"  />-->
+
             </ComboBox>
 
             <Label
@@ -121,11 +133,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Expander Header="{Binding TitleGroup}">
-                            <ListView x:Name="PruductsListViewGroup"
+                            <ListView
+                                x:Name="PruductsListViewGroup"
                                 HorizontalContentAlignment="Stretch"
                                 ItemTemplate="{StaticResource ProductItemTemplate}"
-                                ItemsSource="{Binding GroupProductItems}"
-                                />
+                                ItemsSource="{Binding GroupProductItems}" />
                         </Expander>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -140,7 +152,7 @@
             Margin="5"
             Padding="5"
             HorizontalAlignment="Right"
-            Click = "OpenCart_Click" 
+            Click="OpenCart_Click"
             Content="  Cart  " />
 
         <Button

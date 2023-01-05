@@ -214,9 +214,21 @@ internal class Product : BlApi.IProduct
     /// return list of ProductItem For window ListProductItem
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.ProductItem> GetListProductItems()
+    public IEnumerable<BO.ProductItem> GetListProductItems(BO.CategoryUI category = BO.CategoryUI.All)
     {
-        IEnumerable<DO.Product?> list = Dal.Product.GetAll();
+        IEnumerable<DO.Product?> list = new List<DO.Product?>();
+        if (category == BO.CategoryUI.All)
+        {
+           list = Dal.Product.GetAll();
+        }
+        else
+        {
+             list = from order in Dal.Product.GetAll()
+                    where (int)order?.Category == (int)category
+                    select order;
+        }
+        
+
         List<BO.ProductItem> list2 = new List<BO.ProductItem>();
 
         foreach (var item in list)

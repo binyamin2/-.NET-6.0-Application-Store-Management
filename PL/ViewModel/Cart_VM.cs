@@ -22,7 +22,7 @@ public class Cart_VM: INotifyPropertyChanged
         listProductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
         grouplistproductItems = new ObservableCollection<Group>(this.MakeGrouping());
         listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
-        categoryUI = BO.CategoryUI.All;
+       
     }
     BO.Cart cart=new BO.Cart();
     
@@ -34,7 +34,7 @@ public class Cart_VM: INotifyPropertyChanged
     public ICommand UpdateAction => new RelayCommand(UpdateOi);
     public ICommand CreateOrder => new RelayCommand<Window>(Create);
 
-    public ICommand ChangeCategory => new RelayCommand(changeCategory);
+    public ICommand ChangeCategory => new RelayCommand<BO.CategoryUI>(changeCategory);
 
    
     public ICommand OrderByGrouping => new RelayCommand(orderByGrouping);
@@ -42,17 +42,9 @@ public class Cart_VM: INotifyPropertyChanged
     public ICommand OrderByRegular => new RelayCommand(orderByRegular);
 
 
-    private void changeCategory()
+    private void changeCategory(BO.CategoryUI category)
     {
-        if (categoryUI == BO.CategoryUI.All)
-        {
-            ListProductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
-        }
-
-        ListProductItems = new ObservableCollection<BO.ProductItem>(from pi in bl.Product.GetListProductItems()
-                                                                    where (int)pi.Category == (int)categoryUI
-                                                                    select pi
-                                                                    );
+        ListProductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems(category));
 
     }
     private void orderByRegular()
@@ -281,12 +273,12 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref isRegularOrder, value); }
     }
 
-    private BO.CategoryUI categoryUI;
-    public BO.CategoryUI CategoryUI
-    {
-        get { return categoryUI; }
-        set { Set(ref categoryUI, value); }
-    }
+    //private BO.CategoryUI categoryUI;
+    //public BO.CategoryUI CategoryUI
+    //{
+    //    get { return categoryUI; }
+    //    set { Set(ref categoryUI, value); }
+    //}
 
     public IEnumerable<BO.CategoryUI> CategoriesUI => Enum.GetValues(typeof(BO.CategoryUI)).Cast<BO.CategoryUI>();
 
