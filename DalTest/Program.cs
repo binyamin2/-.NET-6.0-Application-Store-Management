@@ -11,7 +11,7 @@ namespace Dal;
 /// discraption:
 /// this file make tests
 /// </summary>
-enum StoreItem { Exit, Product, Order, OrderItem };
+enum StoreItem { Exit, Product, Order, OrderItem, InitXMlFiles };
 enum CraudMethod { Add = 1, View, ViewAll, Update, Delete, };
 enum ItemOrderMenu { Add = 1, View, ViewAll, Update, Delete, itemByOrderAndProduct, itemListByOrder };
 
@@ -46,6 +46,12 @@ class Program
                         break;
                     case StoreItem.Exit:
                         return;
+                    case StoreItem.InitXMlFiles:
+                        // XMLTools.SaveListToXMLSerializer<DO.Product>(DalList.Product.GetAll().ToList(), "Product");
+                        List<OrderItem?> list = DalList.OrderItem.GetAll()?.ToList();
+                        XMLTools.SaveListToXMLSerializer<DO.Order>(DalList.Order.GetAll().ToList(), "Order");
+                        XMLTools.SaveListToXMLSerializer<DO.OrderItem>(list, "OrderItem");
+                        break;
                     default:
                         throw new Exception("Unvalide choice press any key to continue...");
                         break;

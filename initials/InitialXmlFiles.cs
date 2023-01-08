@@ -9,31 +9,33 @@ namespace Dal;
 
 public class InitialXmlFiles
 {
+    static string?  solutionFileLocation
+= Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName;
     public readonly static Random RandomInt = new Random();
     static void Main(string[] args)
     {
 
-        string ProductsPath = @"C:\Users\binyamin\source\repos\binyamin2\dotNet5783_5863_5607\xml\Product.xml";
-        string OrdersPath = @"C:\Users\binyamin\source\repos\binyamin2\dotNet5783_5863_5607\xml\Order.xml";
-        string OrderItemsPath = @"C:\Users\binyamin\source\repos\binyamin2\dotNet5783_5863_5607\xml\OrderItem.xml";
+        string ProductsPath = solutionFileLocation +@"\xml\Product.xml";
+       // string OrdersPath = @"C:\Users\binyamin\source\repos\binyamin2\dotNet5783_5863_5607\xml\Order.xml";
+       // string OrderItemsPath = @"C:\Users\binyamin\source\repos\binyamin2\dotNet5783_5863_5607\xml\OrderItem.xml";
         XElement products;
-        XElement orders;
-        XElement orderItems;
+      //  XElement orders;
+      //  XElement orderItems;
         try
         {
-            products = XElement.Load(ProductsPath);
-            orders = XElement.Load(OrdersPath);
+            //products = XElement.Load(ProductsPath);
+//            orders = XElement.Load(OrdersPath);
             //orderItems= XElement.Load(OrderItemsPath);
         }
         catch (Exception)
         {
             Console.WriteLine("The file didn't open");
-            
+
         }
 
         products = new XElement("Products");
-        orders = new XElement("orders");
-        orderItems = new XElement("OrderItems");
+//        orders = new XElement("orders");
+ //       orderItems = new XElement("OrderItems");
         #region product init
         string[] ProdName = new string[20] { "SportAdids","SportNike", "SportPuma","SportNewBalance",
                                          "HikeSalomon","HikeRedback","HikeTeva","HikeNewBalance",
@@ -54,13 +56,12 @@ public class InitialXmlFiles
         {
             for (int r = 0; r < 4; r++, j++)
             {
-                XElement ID = new XElement("ID",id[j]);
-                XElement name = new XElement("Name", ProdName[j]);
-                XElement category = new XElement("Category", (Category)i);
-                XElement Price = new XElement("Price" ,price[j]);
-                XElement amount = new XElement("InStock", inStock[j]);
-                XElement Prod = new XElement("Product", ID,name, category, Price,amount);
-                products.Add(Prod);
+             products.Add(new XElement("Product",
+                     new XElement("ID", id[j]),
+                     new XElement("Name", ProdName[j]),
+                     new XElement("Category", (Category)i),
+                     new XElement("Price", price[j]),
+                     new XElement("InStock", inStock[j])));
             }
 
         }
@@ -80,8 +81,8 @@ public class InitialXmlFiles
 
         for (int i = 0; i < 20; i++)
         {
-            XElement ID=new XElement("ID", i);
-            XElement customerName = new XElement ("CustomerName",CustomerName[i]);
+            XElement ID = new XElement("ID", i);
+            XElement customerName = new XElement("CustomerName", CustomerName[i]);
 
             XElement customerEmail = new XElement("CustomerEmail", CustomerName[i] += "@gmail.com");
             string str = "king george";
@@ -90,8 +91,8 @@ public class InitialXmlFiles
             index_address++;
 
             DateTime Shipi = new DateTime();
-            XElement shipDate=new XElement("SSh");
-            XElement? deliveryDate= new XElement("ssh");
+            XElement shipDate = new XElement("SSh");
+            XElement? deliveryDate = new XElement("ssh");
             XElement orderDate = new XElement("ssh");
             ///initial the date
             if (index_time_ship < 16)
@@ -102,27 +103,27 @@ public class InitialXmlFiles
                 {
                     DateTime Deli = DateTime.Now - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 100L));
                     Shipi = Deli - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 7L));
-                    deliveryDate = new XElement("deliveryDate",Deli);
-                    shipDate =  new XElement ("ShipDate",Deli - Shipi);
+                    deliveryDate = new XElement("deliveryDate", Deli);
+                    shipDate = new XElement("ShipDate", Deli - Shipi);
                     index_time_delivery++;
                 }
                 else
                 {
                     Shipi = DateTime.Now - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 7L));
-                    shipDate = new XElement ("ShipDate",Shipi);
+                    shipDate = new XElement("ShipDate", Shipi);
                 }
-                 orderDate = new XElement ("OrderDate",Shipi - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 3L)));
+                orderDate = new XElement("OrderDate", Shipi - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 3L)));
             }
             else
             {
-                 orderDate = new XElement("OrderDate",DateTime.Now - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)));
+                orderDate = new XElement("OrderDate", DateTime.Now - new TimeSpan(RandomInt.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)));
             }
 
-                XElement order = new XElement("Order", ID, customerName, customerEmail, customerAdress, shipDate, deliveryDate, orderDate);
+            XElement order = new XElement("Order", ID, customerName, customerEmail, customerAdress, shipDate, deliveryDate, orderDate);
 
-            orders.Add(order);
+ //           orders.Add(order);
         }
-        orders.Save(OrdersPath);
+ //       orders.Save(OrdersPath);
         #endregion
 
     }
