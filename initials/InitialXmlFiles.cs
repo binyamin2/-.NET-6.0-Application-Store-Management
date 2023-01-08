@@ -72,7 +72,7 @@ public class InitialXmlFiles
 
         int index_address = 1;
 
-        string CustomerAdress = "king_gorg";
+        string CustomerAdress = "king_David";
 
         int index_time_delivery = 0;
         int index_time_ship = 0;
@@ -84,8 +84,8 @@ public class InitialXmlFiles
             XElement customerName = new XElement ("CustomerName",CustomerName[i]);
 
             XElement customerEmail = new XElement("CustomerEmail", CustomerName[i] += "@gmail.com");
-
-            XElement customerAdress = new XElement("CustomerAdress", CustomerAdress += index_address.ToString());
+            string str = "king george";
+            XElement customerAdress = new XElement("CustomerAdress", str + index_address);
 
             index_address++;
 
@@ -122,6 +122,7 @@ public class InitialXmlFiles
 
             orders.Add(order);
         }
+        orders.Save(OrdersPath);
         #endregion
 
     }
