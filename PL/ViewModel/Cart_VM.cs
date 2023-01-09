@@ -16,7 +16,7 @@ namespace PL.ViewModel;
 public class Cart_VM: INotifyPropertyChanged
 {
     BlApi.IBl bl;
-    public Cart_VM(BlApi.IBl bl)
+    public Cart_VM(BlApi.IBl bl)//ctor
     {
         this.bl = bl;
         listProductItems = new ObservableCollection<BO.ProductItem>(bl.Product.GetListProductItems());
@@ -24,22 +24,23 @@ public class Cart_VM: INotifyPropertyChanged
         listOrderItems = new ObservableCollection<BO.OrderItem>(cart.Items);
        
     }
+    //data
     BO.Cart cart=new BO.Cart();
     
 
     #region command 
-    public ICommand DeleteCommand => new RelayCommand(DelOi);
-    public ICommand AddAction => new RelayCommand(AddPi);
-    public ICommand UpdateShow => new RelayCommand(ShowUpdate);
-    public ICommand UpdateAction => new RelayCommand(UpdateOi);
-    public ICommand CreateOrder => new RelayCommand<Window>(Create);
+    public ICommand DeleteCommand => new RelayCommand(DelOi);//command to delete from cart
+    public ICommand AddAction => new RelayCommand(AddPi);//command to add to cart
+    public ICommand UpdateShow => new RelayCommand(ShowUpdate);//show the update tools
+    public ICommand UpdateAction => new RelayCommand(UpdateOi);//update the cart
+    public ICommand CreateOrder => new RelayCommand<Window>(Create);//create order from the cart
 
-    public ICommand ChangeCategory => new RelayCommand<BO.CategoryUI>(changeCategory);
+    public ICommand ChangeCategory => new RelayCommand<BO.CategoryUI>(changeCategory);// change the category of the list 
 
    
-    public ICommand OrderByGrouping => new RelayCommand(orderByGrouping);
+    public ICommand OrderByGrouping => new RelayCommand(orderByGrouping);//show list by grouping
 
-    public ICommand OrderByRegular => new RelayCommand(orderByRegular);
+    public ICommand OrderByRegular => new RelayCommand(orderByRegular);//show list regular
 
 
     private void changeCategory(BO.CategoryUI category)
@@ -129,7 +130,7 @@ public class Cart_VM: INotifyPropertyChanged
 
 
 
-    private Window w = new Window();
+    private Window w = new Window();//for the current window
     public Window W
     {
         get { return w; }
@@ -174,7 +175,7 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref clienAdress, value); }
     }
 
-    private double? price;
+    private double? price;//product price
     public double? Price
     {
         get { return price; }
@@ -208,14 +209,14 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref newAmount, value); }
     }
 
-    private bool inStoct = false;
+    private bool inStoct = false;//for product
     public bool InStoct
     {
         get { return inStoct; }
         set { Set(ref inStoct, value); }
     }
 
-     private string? inStockText = "No";
+     private string? inStockText = "No";//to display if in stock
     public string? InStockText
     {
         get { return inStockText; }
@@ -243,7 +244,7 @@ public class Cart_VM: INotifyPropertyChanged
     #endregion
     #region Variable ListProducyItemWindoe
 
-    public ObservableCollection<Group> grouplistproductItems;
+    public ObservableCollection<Group> grouplistproductItems;//grouping list
 
     public ObservableCollection<Group> GroupListProductItems
     {
@@ -251,7 +252,7 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref grouplistproductItems, value); }
     }
 
-    public ObservableCollection<BO.ProductItem> listProductItems;
+    public ObservableCollection<BO.ProductItem> listProductItems;//product list
 
     public ObservableCollection<BO.ProductItem> ListProductItems
     {
@@ -259,14 +260,14 @@ public class Cart_VM: INotifyPropertyChanged
         set { Set(ref listProductItems, value); }
     }
 
-    private bool isGrouping = false;
+    private bool isGrouping = false;//if want to disply by grouping
     public bool IsGrouping
     {
         get { return isGrouping; }
         set { Set(ref isGrouping, value); }
     }
 
-    private bool isRegularOrder = true;
+    private bool isRegularOrder = true;//if want regular displey
     public bool IsRegularOrder
     {
         get { return isRegularOrder; }
@@ -280,11 +281,11 @@ public class Cart_VM: INotifyPropertyChanged
     //    set { Set(ref categoryUI, value); }
     //}
 
-    public IEnumerable<BO.CategoryUI> CategoriesUI => Enum.GetValues(typeof(BO.CategoryUI)).Cast<BO.CategoryUI>();
+    public IEnumerable<BO.CategoryUI> CategoriesUI => Enum.GetValues(typeof(BO.CategoryUI)).Cast<BO.CategoryUI>();//for category selector
 
     #endregion
     #region Variable ListOrderItem
-    public ObservableCollection<BO.OrderItem> listOrderItems;
+    public ObservableCollection<BO.OrderItem> listOrderItems;//list of order items
 
     public ObservableCollection<BO.OrderItem> ListOrderItems
     {
@@ -295,6 +296,7 @@ public class Cart_VM: INotifyPropertyChanged
     
 
     #region PropertyChanged
+    //generic set method that create event for every change 
     private void Set<T>(ref T prop, T val, [CallerMemberName] string? name = "")
     {
         if (!prop.Equals(val))
@@ -317,7 +319,7 @@ public class Cart_VM: INotifyPropertyChanged
             ddddddddd" ;
     }
     #endregion
-
+    //method to create grouping list
     private IEnumerable<Group> MakeGrouping()
     {
         var groups = bl.Product.GetListProductItems().GroupBy(ProductI => ProductI.Category);

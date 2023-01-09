@@ -238,6 +238,7 @@ public class ProductForListVM : INotifyPropertyChanged
 
 
     #region PropertyChanged
+    //generic set method that create event for every change 
     private void Set<T>(ref T prop, T val, [CallerMemberName] string? name = "")
     {
         if (!prop.Equals(val))
