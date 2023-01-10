@@ -8,21 +8,40 @@ using System.Xml.Linq;
 
 internal class Product : IProduct
 {
-    static DO.Product? createStudentfromXElement(XElement s)
+    static DO.Product? createProductfromXElement(XElement s)
     {
         return new DO.Product()
         {
             ID = s.ToIntNullable("ID") ?? throw new FormatException("id"), //fix to: DalXmlFormatException(id)),
             Name = (string?)s.Element("Name"),
             Price = (double)s.Element("Price"),
-            StudentStatus = s.ToEnumNullable<DO.StudentStatus>("StudentStatus"),
-            BirthDate = s.ToDateTimeNullable("BirthDate"),
-            Grade = (double?)s.Element("Grade") // s.ToDoubleNullable("Grade")
+            Category = s.ToEnumNullable<DO.Category>("StudentStatus"),
+            InStock = s.ToIntNullable("Instock") ?? throw new FormatException("Instock")
         };
     }
-    public int Add(DO.Product value)
+    public int Add(DO.Product prod)
     {
-        throw new NotImplementedException();
+        XElement ProductsRootElem = XMLTools.LoadListFromXMLElement("Products");
+
+        XElement? pr = (from st in ProductsRootElem.Elements()
+                          where st.ToIntNullable("ID") == prod.ID //where (int?)st.Element("ID") == doStudent.ID
+                          select st).FirstOrDefault();
+        if (pr != null)
+            throw new AllreadyExistException("the item is allready exist"); 
+
+        XElement studentElem = new XElement("Product",
+                                   new XElement("ID", prod.ID),
+                                   new XElement("Name", prod.Name),
+                                   new XElement("Price", prod.Price),
+                                   new XElement("Category", prod.Category),                         
+                                   new XElement("InStock", prod.InStock)
+                                   );
+
+        ProductsRootElem.Add(studentElem);
+
+        XMLTools.SaveListToXMLElement(ProductsRootElem, "Products");
+
+        return prod.ID; 
     }
 
     public void Delete(int value)
