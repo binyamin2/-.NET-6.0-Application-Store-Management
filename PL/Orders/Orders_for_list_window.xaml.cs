@@ -32,7 +32,7 @@ public partial class Orders_for_list_window : Window
 
     private void update_item(object sender, MouseButtonEventArgs e)
     {
-        PL.Orders.Update_Order_manager update = new PL.Orders.Update_Order_manager(vm, (BO.OrderForList)ListViewOrderForList.SelectedItem) { DataContext = vm };
+        PL.Orders.Update_Order_manager update = new PL.Orders.Update_Order_manager(vm, (BO.OrderForList)((ListView)sender).SelectedItem) { DataContext = vm };
         update.Show();
     }
 

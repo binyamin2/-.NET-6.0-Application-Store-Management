@@ -28,7 +28,7 @@ public partial class ListProductItem : Window
         InitializeComponent();
     }
 
-    private void OpenProductItem(object sender, MouseButtonEventArgs e) => new PL.Products.Product_Item(vm, (BO.ProductItem)PruductsListView.SelectedItem).Show();
+    private void OpenProductItem(object sender, MouseButtonEventArgs e) => new PL.Products.Product_Item(vm, (BO.ProductItem)((ListView)sender).SelectedItem).Show();
 
     private void OpenCart_Click(object sender, RoutedEventArgs e) => new PL.Carts.Cart(vm).Show();
 

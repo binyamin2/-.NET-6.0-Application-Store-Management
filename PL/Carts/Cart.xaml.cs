@@ -27,7 +27,7 @@ namespace PL.Carts
             InitializeComponent();
         }
 
-        private void OpenOrderItem(object sender, MouseButtonEventArgs e)=>new PL.Products.Product_Item(vm, (BO.OrderItem)OrderItemListView.SelectedItem).Show();
+        private void OpenOrderItem(object sender, MouseButtonEventArgs e)=>new PL.Products.Product_Item(vm, (BO.OrderItem)((ListView)sender).SelectedItem).Show();
 
 
     }

@@ -142,6 +142,7 @@
                             <ListView
                                 x:Name="PruductsListViewGroup"
                                 HorizontalContentAlignment="Stretch"
+                                MouseDoubleClick="OpenProductItem"
                                 ItemTemplate="{StaticResource ProductItemTemplate}"
                                 ItemsSource="{Binding GroupProductItems}" />
                         </Expander>
