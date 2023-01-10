@@ -11,8 +11,22 @@ using System.Xml.Linq;
 
 internal class Order : IOrder
 {
+    static DO.Order? createOrderfromXElement(XElement s)
+    {
+        return new DO.Order()
+        {
+            ID = s.ToIntNullable("ID") ?? throw new FormatException("id"), //fix to: DalXmlFormatException(id)),
+            CustomerName = (string?)s.Element("CustomerName"),
+            CustomerEmail = (string?)s.Element("CustomerEmail"),
+            CustomerAdress = (string?)s.Element("CustomerAdress"),
+            OrderDate = s.ToDateTimeNullable("OrderDate"),
+            ShipDate = s.ToDateTimeNullable("ShipDate"),
+            DeliveryDate = s.ToDateTimeNullable("DeliveryDate"),
+        };
+    }
     public int Add(DO.Order value)
     {
+
         throw new NotImplementedException();
     }
 
