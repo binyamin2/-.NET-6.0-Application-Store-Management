@@ -4,9 +4,22 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Security.Principal;
+using System.Xml.Linq;
 
 internal class Product : IProduct
 {
+    static DO.Product? createStudentfromXElement(XElement s)
+    {
+        return new DO.Product()
+        {
+            ID = s.ToIntNullable("ID") ?? throw new FormatException("id"), //fix to: DalXmlFormatException(id)),
+            Name = (string?)s.Element("Name"),
+            Price = (double)s.Element("Price"),
+            StudentStatus = s.ToEnumNullable<DO.StudentStatus>("StudentStatus"),
+            BirthDate = s.ToDateTimeNullable("BirthDate"),
+            Grade = (double?)s.Element("Grade") // s.ToDoubleNullable("Grade")
+        };
+    }
     public int Add(DO.Product value)
     {
         throw new NotImplementedException();
