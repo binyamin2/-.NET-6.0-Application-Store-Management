@@ -35,9 +35,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{E95242DF-F67
 	ProjectSection(SolutionItems) = preProject
 		xml\Config.xml = xml\Config.xml
 		xml\dal_config.xml = xml\dal_config.xml
-		xml\OrderItem.xml = xml\OrderItem.xml
-		xml\Product.xml = xml\Product.xml
 		xml\Orders.xml = xml\Orders.xml
+		xml\Products.xml = xml\Products.xml
+		xml\OrderItems.xml = xml\OrderItems.xml
 	EndProjectSection
 EndProject
 Global

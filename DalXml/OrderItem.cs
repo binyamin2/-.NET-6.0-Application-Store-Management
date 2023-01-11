@@ -28,7 +28,9 @@ internal class OrderItem : IOrderItem
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
 
+        XElement ConfigRootElem = XMLTools.LoadListFromXMLElement("Config");
 
+        int? id = (int?)ConfigRootElem.Element("OrderItemIndex");
 
         XElement OIElem = new XElement("OrderItem",
                                    new XElement("ID", OI.ID),
@@ -37,6 +39,11 @@ internal class OrderItem : IOrderItem
                                    new XElement("Price", OI.Price),
                                    new XElement("Amount", OI.Amount)
                                    );
+        id++;
+
+        ConfigRootElem.Element("OrderItemIndex")?.SetValue(id);
+
+        XMLTools.SaveListToXMLElement(ConfigRootElem, "Config");
 
         OIRootElem.Add(OIElem);
 

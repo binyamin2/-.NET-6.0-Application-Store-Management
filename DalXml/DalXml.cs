@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Dal;
 using DalApi;
-using DO;
 using System.Diagnostics;
 
-sealed internal class DalXml : IDal
+ internal sealed class DalXml : IDal
 {
     private DalXml() { }
     static DalXml() { }

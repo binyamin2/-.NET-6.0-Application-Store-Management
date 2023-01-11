@@ -49,8 +49,8 @@ class Program
                     case StoreItem.InitXMlFiles:
                         // XMLTools.SaveListToXMLSerializer<DO.Product>(DalList.Product.GetAll().ToList(), "Product");
                         List<OrderItem?> list = DalList.OrderItem.GetAll()?.ToList();
-                        XMLTools.SaveListToXMLSerializer<DO.Order>(DalList.Order.GetAll().ToList(), "Order");
-                        XMLTools.SaveListToXMLSerializer<DO.OrderItem>(list, "OrderItem");
+                        XMLTools.SaveListToXMLSerializer<DO.Order>(DalList.Order.GetAll().ToList(), "Orders");
+                        XMLTools.SaveListToXMLSerializer<DO.OrderItem>(list, "OrderItems");
                         break;
                     default:
                         throw new Exception("Unvalide choice press any key to continue...");
