@@ -8,6 +8,7 @@ using System.Xml.Linq;
 
 internal class Product : IProduct
 {
+    const string s_Product = "Products";
     static DO.Product? createProductfromXElement(XElement s)
     {
         return new DO.Product()
@@ -21,7 +22,7 @@ internal class Product : IProduct
     }
     public int Add(DO.Product prod)
     {
-        XElement ProductsRootElem = XMLTools.LoadListFromXMLElement("Products");
+        XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
 
         XElement? pr = (from st in ProductsRootElem.Elements()
                           where st.ToIntNullable("ID") == prod.ID //where (int?)st.Element("ID") == doStudent.ID
@@ -29,7 +30,7 @@ internal class Product : IProduct
         if (pr != null)
             throw new AllreadyExistException("the item is allready exist"); 
 
-        XElement studentElem = new XElement("Product",
+        XElement prodElem = new XElement("Product",
                                    new XElement("ID", prod.ID),
                                    new XElement("Name", prod.Name),
                                    new XElement("Price", prod.Price),
@@ -37,35 +38,68 @@ internal class Product : IProduct
                                    new XElement("InStock", prod.InStock)
                                    );
 
-        ProductsRootElem.Add(studentElem);
+        ProductsRootElem.Add(prodElem);
 
-        XMLTools.SaveListToXMLElement(ProductsRootElem, "Products");
+        XMLTools.SaveListToXMLElement(ProductsRootElem, s_Product);
 
         return prod.ID; 
     }
 
-    public void Delete(int value)
+    public void Delete(int id)
     {
-        throw new NotImplementedException();
+        XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
+
+        XElement? pr = (from st in ProductsRootElem.Elements()
+                          where (int?)st.Element("ID") == id
+                          select st).FirstOrDefault() ?? throw new NotFoundException("the product not found");  
+
+        pr.Remove(); //<==>   Remove Product from Productlist
+
+        XMLTools.SaveListToXMLElement(ProductsRootElem, s_Product);
     }
 
     public DO.Product? Get(int id)
     {
-        throw new NotImplementedException();
+        XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product); 
+
+        return (from s in ProductsRootElem?.Elements()
+                where s.ToIntNullable("ID") == id
+                select (DO.Product?)createProductfromXElement(s)).FirstOrDefault()
+                ?? throw new NotFoundException("the product not found"); 
     }
 
     public DO.Product? Get(Func<DO.Product?, bool>? predict)
     {
-        throw new NotImplementedException();
+        XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
+
+        return (from s in ProductsRootElem?.Elements()
+                where predict(createProductfromXElement(s))
+                select (DO.Product?)createProductfromXElement(s)).FirstOrDefault()
+                ?? throw new NotFoundException("the product not found");
     }
 
-    public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? predict = null)
+    public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
+
+        if (filter != null)
+        {
+            return from s in ProductsRootElem.Elements()
+                   let pr = createProductfromXElement(s)
+                   where filter(pr)
+                   select (DO.Product?)pr;
+        }
+        else
+        {
+            return from s in ProductsRootElem.Elements()
+                   select createProductfromXElement(s);
+        }
+
     }
 
-    public void Update(DO.Product value)
+    public void Update(DO.Product prod)
     {
-        throw new NotImplementedException();
+        Delete(prod.ID);
+        Add(prod);
     }
 }

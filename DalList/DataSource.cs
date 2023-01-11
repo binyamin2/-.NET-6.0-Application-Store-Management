@@ -162,7 +162,7 @@ internal static class DataSource
         {
             OrderItem OI = new OrderItem();
             OI.ID = i;
-            OI.ProdectID = rnd.Next(111111, 111131);
+            OI.ProductID = rnd.Next(111111, 111131);
 
             if ((float)i % 2.0 == 0 )
             {
@@ -174,7 +174,7 @@ internal static class DataSource
             ///chack the price of the choosen prodect
             foreach (var item in DataSource.LProduct)
             {
-                if(item?.ID==OI.ProdectID)
+                if(item?.ID==OI.ProductID)
                     OI.Price = (double)item?.Price;
             }
             

@@ -295,7 +295,7 @@ class Program
                 OrderItem addedOrderItem = new OrderItem()
                 {
                     ID = 0,///the function add give him id OI
-                    ProdectID = productId,
+                    ProductID = productId,
                     OrderID = orderId,
                     Amount = Amount,
                     Price = price
@@ -334,7 +334,7 @@ class Program
                 OrderItem updateItemOrder = new OrderItem()
                 {
                     ID = (int)oldItemOrder?.ID,
-                    ProdectID= productId,
+                    ProductID= productId,
                     OrderID = orderId,
                     Amount = Amount,
                     Price = price

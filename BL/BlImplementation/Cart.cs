@@ -208,7 +208,7 @@ internal class Cart : BlApi.ICart
     public DO.OrderItem BuildOI(BO.OrderItem BOOI)
     {
         DO.OrderItem item = new DO.OrderItem();
-        item.ProdectID = BOOI.ProdectID;
+        item.ProductID = BOOI.ProdectID;
         item.Amount = BOOI.Amount;
         item.Price = BOOI.Price;
         return item;

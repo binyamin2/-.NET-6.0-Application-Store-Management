@@ -59,7 +59,7 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("id not valid");
         foreach(var item in Dal.OrderItem.GetAll())
         {
-            if (item?.ProdectID == id)
+            if (item?.ProductID == id)
                 throw new BO.WorngProductException("the product to delete is in a order");
         }
         try 
@@ -121,7 +121,7 @@ internal class Product : BlApi.IProduct
 
                 //foreach (var item in cart.Items)
                 //{
-                //    if (item.ProdectID == id)
+                //    if (item.ProductID == id)
                 //    {
                 //        PItem.Amount = item.Amount;
                 //        break;

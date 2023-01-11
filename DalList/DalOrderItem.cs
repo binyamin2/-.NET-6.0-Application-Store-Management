@@ -105,7 +105,7 @@ internal class DalOrderItem :IOrderItem
     public OrderItem? GetItemByOrderAndProduct(int orderId,int productId)
     {
         
-        DO.OrderItem? check = DataSource.LOrderItem.Find(i => i?.OrderID ==orderId&&i?.ProdectID==productId );
+        DO.OrderItem? check = DataSource.LOrderItem.Find(i => i?.OrderID ==orderId&&i?.ProductID==productId );
         if (check == null)
             throw new NotFoundException("the orderitem not found");
         return check;

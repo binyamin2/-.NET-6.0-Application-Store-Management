@@ -205,13 +205,13 @@ internal class Order : BlApi.IOrder
     public void UpdateOIADD(int orderID, int productID)
     {
         //exception if the orderitem already exist
-        if(Dal.OrderItem.GetAll().Any(i=>i?.OrderID==orderID&&i?.ProdectID==productID))
+        if(Dal.OrderItem.GetAll().Any(i=>i?.OrderID==orderID&&i?.ProductID==productID))
             throw new BO.WorngOrderException("the order item already exist in item");
         BO.OrderItem newOi=new BO.OrderItem();
         newOi= buildOIFromP(orderID, productID);//build order item from product
         DO.OrderItem item = new DO.OrderItem();
         //build DO order item from BO oi
-        item.ProdectID = newOi.ProdectID;
+        item.ProductID = newOi.ProdectID;
         item.Amount = newOi.Amount;
         item.Price = newOi.Price;
         item.OrderID=orderID;
@@ -252,7 +252,7 @@ internal class Order : BlApi.IOrder
         {
             foreach (var item in list.ToList())
             {
-                if (item?.OrderID == orderID && item?.ProdectID == proudctID)//if found the correct order item
+                if (item?.OrderID == orderID && item?.ProductID == proudctID)//if found the correct order item
                 {
                     //updating the product data and the order item data
                     foreach (var i in Dal.Product.GetAll().ToList())
@@ -289,12 +289,12 @@ internal class Order : BlApi.IOrder
     public void updateOIAmount(int orderID, int proudctID, int amount)
     {
         //exception if the order item not found in the order
-        if (!Dal.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProdectID == proudctID))
+        if (!Dal.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == proudctID))
             throw new BO.WorngOrderException("the order item to update not exist");
         int? current_amount=0,prInstock=0;
 
         //get the current amont in order item
-        current_amount = Dal.OrderItem.GetAll().First(item => item?.ProdectID == proudctID && item?.OrderID == orderID)?.Amount;
+        current_amount = Dal.OrderItem.GetAll().First(item => item?.ProductID == proudctID && item?.OrderID == orderID)?.Amount;
 
 
         //get the amount of the product in stock
@@ -327,7 +327,7 @@ internal class Order : BlApi.IOrder
             
             foreach (var item in list)
             {
-                if (item?.ProdectID == proudctID && item?.OrderID == orderID)
+                if (item?.ProductID == proudctID && item?.OrderID == orderID)
                 {
                     DO.OrderItem NOI = new DO.OrderItem();
                     CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(ref NOI, item);
