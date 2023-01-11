@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DalApi;
 using System.Xml.Linq;
 
 namespace Dal;
-using DalApi;
-using DO;
-
-
-internal class OrderItem : IOrderItem
+internal class DalOrderItem : IOrderItem
 {
     const string s_Oi = "OrderItems";
     static DO.OrderItem? createOIfromXElement(XElement s)

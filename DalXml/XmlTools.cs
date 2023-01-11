@@ -1,12 +1,14 @@
-﻿namespace Dal;
+﻿
 
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
+namespace Dal;
+
 static class XMLTools
 {
-    static  string? s_dir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory())?.FullName +@"\xml\";
+    static string? s_dir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory())?.FullName + @"\xml\";
     static XMLTools()
     {
         if (!Directory.Exists(s_dir))
@@ -75,7 +77,7 @@ static class XMLTools
             //if (s_writing)
             //    serializer.Serialize(writer, list);
             //else
-                serializer.Serialize(file, list);
+            serializer.Serialize(file, list);
         }
         catch (Exception ex)
         {

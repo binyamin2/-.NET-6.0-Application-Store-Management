@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BO;
+using DalApi;
 
 namespace PL
 {
@@ -30,7 +32,6 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-
         }
         /// <summary>
         /// admin actions button

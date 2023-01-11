@@ -13,10 +13,11 @@ public static class Factory
 
         try
         {
-            Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));
+            Assembly.LoadFrom(dal ?? throw new DalConfigException($"Package {dal} is null"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            string bean=e.Message;
             throw new DalConfigException($"Failed to load {dal}.dll package");
         }
 

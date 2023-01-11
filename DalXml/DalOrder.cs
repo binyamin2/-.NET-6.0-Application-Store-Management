@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dal;
-using DalApi;
-using DO;
+﻿using DalApi;
 using System.Xml.Linq;
 
-internal class Order : IOrder
+namespace Dal;
+internal class DalOrder : IOrder
 {
     public string s_Order = "Orders";
     static DO.Order? createOrderfromXElement(XElement s)
@@ -35,7 +28,7 @@ internal class Order : IOrder
 
         int? id = (int?)ConfigRootElem.Element("OrderIndex");
 
-      
+
 
 
         XElement OrderElem = new XElement("Order",
@@ -71,8 +64,8 @@ internal class Order : IOrder
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
 
         XElement? order = (from or in OrderRootElem.Elements()
-                          where (int?)or.Element("ID") == id
-                          select or).FirstOrDefault() ?? throw new NotFoundException("the Order not found");
+                           where (int?)or.Element("ID") == id
+                           select or).FirstOrDefault() ?? throw new NotFoundException("the Order not found");
 
         order.Remove(); //<==>   Remove order from OrderRootElem
 
@@ -86,7 +79,7 @@ internal class Order : IOrder
         return (from s in OrderRootElem?.Elements()
                 where s.ToIntNullable("ID") == id
                 select (DO.Order?)createOrderfromXElement(s)).FirstOrDefault()
-                ?? throw new NotFoundException("the Order not found"); 
+                ?? throw new NotFoundException("the Order not found");
     }
 
     public DO.Order? Get(Func<DO.Order?, bool>? predict)

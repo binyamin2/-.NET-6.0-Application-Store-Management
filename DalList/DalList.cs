@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using DO;
+
 namespace Dal;
 
  internal sealed class DalList : IDal
