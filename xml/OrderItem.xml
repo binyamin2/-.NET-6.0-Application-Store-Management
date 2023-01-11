@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<OrderItems xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<OrderItem>
 		<ID>0</ID>
 		<ProdectID>111112</ProdectID>
@@ -280,4 +280,4 @@
 		<Price>300</Price>
 		<Amount>15</Amount>
 	</OrderItem>
-</ArrayOfOrderItem>
+</OrderItems>

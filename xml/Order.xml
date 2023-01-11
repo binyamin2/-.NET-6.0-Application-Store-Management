@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Orders xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<Order>
 		<ID>0</ID>
 		<CustomerName>avi</CustomerName>
@@ -180,4 +180,4 @@
 		<ShipDate xsi:nil="true" />
 		<DeliveryDate xsi:nil="true" />
 	</Order>
-</ArrayOfOrder>
+</Orders>
