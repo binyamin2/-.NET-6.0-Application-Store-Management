@@ -27,13 +27,18 @@ public partial class ProductWindow : Window
     public ProductWindow()
     {
         InitializeComponent();
+        ///if change make focus
         IsVisibleChanged += (_, _) =>
         {
             if (Visibility == Visibility.Visible)
                 Focus();
         };
     }
-
+    /// <summary>
+    /// for move the window with the top line
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         DragMove();

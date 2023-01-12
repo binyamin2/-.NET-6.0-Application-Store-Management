@@ -23,6 +23,10 @@ namespace PL.Products
     public partial class ProductForList : Window
     {
         private ProductForListVM vm;
+
+        /// <summary>
+        /// the window all the time is exists
+        /// </summary>
         private ProductWindow productWindow;
         public ProductWindow ProductWindow => productWindow;
 
@@ -36,6 +40,7 @@ namespace PL.Products
             this.vm = vm;
             DataContext = vm;
             productWindow = new() { DataContext = vm };
+            //if change make focus
             productWindow.IsVisibleChanged += (s, e) =>
             {
                 if (productWindow.Visibility == Visibility.Collapsed)

@@ -12,22 +12,44 @@ using BO;
 
 namespace PL.ViewModel;
 
+
+/// <summary>
+/// MVVM for window of product
+/// </summary>
 public class ProductForListVM : INotifyPropertyChanged
 {
     BlApi.IBl bl;
 
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="bl"></param>
     public ProductForListVM(BlApi.IBl bl)
     {
         this.bl = bl;
+        ///list of product
         products = new(bl.Product.GetList());
+        /// productsCollectionFilter class that contain the Observable and make filter
         productsCollectionFilter = new();
         ProductsCollectionFilter.Source = products;
         ProductsCollectionFilter.Filter += ProductsCollectionFilter_Filter;
+        ///sort
         ProductsCollectionFilter.SortDescriptions.Add(new("ID", ListSortDirection.Ascending));
         CategoryUI = CategoryUI.All;
+
+        //for product window
         ProductWindowVisible = false;
     }
 
+
+    #region ProductForList window
+
+    /// <summary>
+    /// The filter for CollectionViewSource "productsCollectionFilter"
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// 
     private void ProductsCollectionFilter_Filter(object sender, FilterEventArgs e)
     {
         if (CategoryUI == CategoryUI.All)
@@ -37,28 +59,13 @@ public class ProductForListVM : INotifyPropertyChanged
         }
         if (e.Item is BO.ProductForList product)
             e.Accepted = (int)product.Category == (int)CategoryUI;
-        else
+        else///only for safe
             e.Accepted = true;
     }
 
-    // V1
-    //private ObservableCollection<ProductForList> products;
-
-    //public ObservableCollection<ProductForList> Products
-    //{
-    //    get { return products; }
-
-    //    set
-    //    {
-    //        if (products != value)
-    //        {
-    //            products = value;
-    //            PropertyChanged?.Invoke(this, new("Products"));
-    //        }
-    //    }
-    //}
-
-    //V2
+    /// <summary>
+    /// ObservableCollection<ProductForList> products for list 
+    /// </summary>
     private ObservableCollection<ProductForList> products;
 
     public ObservableCollection<ProductForList> Products
@@ -68,7 +75,7 @@ public class ProductForListVM : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// BO.CategoryUI for comboBox in Filter
+    /// BO.CategoryUI for select in comboBox in Filter (with all)
     /// </summary>
     private BO.CategoryUI categoryUI;
 
@@ -81,9 +88,14 @@ public class ProductForListVM : INotifyPropertyChanged
             ProductsCollectionFilter.View.Refresh();
         }
     }
-
+    /// <summary>
+    /// for list in combobox CategoryUI
+    /// </summary>
     public IEnumerable<BO.CategoryUI> CategoriesUI => Enum.GetValues(typeof(BO.CategoryUI)).Cast<BO.CategoryUI>();
-    public IEnumerable<BO.Category> Categories => Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>();
+
+    /// <summary>
+    /// ///  CollectionViewSource "productsCollectionFilter" class that contain the Observable and make filter
+    /// </summary>
 
     private CollectionViewSource productsCollectionFilter;
     public CollectionViewSource ProductsCollectionFilter
@@ -92,8 +104,16 @@ public class ProductForListVM : INotifyPropertyChanged
         set { Set(ref productsCollectionFilter, value); }
     }
 
+    #endregion
 
     #region ProductWindow
+
+
+    ///ALL the propartychange for ProductWindow 
+
+    public IEnumerable<BO.Category> Categories => Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>();
+
+
     private bool productWindowVisible;
     public bool ProductWindowVisible
     {
@@ -146,7 +166,15 @@ public class ProductForListVM : INotifyPropertyChanged
         set { Set(ref buttonText, value); }
     }
     #endregion
+    #region function
 
+    /// <summary>
+    /// the fuction of the windows
+    /// </summary>
+    /// 
+
+
+    ///for show product window for add
     public void ShowAdd()
     {
         ProductWindowVisible = true;
@@ -157,7 +185,10 @@ public class ProductForListVM : INotifyPropertyChanged
         Price = 0;
         Category = BO.Category.Elegant;
     }
-
+    /// <summary>
+    /// ///for show product window for update
+    /// </summary>
+    /// <param name="id"></param>
     public void ShowUpdate(int id)
     {
         var product = bl.Product.GetForManager(id);
@@ -170,6 +201,9 @@ public class ProductForListVM : INotifyPropertyChanged
         ButtonText = "Update";
     }
 
+    /// <summary>
+    /// for button in product window
+    /// </summary>
     public void AddOrUpdate()
     {
         switch (ButtonText)
@@ -183,7 +217,9 @@ public class ProductForListVM : INotifyPropertyChanged
         }
 
     }
-
+    /// <summary>
+    /// update the product
+    /// </summary>
     private void UpdateProduct()
     {
         // AddOrUpdate to UI
@@ -207,7 +243,9 @@ public class ProductForListVM : INotifyPropertyChanged
         });
         ProductWindowVisible = false;
     }
-
+    /// <summary>
+    /// add the product
+    /// </summary>
     private void AddProduct()
     {
         // AddOrUpdate to UI
@@ -230,17 +268,23 @@ public class ProductForListVM : INotifyPropertyChanged
         });
         ProductWindowVisible = false;
     }
-
+    /// <summary>
+    /// The RelayCommand that heritage from command and play the function
+    /// </summary>
     public ICommand AddCommand => new RelayCommand(ShowAdd);
     public ICommand UpdateCommand => new RelayCommand<int>(ShowUpdate);
     public ICommand AddAndUpdateCommand => new RelayCommand(AddOrUpdate);
+    /// <summary>
+    /// hides the window
+    /// </summary>
     public ICommand CancelCommand => new RelayCommand(() => ProductWindowVisible = false);
 
-
+    #endregion
     #region PropertyChanged
     //generic set method that create event for every change 
     private void Set<T>(ref T prop, T val, [CallerMemberName] string? name = "")
     {
+        ///if was change it invoke to who connect to this event
         if (!prop.Equals(val))
         {
             prop = val;

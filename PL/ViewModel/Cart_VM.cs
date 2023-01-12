@@ -298,7 +298,7 @@ public class Cart_VM: INotifyPropertyChanged
     #region PropertyChanged
     //generic set method that create event for every change 
     private void Set<T>(ref T prop, T val, [CallerMemberName] string? name = "")
-    {
+    {///if was change it invoke to who connect to this event
         if (!prop.Equals(val))
         {
             prop = val;

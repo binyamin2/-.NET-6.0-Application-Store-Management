@@ -3,6 +3,9 @@ using System.Globalization;
 using System.Windows.Data;
 
 namespace PL.ViewModel;
+/// <summary>
+/// class for the convert of text to bool (update or add)
+/// </summary>
 
 [ValueConversion(typeof(string), typeof(bool))]
 public class ButtonTextToBoolConverter : IValueConverter

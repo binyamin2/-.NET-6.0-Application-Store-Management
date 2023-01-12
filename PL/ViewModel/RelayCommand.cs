@@ -2,7 +2,9 @@
 using System.Windows.Input;
 
 namespace PL.ViewModel;
-
+/// <summary>
+/// class that herited from command and defines the property
+/// </summary>
 public class RelayCommand : ICommand
 {
     public event EventHandler? CanExecuteChanged;
@@ -15,7 +17,9 @@ public class RelayCommand : ICommand
 
     public void Execute(object? parameter) => excecute();
 }
-
+/// <summary>
+/// class that herited from command and defines the property and accepted value
+/// </summary>
 public class RelayCommand<T> : ICommand
 {
     public event EventHandler? CanExecuteChanged;
