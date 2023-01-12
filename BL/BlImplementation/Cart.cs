@@ -38,7 +38,7 @@ internal class Cart : BlApi.ICart
             throw new BO.NotInStockException("the product is over from stock");
         }
         //return true if the product exist in the cart
-        bool exist=cart.Items.Any(i => i.ProdectID == id);
+        bool exist=cart.Items.Any(i => i.ProductID == id);
         if(!exist)
         {
             //check if the product exist
@@ -57,7 +57,7 @@ internal class Cart : BlApi.ICart
                 BO.OrderItem newOI = new BO.OrderItem();
                 newOI.Price = product.Price;
                 newOI.Name = product.Name;
-                newOI.ProdectID = product.ID;
+                newOI.ProductID = product.ID;
                 newOI.Amount = 1;
                 newOI.TotalPrice = newOI.Price;
                 cart.Items.Add(newOI);
@@ -108,7 +108,7 @@ internal class Cart : BlApi.ICart
             {
                 foreach (var i in Dal.Product.GetAll())//run in all product to find the 1 who needs update
                 {
-                    if(item.ProdectID==i?.ID)
+                    if(item.ProductID==i?.ID)
                     {
                         if (item.Amount>i?.InStock)//exeption
                         {
@@ -140,7 +140,7 @@ internal class Cart : BlApi.ICart
     /// <exception cref="BO.WrongCartDeteilsException"></exception>
     public BO.Cart Update(BO.Cart cart, int id, int amount)
     {
-        bool exist = cart.Items.Any(i => i.ProdectID == id);//Check if the product in the cart
+        bool exist = cart.Items.Any(i => i.ProductID == id);//Check if the product in the cart
         if (!exist)
             throw new BO.WrongCartDeteilsException("the product is not in the cart");
         if (!Dal.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
@@ -152,7 +152,7 @@ internal class Cart : BlApi.ICart
 
         foreach (var item in cart.Items)//adding/updating the product
         {
-            if (item.ProdectID==id)
+            if (item.ProductID==id)
             {
                 if (amount == 0)//delete the product if the amount is 0
                 {
@@ -190,7 +190,7 @@ internal class Cart : BlApi.ICart
      
         foreach (var item in cart.Items)
         {
-            if(item.ProdectID==id)
+            if(item.ProductID==id)
             {
                 item.Amount+=amount;
                 item.TotalPrice+=item.Price*amount;
@@ -208,7 +208,7 @@ internal class Cart : BlApi.ICart
     public DO.OrderItem BuildOI(BO.OrderItem BOOI)
     {
         DO.OrderItem item = new DO.OrderItem();
-        item.ProductID = BOOI.ProdectID;
+        item.ProductID = BOOI.ProductID;
         item.Amount = BOOI.Amount;
         item.Price = BOOI.Price;
         return item;

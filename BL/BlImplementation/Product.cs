@@ -116,7 +116,7 @@ internal class Product : BlApi.IProduct
             PItem.Amount = 0;
             if (cart.Items.Count != 0)
             {
-                PItem.Amount = cart.Items.First(i => i.ProdectID == id).Amount;
+                PItem.Amount = cart.Items.First(i => i.ProductID == id).Amount;
 
 
                 //foreach (var item in cart.Items)

@@ -48,7 +48,7 @@ namespace PL.Products
 
         public Product_Item(Cart_VM vm, BO.OrderItem oi)
         {
-            vm.ProductId = oi.ProdectID;
+            vm.ProductId = oi.ProductID;
             vm.OiId=oi.ID;
             vm.Amount=oi.Amount;
             vm.Price=oi.Price;

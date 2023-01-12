@@ -2,6 +2,8 @@
 using Dal;
 using System.Collections.Generic;
 using DalApi;
+using System.Xml.Linq;
+
 namespace Dal;
 
 /// <summary>
@@ -50,7 +52,14 @@ class Program
                         // XMLTools.SaveListToXMLSerializer<DO.Product>(DalList.Product.GetAll().ToList(), "Product");
                         List<OrderItem?> list = DalList.OrderItem.GetAll()?.ToList();
                         XMLTools.SaveListToXMLSerializer<DO.Order>(DalList.Order.GetAll().ToList(), "Orders");
+                        XMLTools.SaveListToXMLSerializer<DO.Product>(DalList.Product.GetAll().ToList(), "Products");
                         XMLTools.SaveListToXMLSerializer<DO.OrderItem>(list, "OrderItems");
+                        XElement ConfigRootElem = XMLTools.LoadListFromXMLElement("Config");
+                        ConfigRootElem.Element("OrderItemIndex")?.SetValue(40);
+                        ConfigRootElem.Element("OrderIndex")?.SetValue(20);
+                        XMLTools.SaveListToXMLElement(ConfigRootElem, "Config");
+                        
+
                         break;
                     default:
                         throw new Exception("Unvalide choice press any key to continue...");

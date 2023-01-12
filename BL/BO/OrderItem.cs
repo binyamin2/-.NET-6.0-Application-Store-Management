@@ -16,7 +16,7 @@ public class OrderItem
     private IDal? Dal = Factory.Get();
 
     public int ID { get; set; }
-    public int ProdectID { get; set; }
+    public int ProductID { get; set; }
     public string? Name { get; set; }
     public double Price { get; set; }
     public int Amount { get; set; }
@@ -25,7 +25,7 @@ public class OrderItem
     public override string ToString() => $@"
     ID : {ID}
     Name : {Name}
-    Product ID :{ProdectID}
+    Product ID :{ProductID}
     Price: {Price}
     Amount in order: {Amount}
     TotalPrice : {TotalPrice}";

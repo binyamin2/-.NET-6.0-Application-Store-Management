@@ -26,13 +26,13 @@ internal class DalOrder : IOrder
 
         XElement ConfigRootElem = XMLTools.LoadListFromXMLElement("Config");
 
-        int? id = (int?)ConfigRootElem.Element("OrderIndex");
+        int id = (int)ConfigRootElem.Element("OrderIndex");
 
-
+        order.ID = id;
 
 
         XElement OrderElem = new XElement("Order",
-                                   new XElement("ID", id),
+                                   new XElement("ID", order.ID),
                                    new XElement("CustomerName", order.CustomerName),
                                    new XElement("CustomerEmail", order.CustomerEmail),
                                    new XElement("CustomerAdress", order.CustomerAdress),
@@ -56,7 +56,7 @@ internal class DalOrder : IOrder
 
         XMLTools.SaveListToXMLElement(OrderRootElem, s_Order);
 
-        return order.ID; ;
+        return order.ID; 
     }
 
     public void Delete(int id)
@@ -96,6 +96,7 @@ internal class DalOrder : IOrder
     {
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
 
+        
 
         if (predict != null)
         {
@@ -106,6 +107,7 @@ internal class DalOrder : IOrder
         }
         else
         {
+
             return from s in OrderRootElem.Elements()
                    select createOrderfromXElement(s);
         }
