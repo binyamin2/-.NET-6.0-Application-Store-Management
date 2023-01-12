@@ -13,7 +13,7 @@ public static class Factory
 
         try
         {
-            Assembly.LoadFrom(dal ?? throw new DalConfigException($"Package {dal} is null"));
+            Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));
         }
         catch (Exception e)
         {

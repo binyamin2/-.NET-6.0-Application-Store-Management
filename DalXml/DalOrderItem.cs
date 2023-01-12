@@ -22,7 +22,9 @@ internal class DalOrderItem : IOrderItem
 
         XElement ConfigRootElem = XMLTools.LoadListFromXMLElement("Config");
 
-        int? id = (int?)ConfigRootElem.Element("OrderItemIndex");
+        int id = (int)ConfigRootElem.Element("OrderItemIndex");
+
+        OI.ID = id;
 
         XElement OIElem = new XElement("OrderItem",
                                    new XElement("ID", OI.ID),

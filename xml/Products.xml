@@ -1,143 +1,143 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Products>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
     <ID>111111</ID>
     <Name>SportAdids</Name>
-    <Category>Sport</Category>
     <Price>250</Price>
+    <Category>Sport</Category>
     <InStock>30</InStock>
   </Product>
   <Product>
     <ID>111112</ID>
     <Name>SportNike</Name>
-    <Category>Sport</Category>
     <Price>300</Price>
+    <Category>Sport</Category>
     <InStock>90</InStock>
   </Product>
   <Product>
     <ID>111113</ID>
     <Name>SportPuma</Name>
-    <Category>Sport</Category>
     <Price>300</Price>
+    <Category>Sport</Category>
     <InStock>80</InStock>
   </Product>
   <Product>
     <ID>111114</ID>
     <Name>SportNewBalance</Name>
-    <Category>Sport</Category>
     <Price>350</Price>
+    <Category>Sport</Category>
     <InStock>70</InStock>
   </Product>
   <Product>
     <ID>111115</ID>
     <Name>HikeSalomon</Name>
-    <Category>Hike</Category>
     <Price>200</Price>
+    <Category>Hike</Category>
     <InStock>60</InStock>
   </Product>
   <Product>
     <ID>111116</ID>
     <Name>HikeRedback</Name>
-    <Category>Hike</Category>
     <Price>400</Price>
+    <Category>Hike</Category>
     <InStock>70</InStock>
   </Product>
   <Product>
     <ID>111117</ID>
     <Name>HikeTeva</Name>
-    <Category>Hike</Category>
     <Price>350</Price>
+    <Category>Hike</Category>
     <InStock>80</InStock>
   </Product>
   <Product>
     <ID>111118</ID>
     <Name>HikeNewBalance</Name>
-    <Category>Hike</Category>
     <Price>300</Price>
+    <Category>Hike</Category>
     <InStock>90</InStock>
   </Product>
   <Product>
     <ID>111119</ID>
     <Name>SandalsSource</Name>
-    <Category>Sandals</Category>
     <Price>300</Price>
+    <Category>Sandals</Category>
     <InStock>0</InStock>
   </Product>
   <Product>
     <ID>111120</ID>
     <Name>SandalsChcko</Name>
-    <Category>Sandals</Category>
     <Price>350</Price>
+    <Category>Sandals</Category>
     <InStock>55</InStock>
   </Product>
   <Product>
     <ID>111121</ID>
     <Name>SandalsTeva</Name>
-    <Category>Sandals</Category>
     <Price>300</Price>
+    <Category>Sandals</Category>
     <InStock>45</InStock>
   </Product>
   <Product>
     <ID>111122</ID>
     <Name>SandalsCrocs</Name>
-    <Category>Sandals</Category>
     <Price>300</Price>
+    <Category>Sandals</Category>
     <InStock>35</InStock>
   </Product>
   <Product>
     <ID>111123</ID>
     <Name>ElegantBlandstone</Name>
-    <Category>Elegant</Category>
     <Price>350</Price>
+    <Category>Elegant</Category>
     <InStock>65</InStock>
   </Product>
   <Product>
     <ID>111124</ID>
     <Name>ElegantNike </Name>
-    <Category>Elegant</Category>
     <Price>300</Price>
+    <Category>Elegant</Category>
     <InStock>75</InStock>
   </Product>
   <Product>
     <ID>111125</ID>
     <Name>ElegantGolf</Name>
-    <Category>Elegant</Category>
     <Price>300</Price>
+    <Category>Elegant</Category>
     <InStock>85</InStock>
   </Product>
   <Product>
     <ID>111126</ID>
     <Name>ElegantCastro</Name>
-    <Category>Elegant</Category>
     <Price>350</Price>
+    <Category>Elegant</Category>
     <InStock>25</InStock>
   </Product>
   <Product>
     <ID>111127</ID>
     <Name>BootsRedback</Name>
-    <Category>Boots</Category>
     <Price>350</Price>
+    <Category>Boots</Category>
     <InStock>5</InStock>
   </Product>
   <Product>
     <ID>111128</ID>
     <Name>BootsBlandstone</Name>
-    <Category>Boots</Category>
     <Price>300</Price>
+    <Category>Boots</Category>
     <InStock>60</InStock>
   </Product>
   <Product>
     <ID>111129</ID>
     <Name>BootsKangeru </Name>
-    <Category>Boots</Category>
     <Price>300</Price>
+    <Category>Boots</Category>
     <InStock>75</InStock>
   </Product>
   <Product>
     <ID>111130</ID>
     <Name>BootsNogaEinat</Name>
-    <Category>Boots</Category>
     <Price>350</Price>
+    <Category>Boots</Category>
     <InStock>35</InStock>
   </Product>
-</Products>
+</ArrayOfProduct>

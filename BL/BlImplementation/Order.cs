@@ -211,7 +211,7 @@ internal class Order : BlApi.IOrder
         newOi= buildOIFromP(orderID, productID);//build order item from product
         DO.OrderItem item = new DO.OrderItem();
         //build DO order item from BO oi
-        item.ProductID = newOi.ProdectID;
+        item.ProductID = newOi.ProductID;
         item.Amount = newOi.Amount;
         item.Price = newOi.Price;
         item.OrderID=orderID;
@@ -432,7 +432,7 @@ internal class Order : BlApi.IOrder
         IEnumerable<DO.Product?> ListOrderItem = Dal.Product.GetAll();
 
 
-        BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ProdectID == item?.ID)?.Name;
+        BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ProductID == item?.ID)?.Name;
 
         //foreach (var item in ListOrderItem)
         //{
@@ -481,7 +481,7 @@ internal class Order : BlApi.IOrder
             BO.OrderItem newOI = new BO.OrderItem();
             newOI.Price = product.Price;
             newOI.Name = product.Name;
-            newOI.ProdectID = product.ID;
+            newOI.ProductID = product.ID;
             newOI.Amount = 1;
             newOI.TotalPrice = newOI.Price;
             return newOI;  
