@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Order>
     <ID>0</ID>
@@ -100,15 +100,6 @@
     <DeliveryDate xsi:nil="true" />
   </Order>
   <Order>
-    <ID>11</ID>
-    <CustomerName>ynon</CustomerName>
-    <CustomerEmail>ynon@gmail.com</CustomerEmail>
-    <CustomerAdress>king_gorg12</CustomerAdress>
-    <OrderDate>2023-01-08T09:47:07.6442524+02:00</OrderDate>
-    <ShipDate>2023-01-08T21:55:45.4934503+02:00</ShipDate>
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
     <ID>12</ID>
     <CustomerName>slomi</CustomerName>
     <CustomerEmail>slomi@gmail.com</CustomerEmail>
@@ -179,5 +170,14 @@
     <OrderDate>2023-01-07T09:20:52.4340889+02:00</OrderDate>
     <ShipDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>20</ID>
+    <CustomerName>ynon</CustomerName>
+    <CustomerEmail>ynon@gmail.com</CustomerEmail>
+    <CustomerAdress>king_gorg12</CustomerAdress>
+    <OrderDate>2023-01-08T09:47:07.6442524+02:00</OrderDate>
+    <ShipDate>2023-01-08T21:55:45.4934503+02:00</ShipDate>
+    <DeliveryDate>2023-01-15T19:28:14.0786406+02:00</DeliveryDate>
   </Order>
 </ArrayOfOrder>
