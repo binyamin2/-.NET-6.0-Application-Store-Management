@@ -9,7 +9,17 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="None" ImageSource="/bri.jpeg"/>
+        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="40*" />
             <RowDefinition Height="500*" />
@@ -46,7 +56,7 @@
                         Width="auto"
                         Height="auto"
                         HorizontalAlignment="Stretch"
-                        Background="Transparent">
+                        Background="AntiqueWhite">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

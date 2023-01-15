@@ -16,13 +16,29 @@
     kjgy
     -->
     <Window.Resources>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Aqua"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
         <BooleanToVisibilityConverter x:Key="boolToVisibityConverter" />
         <vm:ButtonTextToBoolConverter x:Key="buttonTextToBoolConverter" />
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
     </Window.Resources>
     <Window.Visibility>
         <Binding Converter="{StaticResource boolToVisibityConverter}" Path="ProductWindowVisible" />
     </Window.Visibility>
     <DockPanel LastChildFill="True">
+        <DockPanel.Background>
+            <ImageBrush TileMode="None" ImageSource="/bri.jpeg"/>
+        </DockPanel.Background>
+
         <Rectangle
             Width="Auto"
             Height="20"

@@ -7,13 +7,25 @@
         mc:Ignorable="d"
         Title="OrderTracking" Height="450" Width="800">
     <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Aqua"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
         <BooleanToVisibilityConverter x:Key="boolToVisibityConverter" />
         <DataTemplate x:Key="OrderStatusList">
             <Grid
                 Width="auto"
                 Height="auto"
                 HorizontalAlignment="Stretch"
-                Background="Transparent">
+                Background="AntiqueWhite">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -33,7 +45,7 @@
                 Width="auto"
                 Height="auto"
                 HorizontalAlignment="Stretch"
-                Background="Transparent">
+                Background="AntiqueWhite">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -56,6 +68,10 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="None" ImageSource="/bri.jpeg"/>
+        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="2*" />

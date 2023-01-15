@@ -13,8 +13,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="bri.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\Simulator\Simulator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="bri.jpeg" />
   </ItemGroup>
 
 </Project>

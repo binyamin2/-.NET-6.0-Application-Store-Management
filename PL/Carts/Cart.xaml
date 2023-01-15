@@ -8,13 +8,22 @@
         Title="Cart" Height="450" Width="800"
         Name="CartWindow">
     <Window.Resources>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Aqua"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
         <DataTemplate x:Key="OrderItemTemplate">
             <Grid
+                
                 
                 Width="auto"
                 Height="auto"
                 HorizontalAlignment="Stretch"
-                Background="Transparent">
+                Background="AntiqueWhite">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -37,8 +46,16 @@
                 <TextBlock Grid.Column="5" Text="Tap twice to show Order item and update details"/>
             </Grid>
         </DataTemplate>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
     </Window.Resources>
     <Grid x:Name="MainGrid">
+        <Grid.Background>
+            <ImageBrush TileMode="None" ImageSource="/bri.jpeg"/>
+        </Grid.Background>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
             <RowDefinition Height="40*" />

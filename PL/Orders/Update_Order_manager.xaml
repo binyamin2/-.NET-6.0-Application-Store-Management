@@ -14,8 +14,24 @@
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibityConverter" />
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Aqua"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="None" ImageSource="/bri.jpeg"/>
+        </Grid.Background>
+
 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
