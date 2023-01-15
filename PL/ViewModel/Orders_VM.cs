@@ -48,6 +48,26 @@ public class Orders_VM : INotifyPropertyChanged
         set { Set(ref isAction, value); }
     }
 
+    private bool generalAction = false;
+    public bool GeneralAction
+    {
+        get { return generalAction; }
+        set { Set(ref generalAction , value); }
+    }
+
+    private bool isUpdateDate = false;
+    public bool IsUpdateDate
+    {
+        get { return isUpdateDate; }
+        set { Set(ref isUpdateDate, value); }
+    }
+
+    private OrderStatus? orderStatusManager ;
+    public OrderStatus? OrderStatusManager
+    {
+        get { return orderStatusManager; }
+        set { Set(ref orderStatusManager, value); }
+    }
     private int id;
     public int ID
     {
@@ -183,12 +203,15 @@ public class Orders_VM : INotifyPropertyChanged
     #region Command
     public ICommand Update_Item => new RelayCommand<int>(ShowUpdate);
 
+    public ICommand UpdateDate => new RelayCommand<string>(ShowDetails);//update order display
     public ICommand AddCommand => new RelayCommand<string>(ShowDetails);//add order display
     public ICommand UpdateCommand => new RelayCommand<string>(ShowDetails);//update order display
     public ICommand ShowTrack => new RelayCommand(TrackShow);//show the tracking details
     public ICommand OrderDetailsShow => new RelayCommand(OrderShow);//to display order details
     public ICommand DeleteCommand => new RelayCommand<string>(ShowDetails);//delete order display
     public ICommand Act => new RelayCommand<Window>(action);//do the wanted action
+
+
 
     private void action(Window window)
     {
@@ -207,6 +230,20 @@ public class Orders_VM : INotifyPropertyChanged
             {
                 bl.Order?.updateOIAmount(ID,ProductId,Amount);
             }
+            else if (ButtomText == "Update Date")
+            {
+                if (OrderStatusManager == BO.OrderStatus.Confirmed)
+                    bl.Order?.UpdateShip(ID);
+                    OrderStatusManager = BO.OrderStatus.Shiped;
+                    
+                if (OrderStatusManager == BO.OrderStatus.Shiped)
+                    bl.Order?.UpdateDelivery(ID);
+                    OrderStatusManager = BO.OrderStatus.Deliverd;
+                if (OrderStatusManager == BO.OrderStatus.Deliverd)
+                {
+                    throw new Exception("The Order Deliveryd");
+                }
+            }
             Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetList());
             MessageBox.Show("the organ is " + ButtomText + "Successfully");
             window.Close();//close the window after the action
@@ -223,18 +260,21 @@ public class Orders_VM : INotifyPropertyChanged
 
     private void ShowDetails(string str)
     {
+        GeneralAction = true;
         //show the wanted detauls
-        if(str == "Add")
+        if (str == "Add")
         {
             IsAction = true;
             ButtomText = "Add";
             IsUpdate = false;
+            IsUpdateDate = false;
 
         }
         else if (str == "Update")
         {
             IsAction = true;
             IsUpdate = true;
+            IsUpdateDate = false;
             ButtomText = "Update";
 
         }
@@ -242,7 +282,15 @@ public class Orders_VM : INotifyPropertyChanged
         {
             IsAction= true;
             IsUpdate = false;
+            IsUpdateDate = false;
             ButtomText = "Delete";
+        }
+        else if (str == "Update Date")
+        {
+            IsAction = false;
+            IsUpdate = false;
+            IsUpdateDate = true;
+            ButtomText = "Update Date";
         }
     }
     public void ShowUpdate(int id)

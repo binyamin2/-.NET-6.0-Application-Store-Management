@@ -5,13 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:PL.Orders"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Update_Order_manager"
     xmlns:vm="clr-namespace:PL.ViewModel"
+    x:Name="Update_OI"
+    Title="Update_Order_manager"
     Width="800"
     Height="450"
-    mc:Ignorable="d"
-    x:Name="Update_OI">
-    
+    mc:Ignorable="d">
+
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibityConverter" />
     </Window.Resources>
@@ -29,6 +29,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button
                 Grid.Row="0"
@@ -36,7 +37,7 @@
                 Width="90"
                 Height="55"
                 Command="{Binding UpdateCommand}"
-                CommandParameter= "Update"
+                CommandParameter="Update"
                 Content="update amount" />
             <Button
                 Grid.Row="0"
@@ -44,17 +45,24 @@
                 Width="90"
                 Height="55"
                 Command="{Binding DeleteCommand}"
-                CommandParameter= "Delete"
-                Content="delete item"  />
+                CommandParameter="Delete"
+                Content="delete item" />
             <Button
                 Grid.Row="0"
                 Grid.Column="2"
                 Width="90"
                 Height="55"
                 Command="{Binding AddCommand}"
-                CommandParameter= "Add"
-   
+                CommandParameter="Add"
                 Content="add item" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="3"
+                Width="120"
+                Height="55"
+                Command="{Binding UpdateDate}"
+                CommandParameter="Update Date"
+                Content="update Order Status" />
         </Grid>
         <Grid
             Grid.Row="1"
@@ -69,26 +77,31 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
-                Content="Id:"
-                Visibility="{Binding Path=IsAction , Converter={StaticResource boolToVisibityConverter}}" 
-                />
+                Content="Id:" />
             <Label
                 Grid.Row="1"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="product id:"
-                Visibility="{Binding Path=IsAction , Converter={StaticResource boolToVisibityConverter},UpdateSourceTrigger=PropertyChanged}" />
+                Visibility="{Binding Path=IsAction, Converter={StaticResource boolToVisibityConverter}, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
                 Grid.Row="2"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="Amount:"
-                Visibility="{Binding Path=IsUpdate , Converter={StaticResource boolToVisibityConverter} }" />
+                Visibility="{Binding Path=IsUpdate, Converter={StaticResource boolToVisibityConverter}}" />
+            <Label
+                Grid.Row="3"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Status:"
+                Visibility="{Binding Path=IsUpdateDate, Converter={StaticResource boolToVisibityConverter}}" />
             <TextBox
                 x:Name="IDText"
                 Grid.Row="0"
@@ -96,10 +109,9 @@
                 Width="120"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Text="{Binding ID}"
-                TextWrapping="Wrap"
                 IsReadOnly="True"
-                Visibility="{Binding Path=IsAction , Converter={StaticResource boolToVisibityConverter}}" />
+                Text="{Binding ID}"
+                TextWrapping="Wrap" />
             <TextBox
                 x:Name="ProductIdText"
                 Grid.Row="1"
@@ -109,7 +121,7 @@
                 VerticalAlignment="Top"
                 Text="{Binding Path=ProductId}"
                 TextWrapping="Wrap"
-                Visibility="{Binding Path=IsAction , Converter={StaticResource boolToVisibityConverter}}" />
+                Visibility="{Binding Path=IsAction, Converter={StaticResource boolToVisibityConverter}}" />
             <TextBox
                 x:Name="AmountText"
                 Grid.Row="2"
@@ -120,21 +132,32 @@
                 RenderTransformOrigin="0.51,1.102"
                 Text="{Binding Path=Amount}"
                 TextWrapping="Wrap"
-                Visibility="{Binding Path=IsUpdate , Converter={StaticResource boolToVisibityConverter}}" />
-            <Button
+                Visibility="{Binding Path=IsUpdate, Converter={StaticResource boolToVisibityConverter}}" />
+
+            <TextBox
                 Grid.Row="3"
                 Grid.Column="1"
-                Width="50"
+                Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                RenderTransformOrigin="0.51,1.102"
+                Text="{Binding Path=OrderStatusManager}"
+                TextWrapping="Wrap"
+                Visibility="{Binding Path=IsUpdateDate, Converter={StaticResource boolToVisibityConverter}}" />
+            <Button
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="100"
                 Height="25"
                 HorizontalAlignment="Center"
                 Command="{Binding Act}"
-                CommandParameter="{Binding ElementName = Update_OI}"
-                Visibility ="{Binding IsAction , Converter={StaticResource boolToVisibityConverter}}"
-                Content="{Binding Path=ButtomText }" />
-            
+                CommandParameter="{Binding ElementName=Update_OI}"
+                Content="{Binding Path=ButtomText}"
+                Visibility="{Binding GeneralAction, Converter={StaticResource boolToVisibityConverter}}" />
+
 
         </Grid>
-        
+
 
     </Grid>
 </Window>

@@ -29,9 +29,12 @@ public partial class Update_Order_manager : Window
         this.vm = vm;
         vm.IsAction = false;
         vm.IsUpdate = false;
+        vm.IsUpdateDate = false;
+        vm.GeneralAction = false;
         vm.ID = (int)orderForList?.ID;
         vm.ProductId = 0;
         vm.Amount = 0;
+        vm.OrderStatusManager = orderForList.Status;
         InitializeComponent();
 
     }
