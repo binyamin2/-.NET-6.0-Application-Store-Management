@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
     <ID>111111</ID>
@@ -41,13 +41,6 @@
     <Price>400</Price>
     <Category>Hike</Category>
     <InStock>70</InStock>
-  </Product>
-  <Product>
-    <ID>111117</ID>
-    <Name>HikeTeva</Name>
-    <Price>350</Price>
-    <Category>Hike</Category>
-    <InStock>80</InStock>
   </Product>
   <Product>
     <ID>111118</ID>
@@ -139,5 +132,12 @@
     <Price>350</Price>
     <Category>Boots</Category>
     <InStock>35</InStock>
+  </Product>
+  <Product>
+    <ID>111117</ID>
+    <Name>HikeTeva</Name>
+    <Price>350</Price>
+    <Category>Hike</Category>
+    <InStock>0</InStock>
   </Product>
 </ArrayOfProduct>

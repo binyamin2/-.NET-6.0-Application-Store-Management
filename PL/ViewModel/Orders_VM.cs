@@ -181,7 +181,6 @@ public class Orders_VM : INotifyPropertyChanged
 
 
     #region Command
-    public ICommand Update_Item => new RelayCommand<int>(ShowUpdate);
 
     public ICommand AddCommand => new RelayCommand<string>(ShowDetails);//add order display
     public ICommand UpdateCommand => new RelayCommand<string>(ShowDetails);//update order display
@@ -245,18 +244,22 @@ public class Orders_VM : INotifyPropertyChanged
             ButtomText = "Delete";
         }
     }
-    public void ShowUpdate(int id)
-    {
-        MessageBox.Show("hi");
-    }
+
 
 
     private void TrackShow()//show track details
     {
-        OT=bl.Order.OrderTracking(ID);
-        DateList=OT.DateList;
-        IsTrack = true;
-        IsOrderShow = false;
+        if (bl.Order.GetList().Any(x => x.ID == ID))//only if the id exist in the order
+        {
+            OT = bl.Order.OrderTracking(ID);
+            DateList = OT.DateList;
+            IsTrack = true;
+            IsOrderShow = false;
+        }
+        else 
+        {
+            MessageBox.Show("the id nod exist");
+        }
     }
     private void OrderShow()//show order details
     {
@@ -275,9 +278,7 @@ public class Orders_VM : INotifyPropertyChanged
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
-        }
-        
-
+        }  
     }
 
 

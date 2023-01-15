@@ -59,8 +59,13 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("id not valid");
         foreach(var item in Dal.OrderItem.GetAll())
         {
-            if (item?.ProductID == id)
-                throw new BO.WorngProductException("the product to delete is in a order");
+            if (item?.ProductID == id)//update the amount in stock to zero and throw exeption that the product in order
+            {
+                DO.Product p = (DO.Product)Dal.Product.Get(id);
+                p.InStock = 0;
+                Dal.Product.Update(p);
+                throw new BO.WorngProductException("the product to delete is in a order, from now and on there is no option to order the product");
+            }
         }
         try 
         {
@@ -119,14 +124,7 @@ internal class Product : BlApi.IProduct
                 PItem.Amount = cart.Items.First(i => i.ProductID == id).Amount;
 
 
-                //foreach (var item in cart.Items)
-                //{
-                //    if (item.ProductID == id)
-                //    {
-                //        PItem.Amount = item.Amount;
-                //        break;
-                //    }
-                //}
+
             }
             return PItem;
         }
