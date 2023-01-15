@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using BO;
@@ -201,6 +202,7 @@ public class ProductForListVM : INotifyPropertyChanged
         ButtonText = "Update";
     }
 
+
     /// <summary>
     /// for button in product window
     /// </summary>
@@ -214,6 +216,7 @@ public class ProductForListVM : INotifyPropertyChanged
             case "Update":
                 UpdateProduct();
                 break;
+
         }
 
     }
@@ -233,14 +236,21 @@ public class ProductForListVM : INotifyPropertyChanged
         int index = products.IndexOf(products.First(product => product.ID == ID));
         products[index] = product;
         // AddOrUpdate to database
-        bl.Product.Update(new()
+        try 
+        { 
+            bl.Product.Update(new()
+            {
+                Category = Category,
+                ID = ID,
+                InStock = InStock,
+                Name = Name,
+                Price = Price
+            });
+        }
+        catch (Exception e)
         {
-            Category = Category,
-            ID = ID,
-            InStock = InStock,
-            Name = Name,
-            Price = Price
-        });
+            MessageBox.Show(e.Message);
+        }
         ProductWindowVisible = false;
     }
     /// <summary>
@@ -258,14 +268,34 @@ public class ProductForListVM : INotifyPropertyChanged
         };
         products.Add(product);
         // AddOrUpdate to database
-        bl.Product.Add(new()
+        try
         {
-            Category = Category,
-            ID = ID,
-            InStock = InStock,
-            Name = Name,
-            Price = Price
-        });
+            bl.Product.Add(new()
+            {
+                Category = Category,
+                ID = ID,
+                InStock = InStock,
+                Name = Name,
+                Price = Price
+            });
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show(e.Message);
+        }
+
+        ProductWindowVisible = false;
+    }
+    private void DeleteProduct()
+    {
+        try
+        {
+            bl.Product.Delete(ID);
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show(e.Message);
+        }
         ProductWindowVisible = false;
     }
     /// <summary>
@@ -274,6 +304,7 @@ public class ProductForListVM : INotifyPropertyChanged
     public ICommand AddCommand => new RelayCommand(ShowAdd);
     public ICommand UpdateCommand => new RelayCommand<int>(ShowUpdate);
     public ICommand AddAndUpdateCommand => new RelayCommand(AddOrUpdate);
+    public ICommand DeleteCommand => new RelayCommand(DeleteProduct);
     /// <summary>
     /// hides the window
     /// </summary>
