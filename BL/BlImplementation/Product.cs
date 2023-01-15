@@ -221,9 +221,10 @@ internal class Product : BlApi.IProduct
         }
         else
         {
-             list = from order in Dal.Product.GetAll()
-                    where (int)order?.Category == (int)category
-                    select order;
+             list = from product in Dal.Product.GetAll()
+                    where (int)product?.Category == (int)category
+                    orderby product?.ID
+                    select product;
         }
         
 

@@ -74,7 +74,7 @@ internal class Order : BlApi.IOrder
             NewList.Add(OrderFL);
 
         }
-        return NewList;
+        return NewList.OrderBy(x => x?.ID);
        
     }
 
