@@ -48,9 +48,8 @@
             Name="OrderTrack"
             Grid.Row="0"
             Grid.Column="2"
-            Width="90"
             Height="55"
-            Content="Track your Order" Click="OrderTrack_Click" />
+            Content="Track your Order" Click="OrderTrack_Click" Margin="55,81,47,81" />
 
             <Button
             Name="Simulator"

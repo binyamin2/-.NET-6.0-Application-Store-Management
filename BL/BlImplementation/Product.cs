@@ -174,7 +174,7 @@ internal class Product : BlApi.IProduct
             PFLItem.Category = (BO.Category)item.Category;
             list2.Add(PFLItem);
         }   
-        return list2;
+        return list2.OrderBy(x=>x.ID);
        
     }
 
