@@ -9,9 +9,9 @@ namespace BlImplementation;
 
 sealed public class Bl : IBl
 {
-    public IProduct Product => new BlImplementation.Product();
+    public IProduct Product { get; } = new BlImplementation.Product();
 
-    public IOrder Order => new BlImplementation.Order();
+    public IOrder Order { get; } = new BlImplementation.Order();
 
-    public ICart Cart => new BlImplementation.Cart();
+    public ICart Cart { get; } = new BlImplementation.Cart();
 }

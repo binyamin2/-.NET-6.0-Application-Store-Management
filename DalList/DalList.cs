@@ -15,10 +15,10 @@ namespace Dal;
    
     public static IDal Instance { get; } = new DalList();
 
-    public IProduct Product =>  new DalProduct();
+    public IProduct Product { get; } =  new DalProduct();
 
-    public IOrder Order =>  new DalOrder();
+    public IOrder Order { get; } = new DalOrder();
 
-    public IOrderItem OrderItem =>  new DalOrderItem();
+    public IOrderItem OrderItem { get; } = new DalOrderItem();
     
 }
