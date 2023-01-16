@@ -60,7 +60,7 @@ internal class Order : BlApi.IOrder
 
             ///update the status enum
             /////method help "CheckStatus"
-            OrderFL.Status = CheckStatus((DO.Order)item);
+            OrderFL.Status = CheckStatus((DO.Order)item!);
 
 
 
@@ -99,19 +99,19 @@ internal class Order : BlApi.IOrder
             if (order?.OrderDate != null)
             {
                 Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.OrderDate, "The order created");
-                orderTrack.DateList.Add(DateOrder);
+                orderTrack.DateList!.Add(DateOrder!);
             }
             ///if not ship
             if (order?.ShipDate != null)
             {
                 Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.ShipDate, "The order shiped");
-                orderTrack.DateList.Add(DateOrder);
+                orderTrack.DateList!.Add(DateOrder!);
             }
             ///if not delivery
             if (order?.DeliveryDate != null)
             {
                 Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.DeliveryDate, "The order delivered");
-                orderTrack.DateList.Add(DateOrder);
+                orderTrack.DateList!.Add(DateOrder!);
             }
 
             return orderTrack;
@@ -130,7 +130,7 @@ internal class Order : BlApi.IOrder
             throw new BO.InputUnvalidException("ID not valid");
         try
         {
-            DO.Order order = (DO.Order)Dal.Order.Get(id);
+            DO.Order order = (DO.Order)Dal.Order.Get(id)!;
             //if allready ship
             if (order.ShipDate != null)
             {
@@ -163,7 +163,7 @@ internal class Order : BlApi.IOrder
             throw new BO.InputUnvalidException("ID not valid");
         try
         {
-            DO.Order order = (DO.Order)Dal.Order.Get(id);
+            DO.Order order = (DO.Order)Dal.Order.Get(id)!;
             //if not allready ship
             if (order.ShipDate == null)
             {
@@ -205,7 +205,7 @@ internal class Order : BlApi.IOrder
     public void UpdateOIADD(int orderID, int productID)
     {
         //exception if the orderitem already exist
-        if (Dal.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == productID))
+        if (Dal!.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == productID))
             throw new BO.WorngOrderException("the order item already exist in item");
         BO.OrderItem newOi = new BO.OrderItem();
         newOi = buildOIFromP(orderID, productID);//build order item from product
@@ -226,8 +226,8 @@ internal class Order : BlApi.IOrder
                         throw new BO.WorngOrderException("there is no enough amount instock");
                     DO.Product Np = new DO.Product();
                     CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
-                    Np.Category = (DO.Category)i?.Category;
-                    Np.InStock = (int)(i?.InStock - 1);
+                    Np.Category = (DO.Category)i?.Category!;
+                    Np.InStock = (int)(i?.InStock - 1)!;
                     Dal.Product.Update(Np);
                     Dal.OrderItem.Add(item);
                 }
@@ -261,10 +261,10 @@ internal class Order : BlApi.IOrder
                         {
                             DO.Product Np = new DO.Product();
                             CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
-                            Np.Category = (DO.Category)i?.Category;
-                            Np.InStock = (int)(i?.InStock + item?.Amount);
+                            Np.Category = (DO.Category)i?.Category!;
+                            Np.InStock = (int)(i?.InStock + item?.Amount)!;
                             Dal.Product.Update(Np);
-                            Dal.OrderItem.Delete((int)item?.ID);
+                            Dal.OrderItem.Delete((int)item?.ID!);
                             return;
                         }
                     }
@@ -289,7 +289,7 @@ internal class Order : BlApi.IOrder
     public void updateOIAmount(int orderID, int proudctID, int amount)
     {
         //exception if the order item not found in the order
-        if (!Dal.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == proudctID))
+        if (!Dal!.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == proudctID))
             throw new BO.WorngOrderException("the order item to update not exist");
         int? current_amount = 0, prInstock = 0;
 
@@ -316,8 +316,8 @@ internal class Order : BlApi.IOrder
                 {
                     DO.Product Np = new DO.Product();
                     CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, item);
-                    Np.Category = (DO.Category)item?.Category;
-                    Np.InStock = (int)(item?.InStock - (amount - current_amount));
+                    Np.Category = (DO.Category)item?.Category!;
+                    Np.InStock = (int)(item?.InStock - (amount - current_amount))!;
                     Dal.Product.Update(Np);
                     break;
                 }
@@ -366,7 +366,7 @@ internal class Order : BlApi.IOrder
             if (OrderItem?.OrderID == id)
             {
                 AmountItems++;
-                TotalPrice += (double)(OrderItem?.Amount * OrderItem?.Price);
+                TotalPrice += (double)(OrderItem?.Amount * OrderItem?.Price)!;
             }
         }
         return Tuple.Create(AmountItems, TotalPrice);
@@ -381,7 +381,7 @@ internal class Order : BlApi.IOrder
     {
         BO.Order BOorder = new BO.Order();
         CopyProperties<BO.Order, DO.Order>.Copy(ref BOorder, order);
-        BOorder.PaymentDate = BOorder.OrderDate;
+        BOorder!.PaymentDate = BOorder.OrderDate;
 
         ///chack the status
 
@@ -424,7 +424,7 @@ internal class Order : BlApi.IOrder
     {
         BO.OrderItem BOorderItem = new BO.OrderItem();
         CopyProperties<BO.OrderItem, DO.OrderItem?>.Copy(ref BOorderItem, orderItem);
-        BOorderItem.TotalPrice = (double)(orderItem?.Price * orderItem?.Amount);
+        BOorderItem!.TotalPrice = (double)(orderItem?.Price * orderItem?.Amount)!;
 
 
         ///find the name of the product
@@ -466,7 +466,7 @@ internal class Order : BlApi.IOrder
     public BO.OrderItem buildOIFromP(int OId, int PId)
     {
         //check if the product exist
-        if (Dal.Product.GetAll().Any(i => i?.ID == PId))
+        if (Dal!.Product.GetAll().Any(i => i?.ID == PId))
         {
             BO.Product product = new BO.Product();
             foreach (var item in Dal.Product.GetAll().ToList())
