@@ -18,5 +18,6 @@ public static class Simulator
         checkStop = simulatorState.STOP;
     }
 
+    private static EventHandler<SimulEventArgs> stopEvent;
 
 }
