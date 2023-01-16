@@ -306,6 +306,8 @@ public class Orders_VM : INotifyPropertyChanged
         }
         else 
         {
+            IsTrack = false;
+            IsOrderShow = false;
             MessageBox.Show("the id nod exist");
         }
     }

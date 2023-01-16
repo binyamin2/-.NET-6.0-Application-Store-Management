@@ -73,8 +73,8 @@
         </Grid.Background>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
             <RowDefinition Height="2*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
 
@@ -182,7 +182,7 @@
 
 
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="0" Margin="0,0,0,289" Grid.RowSpan="2">
+        <Grid Grid.Column="1" Grid.Row="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="6*"/>
@@ -273,14 +273,15 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="6*"/>
+                <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Label
                     Content="Order items list:"
-                    VerticalAlignment="Bottom"
-                    FontSize="20"
-                    Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"/>
+                    VerticalAlignment="Stretch"
+                    FontSize="26"
+                    Visibility="{Binding IsOrderShow , Converter={StaticResource boolToVisibityConverter}}"
+                    FontFamily="Mongolian Baiti"/>
             </Grid>
             <Grid
             Grid.Row="1">
