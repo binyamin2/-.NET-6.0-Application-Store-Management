@@ -10,7 +10,7 @@ public static class Simulator
     public delegate void SimulationCompleteEventHandler();
     public static event SimulationCompleteEventHandler OnSimulationComplete;
 
-    public delegate void UpdateEventHandler(BO.Order? order,DateTime newTime);
+    public delegate void UpdateEventHandler(BO.Order? order,DateTime newTime, int delay);
     public static event UpdateEventHandler OnUpdate;
     public static Random rnd = new Random();
     public static BO.Order? order= new BO.Order();
@@ -37,7 +37,7 @@ public static class Simulator
         {
             int Delay = rnd.Next(3, 11);
             newDate = DateTime.Now + new TimeSpan(0,0,Delay);
-            OnUpdate(order, newDate);
+            OnUpdate(order, newDate, Delay);
             Thread.Sleep(Delay * 1000);
             if (order.Status == BO.OrderStatus.Confirmed)
             {

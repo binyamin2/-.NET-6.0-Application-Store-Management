@@ -23,6 +23,7 @@ namespace PL;
 
 public partial class SimulatorWindow : Window
 {
+    int DelayMain = 0 ;
 
     private Stopwatch stopWatch;
     private bool isTimerRun;
@@ -42,6 +43,10 @@ public partial class SimulatorWindow : Window
         string timerText = stopWatch.Elapsed.ToString();
         timerText = timerText.Substring(0, 8);
         this.timerTextBlock.Text = timerText;
+        ProgressBar.Value = e.ProgressPercentage;
+
+
+
     }
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
@@ -50,8 +55,13 @@ public partial class SimulatorWindow : Window
         Simulator.Simulator.StartSimulation();
         while (isTimerRun)
         {
-            timerworker.ReportProgress(1);
-            Thread.Sleep(1000);
+            int index = DelayMain;
+            for (int i = 0; i < index; i++)
+            {
+                timerworker.ReportProgress(i * 100 / index);
+                Thread.Sleep(1000);
+            }
+            
         }
     }
     private void stopTimerButton_Click(object sender, RoutedEventArgs e)
@@ -76,11 +86,29 @@ public partial class SimulatorWindow : Window
 
     private void HandleSimulationComplete()
     {
-        _simulationWorker.CancelAsync();
+        timerworker.CancelAsync();
     }
 
-    private void HandleSimulationUpdate(BO.Order? order,DateTime newTime)
+    private void HandleSimulationUpdate(BO.Order? order,DateTime newTime, int delay)
     {
+        this.ID = order?.ID;
+        this.OldStatus = order?.Status;
+
+        if (order?.Status == BO.OrderStatus.Confirmed)
+        {
+            this.OldDate = order?.OrderDate;
+            this.NewStatus = BO.OrderStatus.Shiped;
+        }
+        else
+        {
+            this.NewStatus = BO.OrderStatus.Confirmed;
+            this.OldDate = order?.ShipDate;
+        }
+        this.ExpectedDate = newTime;
+
+        DelayMain = delay;
+           
+        
 
     }
 }
