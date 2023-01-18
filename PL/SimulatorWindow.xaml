@@ -7,6 +7,36 @@
         mc:Ignorable="d"
         Title="Simulator" Height="450" Width="800">
     <Grid>
-        
+        <Grid.Background>
+            <ImageBrush TileMode="None" ImageSource="/bri.jpeg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock x:Name="TimerBlock"
+                       Text="00:00:00" 
+                       TextAlignment="Center" 
+                       FontSize="70"
+                       Foreground="AntiqueWhite"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="IDLabel"
+                   Content="ID:"
+                   Grid.Row="0"/>
+        </Grid>
     </Grid>
 </Window>

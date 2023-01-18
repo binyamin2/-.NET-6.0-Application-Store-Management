@@ -502,10 +502,13 @@ internal class Order : BlApi.IOrder
         return orders.Where(filter);
     }
 
-    public int nextOrder()
+    public BO.Order? nextOrder()
     {
-        return (from item in getAll()
-                select item).FirstOrDefault()!.ID;
+        BO.Order? order= (from item in getAll()
+                select item).FirstOrDefault();
+        if(order.Status==BO.OrderStatus.Deliverd) 
+            return null;
+        return order;
     }
 }
 
