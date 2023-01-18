@@ -70,7 +70,5 @@ public interface IOrder
 
     public void updateOIAmount(int orderID, int proudctID, int amount);
 
-    public IEnumerable<BO.Order> getAll(Func<BO.Order, bool>? func = null);
-
     public BO.Order? nextOrder();
 }
