@@ -42,7 +42,7 @@ public partial class SimulatorWindow : Window
     {
         string timerText = stopWatch.Elapsed.ToString();
         timerText = timerText.Substring(0, 8);
-        this.timerTextBlock.Text = timerText;
+        this.TimerBlock.Text = timerText;
         ProgressBar.Value = e.ProgressPercentage;
 
 
@@ -107,8 +107,22 @@ public partial class SimulatorWindow : Window
         this.ExpectedDate = newTime;
 
         DelayMain = delay;
-           
-        
+
+
 
     }
+
+
+    //public int id
+    //{
+    //    get { return (int)GetValue(idProperty); }
+    //    set { SetValue(idProperty, value); }
+    //}
+
+    //// Using a DependencyProperty as the backing store for id.  This enables animation, styling, binding, etc...
+    //public static readonly DependencyProperty idProperty =
+    //    DependencyProperty.Register("id", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(null));
+
+    /////propdp
+
 }
