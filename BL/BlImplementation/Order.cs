@@ -490,26 +490,31 @@ internal class Order : BlApi.IOrder
             throw new BO.WorngOrderException("the product is not exist");
     }
 
-    public IEnumerable<BO.Order> getAll(Func<BO.Order, bool>? filter = null)
-    {
-        var orders = from item in Dal?.Order.GetAll()
-                     orderby item?.OrderDate!, item?.ShipDate, item?.DeliveryDate
-                     select BuildOrderBO((DO.Order)item);
-
-        if (filter == null)
-            return orders;
-
-        return orders.Where(filter);
-    }
-
     public BO.Order? nextOrder()
     {
-        BO.Order? order= (from item in getAll()
-                select item).FirstOrDefault();
-        if(order.Status==BO.OrderStatus.Deliverd) 
-            return null;
-        return order;
+        BO.Order? order = null;
+        var orders = (from item in Dal?.Order.GetAll()
+                      where item?.DeliveryDate == null
+                      select BuildOrderBO((DO.Order)item)).ToList();
+
+        if (orders.Count == 0)
+            return order;
+
+        orders.OrderByDescending(orderByMin);
+
+        return orders.FirstOrDefault();
     }
+
+    private DateTime? orderByMin(BO.Order? order)
+    {
+        if (order?.ShipDate == null)
+            return order?.OrderDate;
+        else
+            return order?.ShipDate;
+
+    } 
 }
+
+
 
 
