@@ -91,7 +91,7 @@ public partial class SimulatorWindow : Window
 
     private void HandleSimulationUpdate(BO.Order? order,DateTime newTime, int delay)
     {
-        this.ID = order?.ID;
+        ID = (int)order?.ID;
         this.OldStatus = order?.Status;
 
         if (order?.Status == BO.OrderStatus.Confirmed)
@@ -113,16 +113,16 @@ public partial class SimulatorWindow : Window
     }
 
 
-    //public int id
-    //{
-    //    get { return (int)GetValue(idProperty); }
-    //    set { SetValue(idProperty, value); }
-    //}
+    public int ID
+    {
+        get { return (int)GetValue(idProperty); }
+        set { SetValue(idProperty, value); }
+    }
 
-    //// Using a DependencyProperty as the backing store for id.  This enables animation, styling, binding, etc...
-    //public static readonly DependencyProperty idProperty =
-    //    DependencyProperty.Register("id", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(null));
+    // Using a DependencyProperty as the backing store for id.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty idProperty =
+        DependencyProperty.Register("ID", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(null));
 
-    /////propdp
+    ///propdp
 
 }
