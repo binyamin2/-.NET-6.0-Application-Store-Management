@@ -126,7 +126,7 @@ internal class Order : BlApi.IOrder
 
     public BO.Order UpdateShip(int id)
     {
-        if (0 >= id)
+        if (0 > id)
             throw new BO.InputUnvalidException("ID not valid");
         try
         {

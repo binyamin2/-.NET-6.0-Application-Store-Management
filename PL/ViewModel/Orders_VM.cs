@@ -227,24 +227,27 @@ public class Orders_VM : INotifyPropertyChanged
             }
             else if (ButtomText == "Update")
             {
-                bl.Order?.updateOIAmount(ID,ProductId,Amount);
+                bl.Order?.updateOIAmount(ID, ProductId, Amount);
             }
-            else if (ButtomText == "Update Date")
+            else if (ButtomText == "Update Status")
             {
                 if (OrderStatusManager == BO.OrderStatus.Confirmed)
+                {
                     bl.Order?.UpdateShip(ID);
                     OrderStatusManager = BO.OrderStatus.Shiped;
-                    
-                if (OrderStatusManager == BO.OrderStatus.Shiped)
+                }
+                else if (OrderStatusManager == BO.OrderStatus.Shiped)
+                {
                     bl.Order?.UpdateDelivery(ID);
                     OrderStatusManager = BO.OrderStatus.Deliverd;
-                if (OrderStatusManager == BO.OrderStatus.Deliverd)
+                }
+                else if (OrderStatusManager == BO.OrderStatus.Deliverd)
                 {
-                    throw new Exception("The Order Deliveryd");
+                    throw new Exception("The Order Delivered");
                 }
             }
             Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetList());
-            MessageBox.Show("the organ is " + ButtomText + "Successfully");
+            MessageBox.Show("the organ is " + ButtomText + " Successfully");
             window.Close();//close the window after the action
         }
         catch (Exception ex)
@@ -284,12 +287,12 @@ public class Orders_VM : INotifyPropertyChanged
             IsUpdateDate = false;
             ButtomText = "Delete";
         }
-        else if (str == "Update Date")
+        else if (str == "Update Status")
         {
             IsAction = false;
             IsUpdate = false;
             IsUpdateDate = true;
-            ButtomText = "Update Date";
+            ButtomText = "Update Status";
         }
     }
 

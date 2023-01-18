@@ -72,5 +72,5 @@ public interface IOrder
 
     public IEnumerable<BO.Order> getAll(Func<BO.Order, bool>? func = null);
 
-    public int nextOrder();
+    public BO.Order? nextOrder();
 }

@@ -9,7 +9,7 @@ internal class DalOrderItem : IOrderItem
     {
         return new DO.OrderItem()
         {
-            ID = s.ToIntNullable("ID") ?? throw new FormatException("id"), //fix to: DalXmlFormatException(id)),
+            ID = s.ToIntNullable("ID") ?? throw new FormatException("id"),
             ProductID = s.ToIntNullable("ProductID") ?? throw new FormatException("product id"),
             OrderID = s.ToIntNullable("OrderID") ?? throw new FormatException("order id"),
             Price = (double)s.Element("Price"),
@@ -120,7 +120,17 @@ internal class DalOrderItem : IOrderItem
 
     public void Update(DO.OrderItem oi)
     {
-        Delete(oi.ID);
-        Add(oi);
+        XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
+
+        XElement? noi = (from st in OIRootElem.Elements()
+                         where (int?)st.Element("ID") == oi.ID
+                         select st).FirstOrDefault() ?? throw new NotFoundException("the orderitem not found");
+        noi.Element("ID")!.SetValue(oi.ID);
+        noi.Element("ProductID")!.SetValue(oi.ProductID);
+        noi.Element("OrderID")!.SetValue(oi.OrderID);
+        noi.Element("Price")!.SetValue(oi.Price);
+        noi.Element("Amount")!.SetValue(oi.Amount);
+
+        XMLTools.SaveListToXMLElement(OIRootElem, s_Oi);
     }
 }

@@ -115,7 +115,25 @@ internal class DalOrder : IOrder
 
     public void Update(DO.Order order)
     {
-        Delete(order.ID);
-        Add(order);
+        XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
+
+        XElement? new_order = (from or in OrderRootElem.Elements()
+                           where (int?)or.Element("ID") == order.ID
+                           select or).FirstOrDefault() ?? throw new NotFoundException("the Order not found");
+        XElement OrderElem = new XElement("Order",
+                                   new XElement("ID", order.ID),
+                                   new XElement("CustomerName", order.CustomerName),
+                                   new XElement("CustomerEmail", order.CustomerEmail),
+                                   new XElement("CustomerAdress", order.CustomerAdress),
+                                   new XElement("OrderDate", order.OrderDate),
+                                   new XElement("ShipDate", order.ShipDate),
+                                   new XElement("DeliveryDate", order.DeliveryDate));
+        new_order.Remove();
+
+        OrderRootElem.Add(OrderElem);
+        
+        XMLTools.SaveListToXMLElement(OrderRootElem, s_Order);
     }
+
+    
 }

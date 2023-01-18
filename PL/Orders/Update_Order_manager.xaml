@@ -50,7 +50,7 @@
             <Button
                 Grid.Row="0"
                 Grid.Column="0"
-                Width="90"
+                Width="100"
                 Height="55"
                 Command="{Binding UpdateCommand}"
                 CommandParameter="Update"
@@ -77,7 +77,7 @@
                 Width="120"
                 Height="55"
                 Command="{Binding UpdateDate}"
-                CommandParameter="Update Date"
+                CommandParameter="Update Status"
                 Content="update Order Status" />
         </Grid>
         <Grid

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Order>
     <ID>0</ID>
@@ -127,39 +127,12 @@
     <DeliveryDate xsi:nil="true" />
   </Order>
   <Order>
-    <ID>14</ID>
-    <CustomerName>shchr</CustomerName>
-    <CustomerEmail>shchr@gmail.com</CustomerEmail>
-    <CustomerAdress>king_gorg15</CustomerAdress>
-    <OrderDate>2023-01-13T10:26:57.2703431+02:00</OrderDate>
-    <ShipDate>2023-01-15T13:31:57.7678663+02:00</ShipDate>
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
     <ID>15</ID>
     <CustomerName>roni</CustomerName>
     <CustomerEmail>roni@gmail.com</CustomerEmail>
     <CustomerAdress>king_gorg16</CustomerAdress>
     <OrderDate>2023-01-10T14:12:49.8013922+02:00</OrderDate>
     <ShipDate>2023-01-11T14:40:42.1218764+02:00</ShipDate>
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
-    <ID>16</ID>
-    <CustomerName>tami</CustomerName>
-    <CustomerEmail>tami@gmail.com</CustomerEmail>
-    <CustomerAdress>king_gorg17</CustomerAdress>
-    <OrderDate>2023-01-11T14:14:48.7711051+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
-    <ID>17</ID>
-    <CustomerName>hdar</CustomerName>
-    <CustomerEmail>hdar@gmail.com</CustomerEmail>
-    <CustomerAdress>king_gorg18</CustomerAdress>
-    <OrderDate>2023-01-11T10:13:13.0357188+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
   </Order>
   <Order>
@@ -179,5 +152,32 @@
     <OrderDate>2023-01-15T02:04:39.9837265+02:00</OrderDate>
     <ShipDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>16</ID>
+    <CustomerName>tami</CustomerName>
+    <CustomerEmail>tami@gmail.com</CustomerEmail>
+    <CustomerAdress>king_gorg17</CustomerAdress>
+    <OrderDate>2023-01-11T14:14:48.7711051+02:00</OrderDate>
+    <ShipDate>2023-01-17T10:38:19.8391326+02:00</ShipDate>
+    <DeliveryDate>2023-01-17T10:40:39.0710597+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>14</ID>
+    <CustomerName>shchr</CustomerName>
+    <CustomerEmail>shchr@gmail.com</CustomerEmail>
+    <CustomerAdress>king_gorg15</CustomerAdress>
+    <OrderDate>2023-01-13T10:26:57.2703431+02:00</OrderDate>
+    <ShipDate>2023-01-15T13:31:57.7678663+02:00</ShipDate>
+    <DeliveryDate>2023-01-17T10:52:51.9702315+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>17</ID>
+    <CustomerName>hdar</CustomerName>
+    <CustomerEmail>hdar@gmail.com</CustomerEmail>
+    <CustomerAdress>king_gorg18</CustomerAdress>
+    <OrderDate>2023-01-11T10:13:13.0357188+02:00</OrderDate>
+    <ShipDate>2023-01-17T10:56:10.055567+02:00</ShipDate>
+    <DeliveryDate>2023-01-17T10:58:30.1225647+02:00</DeliveryDate>
   </Order>
 </ArrayOfOrder>
