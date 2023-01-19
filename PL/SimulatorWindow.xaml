@@ -85,7 +85,7 @@
                    FontSize="25"
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Right"/>
-            <TextBlock Text="{Binding ID}"
+            <TextBlock x:Name="ID"                 
                        Grid.Column="1"
                        Grid.Row="0"
                        VerticalAlignment="Bottom"

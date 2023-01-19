@@ -44,5 +44,7 @@ namespace PL
 
         private void OrderTrack_Click(object sender, RoutedEventArgs e) => new PL.Orders.OrderTracking(new ViewModel.Orders_VM(bl)).Show();
 
+        private void Simulator_Click(object sender, RoutedEventArgs e) => new PL.SimulatorWindow().Show();
+
     }
 }
