@@ -500,7 +500,7 @@ internal class Order : BlApi.IOrder
         if (orders.Count == 0)
             return order;
 
-        orders.OrderByDescending(orderByMin);
+        orders.OrderBy(orderByMin);
 
         return orders.FirstOrDefault();
     }

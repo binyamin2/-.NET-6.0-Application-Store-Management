@@ -51,7 +51,7 @@ public partial class SimulatorWindow : Window
             this.TimerBlock.Text = timerText;
             if (DelayMain != 0)
             {
-                ProgressBar.Value = ( DelayMain-r + 1) * (100 / DelayMain);
+                progresPer = ( DelayMain-r + 1) * (100 / DelayMain);
                 r--;
             }
 
@@ -59,23 +59,23 @@ public partial class SimulatorWindow : Window
         else 
         {
             var args = (Tuple<BO.Order?, DateTime, int>)e.UserState!;
-            this.ID.Text = args.Item1?.ID.ToString();
-            this.OldStatus.Text = args.Item1?.Status.ToString();
+            ID = args.Item1!.ID;
+            OldStatus = args.Item1?.Status;
 
             if (args.Item1?.Status == BO.OrderStatus.Confirmed)
             {
-                this.OldDate.Text = args.Item1?.OrderDate.ToString();
-                this.NewStatus.Text = BO.OrderStatus.Shiped.ToString();
+                StartTime = DateTime.Now;
+                NewStatus = BO.OrderStatus.Shiped;
             }
             else
             {
-                this.NewStatus.Text = BO.OrderStatus.Confirmed.ToString();
-                this.OldDate.Text = args.Item1?.ShipDate.ToString();
+                NewStatus = BO.OrderStatus.Deliverd;
+                StartTime = DateTime.Now;
             }
-            this.ExpectedDate.Text = args.Item2.ToString();
+            ExpectedDate = args.Item2;
             DelayMain = args.Item3;
             r = DelayMain;
-            ProgressBar.Value = 0;
+            progresPer = 0;
         }
     }
 
@@ -146,16 +146,66 @@ public partial class SimulatorWindow : Window
     }
 
 
-    //public int ID
-    //{
-    //    get { return (int)GetValue(idProperty); }
-    //    set { SetValue(idProperty, value); }
-    //}
+    public int ID
+    {
+        get { return (int)GetValue(idProperty); }
+        set { SetValue(idProperty, value); }
+    }
 
-    //// Using a DependencyProperty as the backing store for id.  This enables animation, styling, binding, etc...
-    //public static readonly DependencyProperty idProperty =
-    //    DependencyProperty.Register("ID", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(null));
 
-    ///propdp
+    // Using a DependencyProperty as the backing store for id.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty idProperty =
+        DependencyProperty.Register("ID", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(null));
+    public int progresPer
+    {
+        get { return (int)GetValue(progresPerProperty); }
+        set { SetValue(progresPerProperty, value); }
+    }
+    // Using a DependencyProperty as the backing store for id.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty progresPerProperty =
+        DependencyProperty.Register("progresPer", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(null));
 
+
+
+
+    public BO.OrderStatus? OldStatus   
+    {
+        get { return (BO.OrderStatus?)GetValue(OldStatusProperty); }
+        set { SetValue(OldStatusProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty OldStatusProperty =
+        DependencyProperty.Register("OldStatus", typeof(BO.OrderStatus?), typeof(SimulatorWindow), new PropertyMetadata(null));
+
+    public BO.OrderStatus? NewStatus
+    {
+        get { return (BO.OrderStatus?)GetValue(NewStatusProperty); }
+        set { SetValue(NewStatusProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty NewStatusProperty =
+        DependencyProperty.Register("NewStatus", typeof(BO.OrderStatus?), typeof(SimulatorWindow), new PropertyMetadata(null));
+
+    public DateTime? ExpectedDate
+    {
+        get { return (DateTime?)GetValue(ExpectedDateProperty); }
+        set { SetValue(ExpectedDateProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ExpectedDateProperty =
+        DependencyProperty.Register("ExpectedDate", typeof(DateTime?), typeof(SimulatorWindow), new PropertyMetadata(null));
+
+    public DateTime? StartTime
+    {
+        get { return (DateTime?)GetValue(StartTimeProperty); }
+        set { SetValue(StartTimeProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty StartTimeProperty =
+        DependencyProperty.Register("StartTime", typeof(DateTime?), typeof(SimulatorWindow), new PropertyMetadata(null));
 }
+

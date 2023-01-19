@@ -48,6 +48,7 @@ public static class Simulator
                 bl.Order?.UpdateDelivery(order.ID);
             }
         }
+
     }
 
     public static void StopSimulation()
