@@ -50,7 +50,7 @@ internal class Cart : BlApi.ICart
                     if (item?.ID == id)
                     {
                         CopyProperties<BO.Product, DO.Product?>.Copy(ref product, item);
-                        product.Category = (BO.Category)item?.Category;
+                        product!.Category = (BO.Category)item?.Category!;
                         break;
                     }
                 }
@@ -98,7 +98,7 @@ internal class Cart : BlApi.ICart
             NewO.OrderDate = DateTime.Now;
             //building new DO.orderItems
             int OrderID =Dal.Order.Add(NewO);
-            foreach (var item in cart.Items)
+            foreach (var item in cart.Items!)
             {
                 DO.OrderItem NewDOOI = BuildOI(item);
                 NewDOOI.OrderID = OrderID;
@@ -108,7 +108,7 @@ internal class Cart : BlApi.ICart
             {
                 foreach (var i in Dal.Product.GetAll())//run in all product to find the 1 who needs update
                 {
-                    if(item.ProductID==i?.ID)
+                    if(item!.ProductID==i?.ID)
                     {
                         if (item.Amount>i?.InStock)//exeption
                         {
@@ -116,7 +116,7 @@ internal class Cart : BlApi.ICart
                         }
                         //update the data 
                         DO.Product UpdateProduct = new DO.Product();
-                        UpdateProduct = (DO.Product)i;
+                        UpdateProduct = (DO.Product)i!;
                         UpdateProduct.InStock-=item.Amount;
                         Dal.Product.Update(UpdateProduct);
                     }
@@ -140,19 +140,19 @@ internal class Cart : BlApi.ICart
     /// <exception cref="BO.WrongCartDeteilsException"></exception>
     public BO.Cart Update(BO.Cart cart, int id, int amount)
     {
-        bool exist = cart.Items.Any(i => i.ProductID == id);//Check if the product in the cart
+        bool exist = cart.Items!.Any(i => i.ProductID == id);//Check if the product in the cart
         if (!exist)
             throw new BO.WrongCartDeteilsException("the product is not in the cart");
-        if (!Dal.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
+        if (!Dal!.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
             throw new BO.WrongCartDeteilsException("the product is not exist");
         int? currentInStock=0;
 
         //find how match in stock
         currentInStock = Dal.Product.GetAll().First(item => item?.ID == id)?.InStock;
 
-        foreach (var item in cart.Items)//adding/updating the product
+        foreach (var item in cart.Items!)//adding/updating the product
         {
-            if (item.ProductID==id)
+            if (item!.ProductID==id)
             {
                 if (amount == 0)//delete the product if the amount is 0
                 {
@@ -188,9 +188,9 @@ internal class Cart : BlApi.ICart
    public void UpDateOI(BO.Cart cart,int id,int amount)
     {
      
-        foreach (var item in cart.Items)
+        foreach (var item in cart.Items!)
         {
-            if(item.ProductID==id)
+            if(item!.ProductID==id)
             {
                 item.Amount+=amount;
                 item.TotalPrice+=item.Price*amount;
@@ -216,7 +216,7 @@ internal class Cart : BlApi.ICart
 
     public void cartZero(BO.Cart cart)
     {
-        cart.Items.Clear();
+        cart.Items!.Clear();
         cart.CustomerAdress = "";
         cart.CustomerName = "";
         cart.CustomerEmail = "";

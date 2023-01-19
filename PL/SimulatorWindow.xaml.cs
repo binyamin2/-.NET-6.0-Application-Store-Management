@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,9 +39,16 @@ public partial class SimulatorWindow : Window
         timerworker.DoWork += Worker_DoWork!;
         timerworker.ProgressChanged += Worker_ProgressChanged!;
         timerworker.WorkerReportsProgress = true;
+        timerworker.WorkerSupportsCancellation = true;
         timerworker.RunWorkerAsync();
         isTimerRun=true;
+
     }
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        e.Cancel= true; 
+    }
+
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
         if (e.ProgressPercentage == 0)
@@ -96,23 +104,36 @@ public partial class SimulatorWindow : Window
             
         }
     }
-    private void stopTimerButton_Click(object sender, RoutedEventArgs e)
+    //private void stopTimerButton_Click(object sender, RoutedEventArgs e)
+    //{
+    //    if (isTimerRun)
+    //    {
+    //        stopWatch.Stop();
+    //        isTimerRun = false;
+    //    }
+    //}
+
+    //private void startTimerButton_Click(object sender, RoutedEventArgs e)
+    //{
+    //    if (!isTimerRun)
+    //    {
+    //        stopWatch.Restart();
+    //        isTimerRun = true;
+    //        timerworker.RunWorkerAsync();
+    //    }
+
+    //}
+    private void stop_simulation(object sender, RoutedEventArgs e)
     {
+        Simulator.Simulator.UnregisterFromUpdateEvent(HandleSimulationUpdate);
+        Simulator.Simulator.StopSimulation();
         if (isTimerRun)
         {
             stopWatch.Stop();
             isTimerRun = false;
         }
-    }
+        Close();
 
-    private void startTimerButton_Click(object sender, RoutedEventArgs e)
-    {
-        if (!isTimerRun)
-        {
-            stopWatch.Restart();
-            isTimerRun = true;
-            timerworker.RunWorkerAsync();
-        }
     }
 
 
@@ -126,23 +147,6 @@ public partial class SimulatorWindow : Window
 
         var ta = new Tuple<BO.Order? , DateTime , int >(order, newTime, delay);
         timerworker.ReportProgress(1,ta);
-        //this.ID.Text = order?.ID.ToString();
-        //this.OldStatus.Text = order?.Status.ToString();
-
-        //if (order?.Status == BO.OrderStatus.Confirmed)
-        //{
-        //    this.OldDate.Text = order?.OrderDate.ToString();
-        //    this.NewStatus.Text = BO.OrderStatus.Shiped.ToString();
-        //}
-        //else
-        //{
-        //    this.NewStatus.Text = BO.OrderStatus.Confirmed.ToString();
-        //    this.OldDate.Text = order?.ShipDate.ToString();
-        //}
-        //this.ExpectedDate.Text = newTime.ToString();
-
-        //DelayMain = delay;
-
     }
 
 
@@ -207,5 +211,17 @@ public partial class SimulatorWindow : Window
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty StartTimeProperty =
         DependencyProperty.Register("StartTime", typeof(DateTime?), typeof(SimulatorWindow), new PropertyMetadata(null));
+
+    //public bool isVisible
+    //{
+    //    get { return (bool)GetValue(isVisibleProperty); }
+    //    set { SetValue(isVisibleProperty, value); }
+    //}
+
+    //// Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    //public static readonly DependencyProperty isVisibleProperty =
+    //    DependencyProperty.Register("isVisible", typeof(bool), typeof(SimulatorWindow), new PropertyMetadata(null));
+
+
 }
 

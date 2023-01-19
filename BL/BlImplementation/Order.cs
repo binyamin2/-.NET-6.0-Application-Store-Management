@@ -130,7 +130,7 @@ internal class Order : BlApi.IOrder
             throw new BO.InputUnvalidException("ID not valid");
         try
         {
-            DO.Order order = (DO.Order)Dal.Order.Get(id)!;
+            DO.Order order = (DO.Order)Dal!.Order.Get(id)!;
             //if allready ship
             if (order.ShipDate != null)
             {
@@ -163,7 +163,7 @@ internal class Order : BlApi.IOrder
             throw new BO.InputUnvalidException("ID not valid");
         try
         {
-            DO.Order order = (DO.Order)Dal.Order.Get(id)!;
+            DO.Order order = (DO.Order)Dal!.Order.Get(id)!;
             //if not allready ship
             if (order.ShipDate == null)
             {
@@ -380,7 +380,7 @@ internal class Order : BlApi.IOrder
     public BO.Order BuildOrderBO(DO.Order order)
     {
         BO.Order BOorder = new BO.Order();
-        CopyProperties<BO.Order, DO.Order>.Copy(ref BOorder, order);
+        CopyProperties<BO.Order, DO.Order>.Copy(ref BOorder!, order);
         BOorder!.PaymentDate = BOorder.OrderDate;
 
         ///chack the status
@@ -393,7 +393,7 @@ internal class Order : BlApi.IOrder
             BOorder.Status = BO.OrderStatus.Confirmed;
 
         ///list of orderitem
-        IEnumerable<DO.OrderItem?> ListOrderItem = Dal.OrderItem.GetAll();
+        IEnumerable<DO.OrderItem?> ListOrderItem = Dal!.OrderItem.GetAll();
 
 
         ///HelpOrder , it need for method "CalcAmountAndTotal"
@@ -423,13 +423,13 @@ internal class Order : BlApi.IOrder
     public BO.OrderItem BuildOrderItemBO(DO.OrderItem? orderItem)
     {
         BO.OrderItem BOorderItem = new BO.OrderItem();
-        CopyProperties<BO.OrderItem, DO.OrderItem?>.Copy(ref BOorderItem, orderItem);
+        CopyProperties<BO.OrderItem, DO.OrderItem?>.Copy(ref BOorderItem!, orderItem);
         BOorderItem!.TotalPrice = (double)(orderItem?.Price * orderItem?.Amount)!;
 
 
         ///find the name of the product
 
-        IEnumerable<DO.Product?> ListOrderItem = Dal.Product.GetAll();
+        IEnumerable<DO.Product?> ListOrderItem = Dal!.Product.GetAll();
 
 
         BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ProductID == item?.ID)?.Name;

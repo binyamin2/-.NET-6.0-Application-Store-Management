@@ -38,10 +38,10 @@ internal class Product : BlApi.IProduct
         DO.Product p_DO = new DO.Product();
         CopyProperties<DO.Product,BO.Product>.Copy( ref p_DO, product);
 
-        p_DO.Category = (DO.Category)product.Category;
+        p_DO.Category = (DO.Category)product.Category!;
         try
         {
-            Dal.Product.Add(p_DO);
+            Dal!.Product.Add(p_DO);
         }
         catch (Exception ex)
         {
@@ -57,11 +57,11 @@ internal class Product : BlApi.IProduct
     {
         if (id < 100000 || id > 999999)
             throw new BO.WorngProductException("id not valid");
-        foreach(var item in Dal.OrderItem.GetAll())
+        foreach(var item in Dal!.OrderItem.GetAll())
         {
             if (item?.ProductID == id)//update the amount in stock to zero and throw exeption that the product in order
             {
-                DO.Product p = (DO.Product)Dal.Product.Get(id);
+                DO.Product p = (DO.Product)Dal.Product.Get(id)!;
                 p.InStock = 0;
                 Dal.Product.Update(p);
                 throw new BO.WorngProductException("the product to delete is in a order, from now and on there is no option to order the product");
@@ -89,12 +89,9 @@ internal class Product : BlApi.IProduct
                      select categorys;
 
 
-        return result.First(i => (int)i.Key == (int)category);
+        return result.First(i => (int)i.Key! == (int)category);
 
-        //return (from ProductForList in GetList()
-        //        where (int)category == (int)ProductForList.Category
-        //        orderby ProductForList.ID
-        //        select ProductForList).ToList();
+
     }
 
 
@@ -110,18 +107,18 @@ internal class Product : BlApi.IProduct
             throw new BO.WorngProductException("id not valid");
         try
         {
-            DO.Product? DP = Dal.Product.Get(id);
+            DO.Product? DP = Dal!.Product.Get(id);
             BO.ProductItem PItem = new BO.ProductItem();
-            CopyProperties<BO.ProductItem, DO.Product?>.Copy( ref PItem,DP);
-            PItem.Category = (BO.Category)DP?.Category;//convertion
+            CopyProperties<BO.ProductItem, DO.Product?>.Copy( ref PItem!,DP);
+            PItem!.Category = (BO.Category)DP?.Category!;//convertion
             if (DP?.InStock > 0)
                 PItem.InStock = true;
             else
                 PItem.InStock = false;
             PItem.Amount = 0;
-            if (cart.Items.Count != 0)
+            if (cart.Items!.Count != 0)
             {
-                PItem.Amount = cart.Items.First(i => i.ProductID == id).Amount;
+                PItem.Amount = cart.Items.First(i => i.ProductID == id)!.Amount;
 
 
 
@@ -147,10 +144,10 @@ internal class Product : BlApi.IProduct
         //try to get the right product 
         try
         {
-            DO.Product? DP = Dal.Product.Get(id);
+            DO.Product? DP = Dal!.Product.Get(id);
             BO.Product BP = new BO.Product();
             CopyProperties<BO.Product, DO.Product?>.Copy(ref BP, DP);
-            BP.Category = (BO.Category)DP?.Category;
+            BP!.Category = (BO.Category)DP?.Category!;
             return BP;
         }
         catch (Exception ex)
@@ -165,13 +162,13 @@ internal class Product : BlApi.IProduct
     /// <returns>IEnumerable<BO.Product></returns>
     public IEnumerable<BO.ProductForList> GetList()
     {
-        IEnumerable<DO.Product?> list = Dal.Product.GetAll();
+        IEnumerable<DO.Product?> list = Dal!.Product.GetAll();
         List<BO.ProductForList> list2 = new List<BO.ProductForList>();
         foreach (DO.Product item in list)//converting from product to product for list
         {
             BO.ProductForList PFLItem = new BO.ProductForList();
             CopyProperties<BO.ProductForList,DO.Product>.Copy(ref PFLItem, item);
-            PFLItem.Category = (BO.Category)item.Category;
+            PFLItem!.Category = (BO.Category)item.Category!;
             list2.Add(PFLItem);
         }   
         return list2.OrderBy(x=>x.ID);
@@ -197,10 +194,10 @@ internal class Product : BlApi.IProduct
         //build new product for update
         DO.Product p_DO = new DO.Product();
         CopyProperties<DO.Product, BO.Product>.Copy(ref p_DO, product);
-        p_DO.Category = (DO.Category)product.Category;
+        p_DO.Category = (DO.Category)product.Category!;
         try//asking from dal to update deteils
         {
-            Dal.Product.Update(p_DO);
+            Dal!.Product.Update(p_DO);
         }
         catch (Exception ex)
         {
@@ -217,12 +214,12 @@ internal class Product : BlApi.IProduct
         IEnumerable<DO.Product?> list = new List<DO.Product?>();
         if (category == BO.CategoryUI.All)
         {
-           list = Dal.Product.GetAll();
+           list = Dal!.Product.GetAll();
         }
         else
         {
-             list = from product in Dal.Product.GetAll()
-                    where (int)product?.Category == (int)category
+             list = from product in Dal!.Product.GetAll()
+                    where (int)product?.Category! == (int)category
                     orderby product?.ID
                     select product;
         }
@@ -233,8 +230,8 @@ internal class Product : BlApi.IProduct
         foreach (var item in list)
         {
             BO.ProductItem PItem = new BO.ProductItem();
-            CopyProperties<BO.ProductItem, DO.Product?>.Copy(ref PItem, item);
-            PItem.Category = (BO.Category)item?.Category;
+            CopyProperties<BO.ProductItem, DO.Product?>.Copy(ref PItem!, item);
+            PItem.Category = (BO.Category)item?.Category!;
             PItem.Amount = 0;
             PItem.Price = item?.Price;
             if (item?.InStock>0)

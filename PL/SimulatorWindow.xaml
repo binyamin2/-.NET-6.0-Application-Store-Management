@@ -25,7 +25,11 @@
             </Style.Triggers>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+        <BooleanToVisibilityConverter x:Key="boolToVisibityConverter" />
     </Window.Resources>
+    <Window.Visibility>
+        <Binding Converter="{StaticResource boolToVisibityConverter}" Path="isVisible" />
+    </Window.Visibility>
     <Grid>
         <Grid.Background>
             <ImageBrush TileMode="None" ImageSource="/bri.jpeg"/>
@@ -130,7 +134,7 @@
                          />
             <Button Content="Stop Simulation" HorizontalAlignment="Left" 
                     Margin="677,0,0,0" 
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Center" Click="stop_simulation"
                     
                     />
         </Grid>

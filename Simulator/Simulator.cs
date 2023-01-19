@@ -54,6 +54,7 @@ public static class Simulator
     public static void StopSimulation()
     {
         _isRunning = false;
+
     }
 
     public static void RegisterForSimulationCompleteEvent(SimulationCompleteEventHandler handler)
