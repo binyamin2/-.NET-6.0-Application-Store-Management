@@ -43,11 +43,12 @@ public partial class SimulatorWindow : Window
         timerworker.RunWorkerAsync();
         isTimerRun=true;
 
+
     }
-    protected override void OnClosing(CancelEventArgs e)
-    {
-        e.Cancel= true; 
-    }
+    //protected override void OnClosing(CancelEventArgs e)
+    //{
+    //    e.Cancel= true; 
+    //}
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
@@ -104,25 +105,7 @@ public partial class SimulatorWindow : Window
             
         }
     }
-    //private void stopTimerButton_Click(object sender, RoutedEventArgs e)
-    //{
-    //    if (isTimerRun)
-    //    {
-    //        stopWatch.Stop();
-    //        isTimerRun = false;
-    //    }
-    //}
 
-    //private void startTimerButton_Click(object sender, RoutedEventArgs e)
-    //{
-    //    if (!isTimerRun)
-    //    {
-    //        stopWatch.Restart();
-    //        isTimerRun = true;
-    //        timerworker.RunWorkerAsync();
-    //    }
-
-    //}
     private void stop_simulation(object sender, RoutedEventArgs e)
     {
         Simulator.Simulator.UnregisterFromUpdateEvent(HandleSimulationUpdate);
@@ -212,15 +195,6 @@ public partial class SimulatorWindow : Window
     public static readonly DependencyProperty StartTimeProperty =
         DependencyProperty.Register("StartTime", typeof(DateTime?), typeof(SimulatorWindow), new PropertyMetadata(null));
 
-    //public bool isVisible
-    //{
-    //    get { return (bool)GetValue(isVisibleProperty); }
-    //    set { SetValue(isVisibleProperty, value); }
-    //}
-
-    //// Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-    //public static readonly DependencyProperty isVisibleProperty =
-    //    DependencyProperty.Register("isVisible", typeof(bool), typeof(SimulatorWindow), new PropertyMetadata(null));
 
 
 }
