@@ -58,6 +58,7 @@ public partial class SimulatorWindow : Window
     /// <param name="e"></param>
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
+        ///call from BackgroundWorker for the watch
         if (e.ProgressPercentage == 0)
         {
             
@@ -71,10 +72,12 @@ public partial class SimulatorWindow : Window
             }
 
         }
+        /// call from thread in simulator.cs For update the details 
         else 
         {
             
             var args = (Tuple<BO.Order?, DateTime, int>)e.UserState!;
+            ///if organ exites
             if (args.Item1 != null)
             {
                 ID = args.Item1!.ID;
@@ -95,6 +98,7 @@ public partial class SimulatorWindow : Window
                 r = DelayMain;
                 progresPer = 0;
             }
+            ///if organ UNexites
             else
             {
                 ID = null;
@@ -122,6 +126,7 @@ public partial class SimulatorWindow : Window
     /// <param name="e"></param>
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
+        ///register func to events
         Simulator.Simulator.RegisterForSimulationCompleteEvent(HandleSimulationComplete);
         Simulator.Simulator.RegisterForUpdateEvent(HandleSimulationUpdate);
         Simulator.Simulator.StartSimulation();
@@ -141,8 +146,10 @@ public partial class SimulatorWindow : Window
     /// <param name="e"></param>
     private void stop_simulation(object sender, RoutedEventArgs e)
     {
+        ///stop simultor and unregister
         Simulator.Simulator.UnregisterFromUpdateEvent(HandleSimulationUpdate);
         Simulator.Simulator.StopSimulation();
+        ///stop the backgroundworker
         if (isTimerRun)
         {
             stopWatch.Stop();

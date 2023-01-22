@@ -28,10 +28,11 @@ public static class Simulator
     /// </summary>
     public static void StartSimulation()
     {
-        
+        ///open the thread
         new Thread(() =>
         {
             _isRunning = true;
+            ///do the work until the flag changed
             while (_isRunning) 
             {
                 work();
@@ -52,8 +53,10 @@ public static class Simulator
         {
             int Delay = rnd.Next(3, 11);
             newDate = DateTime.Now + new TimeSpan(0,0,Delay);
+            ///call the func that rigister to Update
             OnUpdate(order, newDate, Delay);
             Thread.Sleep(Delay * 1000);
+            ///update the time in BL 
             if (order.Status == BO.OrderStatus.Confirmed)
             {
                 bl.Order?.UpdateShip(order.ID);
@@ -64,6 +67,7 @@ public static class Simulator
             }
         }
         else
+        /// ///call the func that rigister to Update by null
         {
             OnUpdate(null,newDate, 0);
         }
