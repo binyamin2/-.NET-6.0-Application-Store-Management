@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 namespace Dal;
@@ -18,6 +19,7 @@ internal class DalProduct : IProduct
             InStock = s.ToIntNullable("InStock") ?? throw new FormatException("instock")
         };
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product prod)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -43,6 +45,7 @@ internal class DalProduct : IProduct
         return prod.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -56,6 +59,7 @@ internal class DalProduct : IProduct
         XMLTools.SaveListToXMLElement(ProductsRootElem, s_Product);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? Get(int id)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -66,6 +70,7 @@ internal class DalProduct : IProduct
                 ?? throw new NotFoundException("the product not found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? Get(Func<DO.Product?, bool>? predict)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -76,6 +81,7 @@ internal class DalProduct : IProduct
                 ?? throw new NotFoundException("the product not found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -95,6 +101,7 @@ internal class DalProduct : IProduct
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product prod)
     {
         Delete(prod.ID);

@@ -3,6 +3,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,8 @@ internal class DalOrderItem :IOrderItem
     /// </summary>
     /// <param name="OI"></param>
     /// <returns>int</returns>
-  public int Add(OrderItem OI) 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int Add(OrderItem OI) 
     {
         OI.ID = DataSource.IDOrderItem;
 
@@ -39,6 +41,7 @@ internal class DalOrderItem :IOrderItem
     /// get orderitem by id
     /// </summary>
     /// <param name="IDorderItem"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem? Get(int IDorderItem)
     {
 
@@ -51,6 +54,7 @@ internal class DalOrderItem :IOrderItem
     /// delete organ
     /// </summary>
     /// <param name="id"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         DO.OrderItem? check = DataSource.LOrderItem.Find(i => i?.ID == id);
@@ -62,6 +66,7 @@ internal class DalOrderItem :IOrderItem
     /// return new array of all OrderItem
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predict = null)
     {
         if (predict == null)
@@ -82,6 +87,7 @@ internal class DalOrderItem :IOrderItem
     /// update the product
     /// </summary>
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem orderItem)
     {
         foreach (var item in DataSource.LOrderItem.ToList())
@@ -101,6 +107,7 @@ internal class DalOrderItem :IOrderItem
     /// <param name="productId"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem? GetItemByOrderAndProduct(int orderId,int productId)
     {
         
@@ -115,6 +122,7 @@ internal class DalOrderItem :IOrderItem
     /// <param name="orderId"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetItemsListByOrderId(int orderId)
     {
        
@@ -127,8 +135,9 @@ internal class DalOrderItem :IOrderItem
     /// get order item from list according to some condition
     /// </summary>
     /// <param name="predict"></param>
-    /// <returns></returns>
+    /// <returns>OrderItem</returns>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem? Get(Func<OrderItem?, bool>? predict)
     {
  

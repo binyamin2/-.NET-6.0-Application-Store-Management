@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -25,6 +26,7 @@ internal class Product : BlApi.IProduct
     /// add a product for data base   for manager
     /// </summary>
     /// <param name="product"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Add(BO.Product product)
     {
         if (product.ID < 100000 || product.ID > 999999)
@@ -53,6 +55,7 @@ internal class Product : BlApi.IProduct
     /// delete product from data base   for manager
     /// </summary>
     /// <param name="id"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         if (id < 100000 || id > 999999)
@@ -77,6 +80,7 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetCategory(BO.CategoryUI category)
     {
         if (category == BO.CategoryUI.All)
@@ -101,6 +105,7 @@ internal class Product : BlApi.IProduct
     /// <param name="id"></param>
     /// <param name="cart"></param>
     /// <returns>BO.ProductItem</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem GetForClient(int id, BO.Cart cart)
     {
         if (id < 100000 || id > 999999)
@@ -137,6 +142,7 @@ internal class Product : BlApi.IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Product</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetForManager(int id)
     {
         if (id < 100000 || id > 999999)
@@ -160,6 +166,7 @@ internal class Product : BlApi.IProduct
     /// get list of productForList
     /// </summary>
     /// <returns>IEnumerable<BO.Product></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetList()
     {
         IEnumerable<DO.Product?> list = Dal!.Product.GetAll();
@@ -180,6 +187,7 @@ internal class Product : BlApi.IProduct
     /// update a product   for manager
     /// </summary>
     /// <param name="product"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(BO.Product product)
     {
         //check the input
@@ -209,6 +217,7 @@ internal class Product : BlApi.IProduct
     /// return list of ProductItem For window ListProductItem
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetListProductItems(BO.CategoryUI category = BO.CategoryUI.All)
     {
         IEnumerable<DO.Product?> list = new List<DO.Product?>();
