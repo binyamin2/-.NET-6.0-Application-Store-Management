@@ -15,7 +15,13 @@ namespace BlImplementation;
 internal class Order : BlApi.IOrder
 {
     private IDal? Dal = DalApi.Factory.Get();
-
+    /// <summary>
+    /// get order by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>order</returns>
+    /// <exception cref="BO.InputUnvalidException"></exception>
+    /// <exception cref="BO.WorngOrderException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order Get(int id)
     {
@@ -87,7 +93,13 @@ internal class Order : BlApi.IOrder
     }
 
 
-
+    /// <summary>
+    /// order the track
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.InputUnvalidException"></exception>
+    /// <exception cref="BO.WorngOrderException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTracking(int id)
     {
@@ -135,7 +147,13 @@ internal class Order : BlApi.IOrder
             }
         }
     }
-
+    /// <summary>
+    /// update the status of shipdate
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.InputUnvalidException"></exception>
+    /// <exception cref="BO.WorngOrderException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateShip(int id)
     {
@@ -172,7 +190,13 @@ internal class Order : BlApi.IOrder
         }
     }
 
-
+    /// <summary>
+    /// update the status delivery
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.InputUnvalidException"></exception>
+    /// <exception cref="BO.WorngOrderException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateDelivery(int id)
     {
@@ -533,7 +557,10 @@ internal class Order : BlApi.IOrder
                 throw new BO.WorngOrderException("the product is not exist");
         }
     }
-
+    /// <summary>
+    /// get the next order for simulator
+    /// </summary>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order? nextOrder()
     {
@@ -542,12 +569,13 @@ internal class Order : BlApi.IOrder
             BO.Order? order = null;
             var orders = (from item in Dal?.Order.GetAll()
                           where item?.DeliveryDate == null
+                          orderby item?.ShipDate??item?.OrderDate
                           select BuildOrderBO((DO.Order)item)).ToList();
 
             if (orders.Count == 0)
                 return order;
 
-            orders.OrderBy(orderByMin);
+            //orders.OrderBy(orderByMin);
 
             return orders.FirstOrDefault();
         }
