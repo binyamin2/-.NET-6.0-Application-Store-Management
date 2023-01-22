@@ -567,6 +567,7 @@ internal class Order : BlApi.IOrder
         lock (Dal!)
         {
             BO.Order? order = null;
+            //return only the relevant orders order according the dates
             var orders = (from item in Dal?.Order.GetAll()
                           where item?.DeliveryDate == null
                           orderby item?.ShipDate??item?.OrderDate
@@ -574,22 +575,10 @@ internal class Order : BlApi.IOrder
 
             if (orders.Count == 0)
                 return order;
-
-            //orders.OrderBy(orderByMin);
-
             return orders.FirstOrDefault();
         }
     }
 
-    [MethodImpl(MethodImplOptions.Synchronized)]
-    private DateTime? orderByMin(BO.Order? order)
-    {
-        if (order?.ShipDate == null)
-            return order?.OrderDate;
-        else
-            return order?.ShipDate;
-
-    } 
 }
 
 
