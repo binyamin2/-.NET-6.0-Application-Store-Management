@@ -43,13 +43,6 @@
     <InStock>80</InStock>
   </Product>
   <Product>
-    <ID>111118</ID>
-    <Name>HikeNewBalance</Name>
-    <Price>300</Price>
-    <Category>Hike</Category>
-    <InStock>90</InStock>
-  </Product>
-  <Product>
     <ID>111119</ID>
     <Name>SandalsSource</Name>
     <Price>300</Price>
@@ -69,34 +62,6 @@
     <Price>300</Price>
     <Category>Sandals</Category>
     <InStock>35</InStock>
-  </Product>
-  <Product>
-    <ID>111123</ID>
-    <Name>ElegantBlandstone</Name>
-    <Price>350</Price>
-    <Category>Elegant</Category>
-    <InStock>65</InStock>
-  </Product>
-  <Product>
-    <ID>111124</ID>
-    <Name>ElegantNike </Name>
-    <Price>300</Price>
-    <Category>Elegant</Category>
-    <InStock>75</InStock>
-  </Product>
-  <Product>
-    <ID>111125</ID>
-    <Name>ElegantGolf</Name>
-    <Price>300</Price>
-    <Category>Elegant</Category>
-    <InStock>85</InStock>
-  </Product>
-  <Product>
-    <ID>111126</ID>
-    <Name>ElegantCastro</Name>
-    <Price>350</Price>
-    <Category>Elegant</Category>
-    <InStock>25</InStock>
   </Product>
   <Product>
     <ID>111127</ID>
@@ -120,13 +85,6 @@
     <InStock>75</InStock>
   </Product>
   <Product>
-    <ID>111130</ID>
-    <Name>BootsNogaEinat</Name>
-    <Price>350</Price>
-    <Category>Boots</Category>
-    <InStock>35</InStock>
-  </Product>
-  <Product>
     <ID>111120</ID>
     <Name>SandalsChcko</Name>
     <Price>350</Price>
@@ -139,5 +97,54 @@
     <Price>250</Price>
     <Category>Sport</Category>
     <InStock>7</InStock>
+  </Product>
+  <Product>
+    <ID>111123</ID>
+    <Name>ElegantBlandstone</Name>
+    <Price>350</Price>
+    <Category>Elegant</Category>
+    <InStock>64</InStock>
+  </Product>
+  <Product>
+    <ID>111126</ID>
+    <Name>ElegantCastro</Name>
+    <Price>350</Price>
+    <Category>Elegant</Category>
+    <InStock>24</InStock>
+  </Product>
+  <Product>
+    <ID>222222</ID>
+    <Name></Name>
+    <Price>0</Price>
+    <Category>Elegant</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>111125</ID>
+    <Name>ElegantGolf</Name>
+    <Price>300</Price>
+    <Category>Elegant</Category>
+    <InStock>84</InStock>
+  </Product>
+  <Product>
+    <ID>111118</ID>
+    <Name>HikeNewBalance</Name>
+    <Price>300</Price>
+    <Category>Hike</Category>
+    <InStock>89</InStock>
+  </Product>
+  <Product>
+    <ID>111124</ID>
+    <Name>ElegantNike </Name>
+    <Price>300</Price>
+    <Category>Elegant</Category>
+    <InStock>75</InStock>
+  </Product>
+  <Product>
+    <ID>111130</ID>
+    <Name>BootsNogaEinat</Name>
+    <Price>350</Price>
+    <Category>Boots</Category>
+    <InStock>34</InStock>
   </Product>
 </ArrayOfProduct>
