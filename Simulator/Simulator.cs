@@ -7,14 +7,25 @@ public static class Simulator
     static BlApi.IBl bl = BlApi.Factory.Get();
     private static volatile bool _isRunning;
 
+    /// <summary>
+    /// delegate event for complate Simulator
+    /// </summary>
     public delegate void SimulationCompleteEventHandler();
     public static event SimulationCompleteEventHandler OnSimulationComplete;
 
+    /// <summary>
+    /// delegate event for Update Simulator
+    /// </summary>
     public delegate void UpdateEventHandler(BO.Order? order,DateTime newTime, int delay);
     public static event UpdateEventHandler OnUpdate;
+
+
     public static bool isAlreadyOpen=false;
     public static Random rnd = new Random();
     public static BO.Order? order= new BO.Order();
+    /// <summary>
+    /// Start simulation, open the thread and The work
+    /// </summary>
     public static void StartSimulation()
     {
         
@@ -29,6 +40,9 @@ public static class Simulator
             OnSimulationComplete();
         }).Start();
     }
+    /// <summary>
+    /// The work is Each Second it Take organ from the Data and move action to the BL and PL
+    /// </summary>
     private static void work()
     {
         
@@ -49,30 +63,48 @@ public static class Simulator
                 bl.Order?.UpdateDelivery(order.ID);
             }
         }
+        else
+        {
+            OnUpdate(null,newDate, 0);
+        }
 
     }
-
+    /// <summary>
+    /// StopSimulation
+    /// </summary>
     public static void StopSimulation()
     {
         _isRunning = false;
 
     }
-
+    /// <summary>
+    /// Register to complate event
+    /// </summary>
+    /// <param name="handler"></param>
     public static void RegisterForSimulationCompleteEvent(SimulationCompleteEventHandler handler)
     {
         OnSimulationComplete += handler;
     }
-
+    /// <summary>
+    /// UNRegister to complate event
+    /// </summary>
+    /// <param name="handler"></param>
     public static void UnregisterFromSimulationCompleteEvent(SimulationCompleteEventHandler handler)
     {
         OnSimulationComplete -= handler;
     }
 
+    /// <summary>
+    /// Register to Update event
+    /// </summary>
+    /// <param name="handler"></param>
     public static void RegisterForUpdateEvent(UpdateEventHandler handler)
     {
         OnUpdate += handler;
     }
-
+    /// <summary>
+    /// UnRegister to Update event
+    /// </summary>
     public static void UnregisterFromUpdateEvent(UpdateEventHandler handler)
     {
         OnUpdate -= handler;

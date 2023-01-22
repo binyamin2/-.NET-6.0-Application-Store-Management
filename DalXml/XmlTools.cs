@@ -1,11 +1,12 @@
 ﻿
-
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace Dal;
-
+/// <summary>
+/// Help class Of xml tool
+/// </summary>
 static class XMLTools
 {
     static string? s_dir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory())?.FullName + @"\xml\";

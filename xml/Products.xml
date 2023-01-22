@@ -64,13 +64,6 @@
     <InStock>35</InStock>
   </Product>
   <Product>
-    <ID>111127</ID>
-    <Name>BootsRedback</Name>
-    <Price>350</Price>
-    <Category>Boots</Category>
-    <InStock>5</InStock>
-  </Product>
-  <Product>
     <ID>111128</ID>
     <Name>BootsBlandstone</Name>
     <Price>300</Price>
@@ -83,13 +76,6 @@
     <Price>300</Price>
     <Category>Boots</Category>
     <InStock>75</InStock>
-  </Product>
-  <Product>
-    <ID>111120</ID>
-    <Name>SandalsChcko</Name>
-    <Price>350</Price>
-    <Category>Sandals</Category>
-    <InStock>57</InStock>
   </Product>
   <Product>
     <ID>111111</ID>
@@ -146,5 +132,19 @@
     <Price>350</Price>
     <Category>Boots</Category>
     <InStock>34</InStock>
+  </Product>
+  <Product>
+    <ID>111127</ID>
+    <Name>BootsRedback</Name>
+    <Price>350</Price>
+    <Category>Boots</Category>
+    <InStock>4</InStock>
+  </Product>
+  <Product>
+    <ID>111120</ID>
+    <Name>SandalsChcko</Name>
+    <Price>350</Price>
+    <Category>Sandals</Category>
+    <InStock>56</InStock>
   </Product>
 </ArrayOfProduct>

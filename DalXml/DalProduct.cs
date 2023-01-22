@@ -6,6 +6,12 @@ namespace Dal;
 internal class DalProduct : IProduct
 {
     const string s_Product = "Products";
+    /// <summary>
+    /// create Product from XElement
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    /// <exception cref="FormatException"></exception>
     static DO.Product? createProductfromXElement(XElement s)
     {
         return new DO.Product()
@@ -18,6 +24,12 @@ internal class DalProduct : IProduct
             InStock = s.ToIntNullable("InStock") ?? throw new FormatException("instock")
         };
     }
+    /// <summary>
+    /// Add product to xml file
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <returns></returns>
+    /// <exception cref="AllreadyExistException"></exception>
     public int Add(DO.Product prod)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -43,6 +55,11 @@ internal class DalProduct : IProduct
         return prod.ID;
     }
 
+    /// <summary>
+    /// Delete product to xml file
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="NotFoundException"></exception>
     public void Delete(int id)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -55,7 +72,12 @@ internal class DalProduct : IProduct
 
         XMLTools.SaveListToXMLElement(ProductsRootElem, s_Product);
     }
-
+    /// <summary>
+    /// Get organ by id from xml file
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
     public DO.Product? Get(int id)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -65,7 +87,12 @@ internal class DalProduct : IProduct
                 select (DO.Product?)createProductfromXElement(s)).FirstOrDefault()
                 ?? throw new NotFoundException("the product not found");
     }
-
+    /// <summary>
+    /// Get organ by delegate from xml file
+    /// </summary>
+    /// <param name="predict"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
     public DO.Product? Get(Func<DO.Product?, bool>? predict)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -75,7 +102,11 @@ internal class DalProduct : IProduct
                 select (DO.Product?)createProductfromXElement(s)).FirstOrDefault()
                 ?? throw new NotFoundException("the product not found");
     }
-
+    /// <summary>
+    /// Get all organ by delegate from xml file
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -94,7 +125,10 @@ internal class DalProduct : IProduct
         }
 
     }
-
+    /// <summary>
+    /// Update organ in xml file
+    /// </summary>
+    /// <param name="prod"></param>
     public void Update(DO.Product prod)
     {
         Delete(prod.ID);

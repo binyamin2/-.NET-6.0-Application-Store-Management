@@ -31,6 +31,9 @@ public partial class SimulatorWindow : Window
     private Stopwatch stopWatch;
     private volatile bool isTimerRun;
     BackgroundWorker timerworker;
+    /// <summary>
+    /// Ctor
+    /// </summary>
     public SimulatorWindow()
     {
         
@@ -47,11 +50,12 @@ public partial class SimulatorWindow : Window
             Simulator.Simulator.isAlreadyOpen = true;
 
     }
-    //protected override void OnClosing(CancelEventArgs e)
-    //{
-    //    e.Cancel= true; 
-    //}
-
+   
+    /// <summary>
+    /// Worker Func Of update for watch and show simulator
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
         if (e.ProgressPercentage == 0)
@@ -69,30 +73,53 @@ public partial class SimulatorWindow : Window
         }
         else 
         {
+            
             var args = (Tuple<BO.Order?, DateTime, int>)e.UserState!;
-            ID = args.Item1!.ID;
-            OldStatus = args.Item1?.Status;
-
-            if (args.Item1?.Status == BO.OrderStatus.Confirmed)
+            if (args.Item1 != null)
             {
-                StartTime = DateTime.Now;
-                NewStatus = BO.OrderStatus.Shiped;
+                ID = args.Item1!.ID;
+                OldStatus = args.Item1?.Status;
+
+                if (args.Item1?.Status == BO.OrderStatus.Confirmed)
+                {
+                    StartTime = DateTime.Now;
+                    NewStatus = BO.OrderStatus.Shiped;
+                }
+                else
+                {
+                    NewStatus = BO.OrderStatus.Deliverd;
+                    StartTime = DateTime.Now;
+                }
+                ExpectedDate = args.Item2;
+                DelayMain = args.Item3;
+                r = DelayMain;
+                progresPer = 0;
             }
             else
             {
-                NewStatus = BO.OrderStatus.Deliverd;
-                StartTime = DateTime.Now;
+                ID = null;
+                progresPer = 0;
+                OldStatus = null;
+                NewStatus = null;
+                StartTime = null;
+                ExpectedDate = null;
+                DelayMain = 0;
+                r = DelayMain;
+
+
+
+
             }
-            ExpectedDate = args.Item2;
-            DelayMain = args.Item3;
-            r = DelayMain;
-            progresPer = 0;
         }
     }
 
 
 
-    
+    /// <summary>
+    /// Do work of Backgroundworker
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
         Simulator.Simulator.RegisterForSimulationCompleteEvent(HandleSimulationComplete);
@@ -107,7 +134,11 @@ public partial class SimulatorWindow : Window
             
         }
     }
-
+    /// <summary>
+    /// Stop simulation, say to simulator class to stop and after stop
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void stop_simulation(object sender, RoutedEventArgs e)
     {
         Simulator.Simulator.UnregisterFromUpdateEvent(HandleSimulationUpdate);
@@ -122,30 +153,41 @@ public partial class SimulatorWindow : Window
 
     }
 
-
+    /// <summary>
+    /// Finish
+    /// </summary>
     private void HandleSimulationComplete()
     {
         timerworker.CancelAsync();
     }
-
+    /// <summary>
+    /// Update the show of PL with call to ReportProgress
+    /// </summary>
+    /// <param name="order"></param>
+    /// <param name="newTime"></param>
+    /// <param name="delay"></param>
     private void HandleSimulationUpdate(BO.Order? order,DateTime newTime, int delay)
     {
-
-        var ta = new Tuple<BO.Order? , DateTime , int >(order, newTime, delay);
-        timerworker.ReportProgress(1,ta);
+       
+        
+            var ta = new Tuple<BO.Order?, DateTime, int>(order, newTime, delay);
+            timerworker.ReportProgress(1, ta);
+     
+       
     }
 
+    #region DependencyProperty Variable
 
-    public int ID
+    public int? ID
     {
-        get { return (int)GetValue(idProperty); }
+        get { return (int?)GetValue(idProperty); }
         set { SetValue(idProperty, value); }
     }
 
 
     // Using a DependencyProperty as the backing store for id.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty idProperty =
-        DependencyProperty.Register("ID", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("ID", typeof(int?), typeof(SimulatorWindow), new PropertyMetadata(null));
     public int progresPer
     {
         get { return (int)GetValue(progresPerProperty); }
@@ -198,7 +240,7 @@ public partial class SimulatorWindow : Window
     public static readonly DependencyProperty StartTimeProperty =
         DependencyProperty.Register("StartTime", typeof(DateTime?), typeof(SimulatorWindow), new PropertyMetadata(null));
 
-
+    #endregion
 
 }
 
