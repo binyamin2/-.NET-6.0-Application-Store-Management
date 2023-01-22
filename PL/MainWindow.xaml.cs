@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BO;
 using DalApi;
+using Simulator;
 
 namespace PL
 {
@@ -44,7 +45,14 @@ namespace PL
 
         private void OrderTrack_Click(object sender, RoutedEventArgs e) => new PL.Orders.OrderTracking(new ViewModel.Orders_VM(bl)).Show();
 
-        private void Simulator_Click(object sender, RoutedEventArgs e) => new PL.SimulatorWindow().Show();
+        private void Simulator_Click(object sender, RoutedEventArgs e)
+        {
+            if (Simulator.Simulator.isAlreadyOpen == false)
+            {
+                Window simu = new PL.SimulatorWindow();
+                simu.Show();
+            }
+        }
 
     }
 }

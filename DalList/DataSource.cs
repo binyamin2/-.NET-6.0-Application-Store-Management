@@ -55,11 +55,11 @@ internal static class DataSource
 
     private static void Product_Initialize()
     {
-        string[] ProdName = new string[20] { "SportAdids","SportNike", "SportPuma","SportNewBalance",
-                                         "HikeSalomon","HikeRedback","HikeTeva","HikeNewBalance",
-                                         "SandalsSource","SandalsChcko","SandalsTeva","SandalsCrocs",
-                                         "ElegantBlandstone","ElegantNike ","ElegantGolf","ElegantCastro",
-                                         "BootsRedback","BootsBlandstone", "BootsKangeru ","BootsNogaEinat" };
+        string[] ProdName = new string[20] { "Adids","Nike", "Puma","NewBalance",
+                                         "Salomon","Redback","Teva","NewBalance",
+                                         "Source","Chacko","Teva","Crocs",
+                                         "Blandstone","Nike ","Golf","Castro",
+                                         "Redback","Blandstone", "Kangeru ","NogaEinat" };
         int[] price = new int[20] {250,300,300,350,200,400,350,300, 300, 350,
                                   300, 300, 350, 300, 300, 350 , 350, 300, 300, 350 };
         int[] id = new int[20] { 111111, 111112, 111113, 111114, 111115, 111116, 111117, 111118, 111119,

@@ -291,6 +291,10 @@ internal class Order : BlApi.IOrder
         //exception if the order item not found in the order
         if (!Dal!.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == proudctID))
             throw new BO.WorngOrderException("the order item to update not exist");
+        if(amount <0)
+        {
+            throw new BO.WorngOrderException("amount must be not negative");
+        }
         int? current_amount = 0, prInstock = 0;
 
         //get the current amont in order item

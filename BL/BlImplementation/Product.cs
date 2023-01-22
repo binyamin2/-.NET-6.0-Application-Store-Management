@@ -29,7 +29,7 @@ internal class Product : BlApi.IProduct
     {
         if (product.ID < 100000 || product.ID > 999999)
             throw new BO.WorngProductException("id not valid");
-        if (product.Name == null)
+        if (product.Name == "" || product.Name == null)
             throw new BO.WorngProductException("name not valid");
         if (product.Price < 0)
             throw new BO.WorngProductException("price not valid");

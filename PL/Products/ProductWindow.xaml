@@ -156,6 +156,7 @@
                 Height="22"
                 HorizontalAlignment="center"
                 VerticalAlignment="Center"
+                Visibility="{Binding DeleteVisible, Converter={StaticResource boolToVisibityConverter}}"
                 Command="{Binding DeleteCommand}"
                 Content="Delete" />
 

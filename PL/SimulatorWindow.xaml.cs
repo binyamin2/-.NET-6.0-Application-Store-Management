@@ -33,16 +33,18 @@ public partial class SimulatorWindow : Window
     BackgroundWorker timerworker;
     public SimulatorWindow()
     {
-        InitializeComponent();
-        stopWatch = new Stopwatch();
-        timerworker = new BackgroundWorker();
-        timerworker.DoWork += Worker_DoWork!;
-        timerworker.ProgressChanged += Worker_ProgressChanged!;
-        timerworker.WorkerReportsProgress = true;
-        timerworker.WorkerSupportsCancellation = true;
-        timerworker.RunWorkerAsync();
-        isTimerRun=true;
-
+        
+        
+            InitializeComponent();
+            stopWatch = new Stopwatch();
+            timerworker = new BackgroundWorker();
+            timerworker.DoWork += Worker_DoWork!;
+            timerworker.ProgressChanged += Worker_ProgressChanged!;
+            timerworker.WorkerReportsProgress = true;
+            timerworker.WorkerSupportsCancellation = true;
+            timerworker.RunWorkerAsync();
+            isTimerRun=true;
+            Simulator.Simulator.isAlreadyOpen = true;
 
     }
     //protected override void OnClosing(CancelEventArgs e)
@@ -115,6 +117,7 @@ public partial class SimulatorWindow : Window
             stopWatch.Stop();
             isTimerRun = false;
         }
+        Simulator.Simulator.isAlreadyOpen= false;
         Close();
 
     }

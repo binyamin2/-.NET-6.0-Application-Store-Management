@@ -122,6 +122,12 @@ public class ProductForListVM : INotifyPropertyChanged
         set { Set(ref productWindowVisible, value); }
     }
 
+    private bool deleteVisible;
+    public bool DeleteVisible
+    {
+        get { return deleteVisible; }
+        set { Set(ref deleteVisible, value); }
+    }
     private int id;
     public int ID
     {
@@ -185,6 +191,7 @@ public class ProductForListVM : INotifyPropertyChanged
         InStock = 0;
         Price = 0;
         Category = BO.Category.Elegant;
+        DeleteVisible= false;
     }
     /// <summary>
     /// ///for show product window for update
@@ -200,6 +207,7 @@ public class ProductForListVM : INotifyPropertyChanged
         ID = id;
         ProductWindowVisible = true;
         ButtonText = "Update";
+        DeleteVisible = true;
     }
 
 
@@ -233,8 +241,7 @@ public class ProductForListVM : INotifyPropertyChanged
             Name = Name,
             Price = Price
         };
-        int index = products.IndexOf(products.First(product => product.ID == ID));
-        products[index] = product;
+        
         // AddOrUpdate to database
         try 
         { 
@@ -246,6 +253,8 @@ public class ProductForListVM : INotifyPropertyChanged
                 Name = Name,
                 Price = Price
             });
+            int index = products.IndexOf(products.First(product => product.ID == ID));
+            products[index] = product;
         }
         catch (Exception e)
         {
@@ -266,7 +275,7 @@ public class ProductForListVM : INotifyPropertyChanged
             Name = Name,
             Price = Price
         };
-        products.Add(product);
+        
         // AddOrUpdate to database
         try
         {
@@ -278,6 +287,7 @@ public class ProductForListVM : INotifyPropertyChanged
                 Name = Name,
                 Price = Price
             });
+            products.Add(product);
         }
         catch (Exception e)
         {

@@ -4,15 +4,21 @@ project_mini_windows_c#
 Hello wee 
 
 bonuses:
-stage 1:
-the tryParse functions.
+Dal:
+the tryParse functions.=1
 
-stage 2:
-the tryParse functions.
+Logic:
+delete Object from entities=2?
+the fuction for order entity (add,delete,update)=3
 
-the fuction for order entity (add,delete,update)
-
-stage 3:
-the methods for copy entities with reflection.
-the methods for prints entities with reflection.
+architecture:
+the methods for copy entities with reflection=2.
+the methods for prints entities with reflection
+full use with binding=5
+property trigger=1
+general style for controls=1
+commands =1
+IvalueConverter=1
+MVVM=5
+ProgressBar=3
 the extention methods for any need.

@@ -12,6 +12,7 @@ public static class Simulator
 
     public delegate void UpdateEventHandler(BO.Order? order,DateTime newTime, int delay);
     public static event UpdateEventHandler OnUpdate;
+    public static bool isAlreadyOpen=false;
     public static Random rnd = new Random();
     public static BO.Order? order= new BO.Order();
     public static void StartSimulation()

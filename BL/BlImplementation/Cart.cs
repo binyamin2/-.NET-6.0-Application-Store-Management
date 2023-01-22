@@ -146,6 +146,10 @@ internal class Cart : BlApi.ICart
         if (!Dal!.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
             throw new BO.WrongCartDeteilsException("the product is not exist");
         int? currentInStock=0;
+        if (amount < 0)//check if the amount is valid
+        {
+            throw new BO.WrongCartDeteilsException("amount must be not negative");
+        }
 
         //find how match in stock
         currentInStock = Dal.Product.GetAll().First(item => item?.ID == id)?.InStock;
