@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -25,6 +26,7 @@ internal class Product : BlApi.IProduct
     /// add a product for data base   for manager
     /// </summary>
     /// <param name="product"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Add(BO.Product product)
     {
         lock (Dal!)
@@ -55,6 +57,7 @@ internal class Product : BlApi.IProduct
     /// delete product from data base   for manager
     /// </summary>
     /// <param name="id"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {   lock (Dal!)
         {
@@ -81,6 +84,7 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetCategory(BO.CategoryUI category)
     {
         lock (Dal!)
@@ -107,6 +111,7 @@ internal class Product : BlApi.IProduct
     /// <param name="id"></param>
     /// <param name="cart"></param>
     /// <returns>BO.ProductItem</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem GetForClient(int id, BO.Cart cart)
     {
         lock (Dal!)
@@ -145,6 +150,7 @@ internal class Product : BlApi.IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <returns>BO.Product</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetForManager(int id)
     {
         lock (Dal!)
@@ -171,6 +177,7 @@ internal class Product : BlApi.IProduct
     /// get list of productForList
     /// </summary>
     /// <returns>IEnumerable<BO.Product></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetList()
     {
         lock (Dal!)
@@ -193,6 +200,7 @@ internal class Product : BlApi.IProduct
     /// update a product   for manager
     /// </summary>
     /// <param name="product"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(BO.Product product)
     {
         lock (Dal!)
@@ -224,6 +232,7 @@ internal class Product : BlApi.IProduct
     /// return list of ProductItem For window ListProductItem
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetListProductItems(BO.CategoryUI category = BO.CategoryUI.All)
     {
         lock (Dal!)

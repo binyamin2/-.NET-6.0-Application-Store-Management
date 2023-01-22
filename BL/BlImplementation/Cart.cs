@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
@@ -142,6 +143,7 @@ internal class Cart : BlApi.ICart
     /// <param name="amount"></param>
     /// <returns></returns>
     /// <exception cref="BO.WrongCartDeteilsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Update(BO.Cart cart, int id, int amount)
     {
         lock (Dal!)
@@ -196,7 +198,8 @@ internal class Cart : BlApi.ICart
     /// <param name="cart"></param>
     /// <param name="id"></param>
     /// <param name="amount"></param>
-   public void UpDateOI(BO.Cart cart,int id,int amount)
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public void UpDateOI(BO.Cart cart,int id,int amount)
     {
         lock (Dal!)
         {
@@ -229,7 +232,10 @@ internal class Cart : BlApi.ICart
             return item;
         }
     }
-
+    /// <summary>
+    /// update the cart to empty
+    /// </summary>
+    /// <param name="cart"></param>
     public void cartZero(BO.Cart cart)
     {
         cart.Items!.Clear();

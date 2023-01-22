@@ -1,10 +1,12 @@
 ﻿using DalApi;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 namespace Dal;
 internal class DalOrder : IOrder
 {
     public string s_Order = "Orders";
+    
     static DO.Order? createOrderfromXElement(XElement s)
     {
         return new DO.Order()
@@ -18,6 +20,7 @@ internal class DalOrder : IOrder
             DeliveryDate = s.ToDateTimeNullable("DeliveryDate"),
         };
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order order)
     {
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
@@ -59,6 +62,7 @@ internal class DalOrder : IOrder
         return order.ID; 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
@@ -72,6 +76,7 @@ internal class DalOrder : IOrder
         XMLTools.SaveListToXMLElement(OrderRootElem, s_Order);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order? Get(int id)
     {
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
@@ -82,6 +87,7 @@ internal class DalOrder : IOrder
                 ?? throw new NotFoundException("the Order not found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order? Get(Func<DO.Order?, bool>? predict)
     {
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
@@ -92,6 +98,7 @@ internal class DalOrder : IOrder
                 ?? throw new NotFoundException("the Order not found\"");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? predict = null)
     {
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);
@@ -113,6 +120,7 @@ internal class DalOrder : IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order order)
     {
         XElement OrderRootElem = XMLTools.LoadListFromXMLElement(s_Order);

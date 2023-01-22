@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ internal class Order : BlApi.IOrder
 {
     private IDal? Dal = DalApi.Factory.Get();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order Get(int id)
     {
         lock (Dal!)
@@ -43,6 +45,7 @@ internal class Order : BlApi.IOrder
     /// get list of "OrderForList" with calculate from data
     /// </summary>
     /// <returns>IEnumerable<BO.OrderForList></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList> GetList()
     {
         lock (Dal)
@@ -85,6 +88,7 @@ internal class Order : BlApi.IOrder
 
 
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTracking(int id)
     {
         lock (Dal!)
@@ -132,6 +136,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateShip(int id)
     {
         lock (Dal!)
@@ -168,6 +173,7 @@ internal class Order : BlApi.IOrder
     }
 
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateDelivery(int id)
     {
         lock (Dal!)
@@ -216,6 +222,7 @@ internal class Order : BlApi.IOrder
     /// <param name="orderID"></param>
     /// <param name="productID"></param>
     /// <exception cref="BO.WorngOrderException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateOIADD(int orderID, int productID)
     {
         lock (Dal!)
@@ -262,6 +269,7 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <param name="proudctID"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void updateOIdelete(int orderID, int proudctID)
     {
         lock (Dal!)
@@ -306,6 +314,7 @@ internal class Order : BlApi.IOrder
     /// <param name="orderID"></param>
     /// <param name="proudctID"></param>
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void updateOIAmount(int orderID, int proudctID, int amount)
     {
         lock (Dal!)
@@ -403,6 +412,7 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order BuildOrderBO(DO.Order order)
     {
         BO.Order BOorder = new BO.Order();
@@ -446,6 +456,7 @@ internal class Order : BlApi.IOrder
     /// constractor that take DO.OrderItem
     /// </summary>
     /// <param name="orderItem"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderItem BuildOrderItemBO(DO.OrderItem? orderItem)
     {
         lock (Dal!)
@@ -492,6 +503,7 @@ internal class Order : BlApi.IOrder
         return Status;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderItem buildOIFromP(int OId, int PId)
     {
         lock (Dal!)
@@ -522,6 +534,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order? nextOrder()
     {
         lock (Dal!)
@@ -540,6 +553,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private DateTime? orderByMin(BO.Order? order)
     {
         if (order?.ShipDate == null)

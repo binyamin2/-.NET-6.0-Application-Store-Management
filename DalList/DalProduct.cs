@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 /// <summary>
@@ -18,12 +19,13 @@ namespace Dal;
 /// </summary>
 internal class DalProduct:IProduct
 {
-    
+
     /// <summary>
     /// Add organ to the array and chack if id exitis
     /// </summary>
     /// <param name="p"></param>
     /// <returns>int</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product p)
     {
         
@@ -47,7 +49,8 @@ internal class DalProduct:IProduct
         }
 
     }
-    
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product? Get(int IDp)
     {
         foreach (var item in DataSource.LProduct)
@@ -65,6 +68,7 @@ internal class DalProduct:IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
 
@@ -77,6 +81,7 @@ internal class DalProduct:IProduct
     /// return new array of all product
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product?> GetAll(Func<DO.Product?, bool>? predict = null)
     {
         if( predict == null)
@@ -98,7 +103,8 @@ internal class DalProduct:IProduct
     /// <summary>
     /// update the product
     /// </summary>
-   
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product p)
     {
         
@@ -118,8 +124,9 @@ internal class DalProduct:IProduct
     /// get product from list according to some condition
     /// </summary>
     /// <param name="predict"></param>
-    /// <returns></returns>
+    /// <returns>Product</returns>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product? Get(Func<Product?, bool>? predict)
     {
 

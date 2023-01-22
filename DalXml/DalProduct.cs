@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 namespace Dal;
@@ -30,6 +31,7 @@ internal class DalProduct : IProduct
     /// <param name="prod"></param>
     /// <returns></returns>
     /// <exception cref="AllreadyExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product prod)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -60,6 +62,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -78,6 +81,8 @@ internal class DalProduct : IProduct
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundException"></exception>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? Get(int id)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -93,6 +98,8 @@ internal class DalProduct : IProduct
     /// <param name="predict"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundException"></exception>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? Get(Func<DO.Product?, bool>? predict)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -107,6 +114,8 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null)
     {
         XElement ProductsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
@@ -129,6 +138,8 @@ internal class DalProduct : IProduct
     /// Update organ in xml file
     /// </summary>
     /// <param name="prod"></param>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product prod)
     {
         Delete(prod.ID);

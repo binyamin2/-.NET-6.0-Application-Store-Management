@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 namespace Dal;
@@ -16,6 +17,7 @@ internal class DalOrderItem : IOrderItem
             Amount = s.ToIntNullable("Amount") ?? throw new FormatException("Amount")
         };
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.OrderItem OI)
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
@@ -46,6 +48,7 @@ internal class DalOrderItem : IOrderItem
         return OI.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
@@ -59,6 +62,7 @@ internal class DalOrderItem : IOrderItem
         XMLTools.SaveListToXMLElement(OIRootElem, s_Oi);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem? Get(int id)
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
@@ -69,6 +73,7 @@ internal class DalOrderItem : IOrderItem
                 ?? throw new NotFoundException("the orderitem not found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem? Get(Func<DO.OrderItem?, bool>? predict)
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
@@ -79,6 +84,7 @@ internal class DalOrderItem : IOrderItem
                 ?? throw new NotFoundException("the orderitem not found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? filter = null)
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
@@ -97,6 +103,7 @@ internal class DalOrderItem : IOrderItem
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem? GetItemByOrderAndProduct(int orderId, int productId)
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
@@ -118,6 +125,7 @@ internal class DalOrderItem : IOrderItem
                 ?? throw new NotFoundException("the orderitem not found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.OrderItem oi)
     {
         XElement OIRootElem = XMLTools.LoadListFromXMLElement(s_Oi);
