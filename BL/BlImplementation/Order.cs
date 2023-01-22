@@ -17,21 +17,24 @@ internal class Order : BlApi.IOrder
 
     public BO.Order Get(int id)
     {
-        if (0 > id)
-            throw new BO.InputUnvalidException("ID not valid");
-
-        ///try if id found in Orders list
-        try
+        lock (Dal!)
         {
-            DO.Order? order = Dal?.Order.Get(id);
+            if (0 > id)
+                throw new BO.InputUnvalidException("ID not valid");
 
-            ///build the new organ with constractor of Order
-            BO.Order NewOrder = BuildOrderBO((DO.Order)order!);
-            return NewOrder;
-        }
-        catch (Exception ex)
-        {
-            throw new BO.WorngOrderException(ex.Message, ex);
+            ///try if id found in Orders list
+            try
+            {
+                DO.Order? order = Dal?.Order.Get(id);
+
+                ///build the new organ with constractor of Order
+                BO.Order NewOrder = BuildOrderBO((DO.Order)order!);
+                return NewOrder;
+            }
+            catch (Exception ex)
+            {
+                throw new BO.WorngOrderException(ex.Message, ex);
+            }
         }
     }
 
@@ -42,155 +45,166 @@ internal class Order : BlApi.IOrder
     /// <returns>IEnumerable<BO.OrderForList></returns>
     public IEnumerable<BO.OrderForList> GetList()
     {
-        ///order list
-        IEnumerable<DO.Order?> Oldlist = Dal!.Order.GetAll();
-
-        ///new list 
-        List<BO.OrderForList> NewList = new List<BO.OrderForList>();
-
-        ///for update amount and total
-        IEnumerable<DO.OrderItem?> ListOrderItem = Dal.OrderItem.GetAll();
-
-        foreach (var item in Oldlist)
+        lock (Dal)
         {
-            ///update ID and name
-            BO.OrderForList OrderFL = new BO.OrderForList();
-            OrderFL.ID = item?.ID;
-            OrderFL.CustomerName = item?.CustomerName;
+            ///order list
+            IEnumerable<DO.Order?> Oldlist = Dal!.Order.GetAll();
 
-            ///update the status enum
-            /////method help "CheckStatus"
-            OrderFL.Status = CheckStatus((DO.Order)item!);
+            ///new list 
+            List<BO.OrderForList> NewList = new List<BO.OrderForList>();
+
+            ///for update amount and total
+            IEnumerable<DO.OrderItem?> ListOrderItem = Dal.OrderItem.GetAll();
+
+            foreach (var item in Oldlist)
+            {
+                ///update ID and name
+                BO.OrderForList OrderFL = new BO.OrderForList();
+                OrderFL.ID = item?.ID;
+                OrderFL.CustomerName = item?.CustomerName;
+
+                ///update the status enum
+                /////method help "CheckStatus"
+                OrderFL.Status = CheckStatus((DO.Order)item!);
 
 
 
-            ///update the "Amount Items" and "Total price" with func help
-            var tuple = CalcAmountAndTotal(OrderFL.ID, ListOrderItem);
+                ///update the "Amount Items" and "Total price" with func help
+                var tuple = CalcAmountAndTotal(OrderFL.ID, ListOrderItem);
 
-            OrderFL.AmountOfItems = tuple.Item1;
-            OrderFL.TotalPrice = tuple.Item2;
+                OrderFL.AmountOfItems = tuple.Item1;
+                OrderFL.TotalPrice = tuple.Item2;
 
-            ///add to new list
-            NewList.Add(OrderFL);
+                ///add to new list
+                NewList.Add(OrderFL);
 
+            }
+            return NewList.OrderBy(x => x?.ID);
         }
-        return NewList.OrderBy(x => x?.ID);
-
     }
 
 
 
     public BO.OrderTracking OrderTracking(int id)
     {
-        if (0 > id)
+        lock (Dal!)
         {
-            throw new BO.InputUnvalidException("ID not valid");
-        }
-
-        try
-        {
-            ///build order and ordertracking
-            DO.Order? order = Dal?.Order.Get(id);
-            BO.OrderTracking orderTrack = new BO.OrderTracking();
-            orderTrack.ID = (int)order?.ID!;
-            //method help "CheckStatus"
-            orderTrack.Status = CheckStatus((DO.Order)order);
-            ///if not order
-            if (order?.OrderDate != null)
+            if (0 > id)
             {
-                Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.OrderDate, "The order created");
-                orderTrack.DateList!.Add(DateOrder!);
-            }
-            ///if not ship
-            if (order?.ShipDate != null)
-            {
-                Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.ShipDate, "The order shiped");
-                orderTrack.DateList!.Add(DateOrder!);
-            }
-            ///if not delivery
-            if (order?.DeliveryDate != null)
-            {
-                Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.DeliveryDate, "The order delivered");
-                orderTrack.DateList!.Add(DateOrder!);
+                throw new BO.InputUnvalidException("ID not valid");
             }
 
-            return orderTrack;
+            try
+            {
+                ///build order and ordertracking
+                DO.Order? order = Dal?.Order.Get(id);
+                BO.OrderTracking orderTrack = new BO.OrderTracking();
+                orderTrack.ID = (int)order?.ID!;
+                //method help "CheckStatus"
+                orderTrack.Status = CheckStatus((DO.Order)order);
+                ///if not order
+                if (order?.OrderDate != null)
+                {
+                    Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.OrderDate, "The order created");
+                    orderTrack.DateList!.Add(DateOrder!);
+                }
+                ///if not ship
+                if (order?.ShipDate != null)
+                {
+                    Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.ShipDate, "The order shiped");
+                    orderTrack.DateList!.Add(DateOrder!);
+                }
+                ///if not delivery
+                if (order?.DeliveryDate != null)
+                {
+                    Tuple<DateTime?, String> DateOrder = new Tuple<DateTime?, String>(order?.DeliveryDate, "The order delivered");
+                    orderTrack.DateList!.Add(DateOrder!);
+                }
 
-        }
-        catch (Exception ex)
-        {
+                return orderTrack;
 
-            throw new BO.WorngOrderException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+
+                throw new BO.WorngOrderException(ex.Message, ex);
+            }
         }
     }
 
     public BO.Order UpdateShip(int id)
     {
-        if (0 > id)
-            throw new BO.InputUnvalidException("ID not valid");
-        try
+        lock (Dal!)
         {
-            DO.Order order = (DO.Order)Dal!.Order.Get(id)!;
-            //if allready ship
-            if (order.ShipDate != null)
+            if (0 > id)
+                throw new BO.InputUnvalidException("ID not valid");
+            try
             {
-                throw new BO.WorngOrderException("The order allready ship");
+                DO.Order order = (DO.Order)Dal!.Order.Get(id)!;
+                //if allready ship
+                if (order.ShipDate != null)
+                {
+                    throw new BO.WorngOrderException("The order allready ship");
+                }
+
+                DateTime NowDate = DateTime.Now;
+
+                order.ShipDate = NowDate;
+
+                //update the order n database
+                Dal.Order.Update((DO.Order)order);
+
+                ///create a BO.order and return it.
+                BO.Order BOorder = BuildOrderBO((DO.Order)order);
+
+                return BOorder;
             }
+            catch (Exception ex)
+            {
 
-            DateTime NowDate = DateTime.Now;
-
-            order.ShipDate = NowDate;
-
-            //update the order n database
-            Dal.Order.Update((DO.Order)order);
-
-            ///create a BO.order and return it.
-            BO.Order BOorder = BuildOrderBO((DO.Order)order);
-
-            return BOorder;
-        }
-        catch (Exception ex)
-        {
-
-            throw new BO.WorngOrderException(ex.Message, ex);
+                throw new BO.WorngOrderException(ex.Message, ex);
+            }
         }
     }
 
 
     public BO.Order UpdateDelivery(int id)
     {
-        if (0 >= id)
-            throw new BO.InputUnvalidException("ID not valid");
-        try
+        lock (Dal!)
         {
-            DO.Order order = (DO.Order)Dal!.Order.Get(id)!;
-            //if not allready ship
-            if (order.ShipDate == null)
+            if (0 >= id)
+                throw new BO.InputUnvalidException("ID not valid");
+            try
             {
-                throw new BO.WorngOrderException("The order not allready ship");
+                DO.Order order = (DO.Order)Dal!.Order.Get(id)!;
+                //if not allready ship
+                if (order.ShipDate == null)
+                {
+                    throw new BO.WorngOrderException("The order not allready ship");
+                }
+                //if allready delivery
+                if (order.DeliveryDate != null)
+                {
+                    throw new BO.WorngOrderException("The order allready delivery");
+                }
+
+                DateTime? NowDate = DateTime.Now;
+
+                order.DeliveryDate = NowDate;
+
+                //update the order in database
+                Dal.Order.Update((DO.Order)order);
+
+                ///create a BO.order and return it.
+                BO.Order BOorder = BuildOrderBO((DO.Order)order);
+
+                return BOorder;
             }
-            //if allready delivery
-            if (order.DeliveryDate != null)
+            catch (Exception ex)
             {
-                throw new BO.WorngOrderException("The order allready delivery");
+
+                throw new BO.WorngOrderException(ex.Message, ex);
             }
-
-            DateTime? NowDate = DateTime.Now;
-
-            order.DeliveryDate = NowDate;
-
-            //update the order in database
-            Dal.Order.Update((DO.Order)order);
-
-            ///create a BO.order and return it.
-            BO.Order BOorder = BuildOrderBO((DO.Order)order);
-
-            return BOorder;
-        }
-        catch (Exception ex)
-        {
-
-            throw new BO.WorngOrderException(ex.Message, ex);
         }
     }
 
@@ -204,39 +218,42 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.WorngOrderException"></exception>
     public void UpdateOIADD(int orderID, int productID)
     {
-        //exception if the orderitem already exist
-        if (Dal!.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == productID))
-            throw new BO.WorngOrderException("the order item already exist in item");
-        BO.OrderItem newOi = new BO.OrderItem();
-        newOi = buildOIFromP(orderID, productID);//build order item from product
-        DO.OrderItem item = new DO.OrderItem();
-        //build DO order item from BO oi
-        item.ProductID = newOi.ProductID;
-        item.Amount = newOi.Amount;
-        item.Price = newOi.Price;
-        item.OrderID = orderID;
-        try
+        lock (Dal!)
         {
-            //updating the datasource in amounts
-            foreach (var i in Dal.Product.GetAll().ToList())
+            //exception if the orderitem already exist
+            if (Dal!.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == productID))
+                throw new BO.WorngOrderException("the order item already exist in item");
+            BO.OrderItem newOi = new BO.OrderItem();
+            newOi = buildOIFromP(orderID, productID);//build order item from product
+            DO.OrderItem item = new DO.OrderItem();
+            //build DO order item from BO oi
+            item.ProductID = newOi.ProductID;
+            item.Amount = newOi.Amount;
+            item.Price = newOi.Price;
+            item.OrderID = orderID;
+            try
             {
-                if (productID == i?.ID)
+                //updating the datasource in amounts
+                foreach (var i in Dal.Product.GetAll().ToList())
                 {
-                    if (i?.InStock < 1)//if have no enough in stock
-                        throw new BO.WorngOrderException("there is no enough amount instock");
-                    DO.Product Np = new DO.Product();
-                    CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
-                    Np.Category = (DO.Category)i?.Category!;
-                    Np.InStock = (int)(i?.InStock - 1)!;
-                    Dal.Product.Update(Np);
-                    Dal.OrderItem.Add(item);
+                    if (productID == i?.ID)
+                    {
+                        if (i?.InStock < 1)//if have no enough in stock
+                            throw new BO.WorngOrderException("there is no enough amount instock");
+                        DO.Product Np = new DO.Product();
+                        CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
+                        Np.Category = (DO.Category)i?.Category!;
+                        Np.InStock = (int)(i?.InStock - 1)!;
+                        Dal.Product.Update(Np);
+                        Dal.OrderItem.Add(item);
+                    }
                 }
             }
-        }
-        catch (Exception ex)
-        {
+            catch (Exception ex)
+            {
 
-            throw new BO.WorngOrderException(ex.Message, ex);
+                throw new BO.WorngOrderException(ex.Message, ex);
+            }
         }
     }
     /// <summary>
@@ -247,35 +264,38 @@ internal class Order : BlApi.IOrder
     /// <param name="proudctID"></param>
     public void updateOIdelete(int orderID, int proudctID)
     {
-        IEnumerable<DO.OrderItem?> list = Dal.OrderItem.GetAll();
-        try
+        lock (Dal!)
         {
-            foreach (var item in list.ToList())
+            IEnumerable<DO.OrderItem?> list = Dal.OrderItem.GetAll();
+            try
             {
-                if (item?.OrderID == orderID && item?.ProductID == proudctID)//if found the correct order item
+                foreach (var item in list.ToList())
                 {
-                    //updating the product data and the order item data
-                    foreach (var i in Dal.Product.GetAll().ToList())
+                    if (item?.OrderID == orderID && item?.ProductID == proudctID)//if found the correct order item
                     {
-                        if (proudctID == i?.ID)
+                        //updating the product data and the order item data
+                        foreach (var i in Dal.Product.GetAll().ToList())
                         {
-                            DO.Product Np = new DO.Product();
-                            CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
-                            Np.Category = (DO.Category)i?.Category!;
-                            Np.InStock = (int)(i?.InStock + item?.Amount)!;
-                            Dal.Product.Update(Np);
-                            Dal.OrderItem.Delete((int)item?.ID!);
-                            return;
+                            if (proudctID == i?.ID)
+                            {
+                                DO.Product Np = new DO.Product();
+                                CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, i);
+                                Np.Category = (DO.Category)i?.Category!;
+                                Np.InStock = (int)(i?.InStock + item?.Amount)!;
+                                Dal.Product.Update(Np);
+                                Dal.OrderItem.Delete((int)item?.ID!);
+                                return;
+                            }
                         }
                     }
                 }
+                throw new BO.WorngOrderException("the order item not found");
             }
-            throw new BO.WorngOrderException("the order item not found");
-        }
-        catch (Exception ex)
-        {
+            catch (Exception ex)
+            {
 
-            throw new BO.WorngOrderException(ex.Message, ex);
+                throw new BO.WorngOrderException(ex.Message, ex);
+            }
         }
     }
 
@@ -288,66 +308,68 @@ internal class Order : BlApi.IOrder
 
     public void updateOIAmount(int orderID, int proudctID, int amount)
     {
-        //exception if the order item not found in the order
-        if (!Dal!.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == proudctID))
-            throw new BO.WorngOrderException("the order item to update not exist");
-        if(amount <0)
+        lock (Dal!)
         {
-            throw new BO.WorngOrderException("amount must be not negative");
-        }
-        int? current_amount = 0, prInstock = 0;
-
-        //get the current amont in order item
-        current_amount = Dal.OrderItem.GetAll().First(item => item?.ProductID == proudctID && item?.OrderID == orderID)?.Amount;
-
-
-        //get the amount of the product in stock
-        prInstock = Dal.Product.GetAll().First(item => item?.ID == proudctID)?.InStock;
-
-        if (current_amount < amount)//if we wont to rise the amount
-        {
-            if (amount - current_amount > prInstock)//if there is no enough in stock
+            //exception if the order item not found in the order
+            if (!Dal!.OrderItem.GetAll().Any(i => i?.OrderID == orderID && i?.ProductID == proudctID))
+                throw new BO.WorngOrderException("the order item to update not exist");
+            if (amount < 0)
             {
-                throw new BO.WorngOrderException("there is no enough amount instock");
+                throw new BO.WorngOrderException("amount must be not negative");
             }
-        }
-        //update the amount in stock
-        try
-        {
-            foreach (var item in Dal.Product.GetAll().ToList())
+            int? current_amount = 0, prInstock = 0;
+
+            //get the current amont in order item
+            current_amount = Dal.OrderItem.GetAll().First(item => item?.ProductID == proudctID && item?.OrderID == orderID)?.Amount;
+
+
+            //get the amount of the product in stock
+            prInstock = Dal.Product.GetAll().First(item => item?.ID == proudctID)?.InStock;
+
+            if (current_amount < amount)//if we wont to rise the amount
             {
-                if (item?.ID == proudctID)
+                if (amount - current_amount > prInstock)//if there is no enough in stock
                 {
-                    DO.Product Np = new DO.Product();
-                    CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, item);
-                    Np.Category = (DO.Category)item?.Category!;
-                    Np.InStock = (int)(item?.InStock - (amount - current_amount))!;
-                    Dal.Product.Update(Np);
-                    break;
+                    throw new BO.WorngOrderException("there is no enough amount instock");
                 }
             }
-            //update the order item details
-            List<DO.OrderItem?> list = new List<DO.OrderItem?>(Dal.OrderItem.GetAll().ToList());
-
-            foreach (var item in list)
+            //update the amount in stock
+            try
             {
-                if (item?.ProductID == proudctID && item?.OrderID == orderID)
+                foreach (var item in Dal.Product.GetAll().ToList())
                 {
-                    DO.OrderItem NOI = new DO.OrderItem();
-                    CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(ref NOI, item);
-                    NOI.Amount = amount;
-                    Dal.OrderItem.Update(NOI);
-                    return;
+                    if (item?.ID == proudctID)
+                    {
+                        DO.Product Np = new DO.Product();
+                        CopyProperties<DO.Product, DO.Product?>.Copy(ref Np, item);
+                        Np.Category = (DO.Category)item?.Category!;
+                        Np.InStock = (int)(item?.InStock - (amount - current_amount))!;
+                        Dal.Product.Update(Np);
+                        break;
+                    }
+                }
+                //update the order item details
+                List<DO.OrderItem?> list = new List<DO.OrderItem?>(Dal.OrderItem.GetAll().ToList());
+
+                foreach (var item in list)
+                {
+                    if (item?.ProductID == proudctID && item?.OrderID == orderID)
+                    {
+                        DO.OrderItem NOI = new DO.OrderItem();
+                        CopyProperties<DO.OrderItem, DO.OrderItem?>.Copy(ref NOI, item);
+                        NOI.Amount = amount;
+                        Dal.OrderItem.Update(NOI);
+                        return;
+                    }
                 }
             }
-        }
-        catch (Exception ex)
-        {
+            catch (Exception ex)
+            {
 
-            throw new BO.WorngOrderException(ex.Message, ex);
-        }
+                throw new BO.WorngOrderException(ex.Message, ex);
+            }
 
-        //update order
+        }
     }
 
 
@@ -426,27 +448,30 @@ internal class Order : BlApi.IOrder
     /// <param name="orderItem"></param>
     public BO.OrderItem BuildOrderItemBO(DO.OrderItem? orderItem)
     {
-        BO.OrderItem BOorderItem = new BO.OrderItem();
-        CopyProperties<BO.OrderItem, DO.OrderItem?>.Copy(ref BOorderItem!, orderItem);
-        BOorderItem!.TotalPrice = (double)(orderItem?.Price * orderItem?.Amount)!;
+        lock (Dal!)
+        {
+            BO.OrderItem BOorderItem = new BO.OrderItem();
+            CopyProperties<BO.OrderItem, DO.OrderItem?>.Copy(ref BOorderItem!, orderItem);
+            BOorderItem!.TotalPrice = (double)(orderItem?.Price * orderItem?.Amount)!;
 
 
-        ///find the name of the product
+            ///find the name of the product
 
-        IEnumerable<DO.Product?> ListOrderItem = Dal!.Product.GetAll();
+            IEnumerable<DO.Product?> ListOrderItem = Dal!.Product.GetAll();
 
 
-        BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ProductID == item?.ID)?.Name;
+            BOorderItem.Name = ListOrderItem.First(item => BOorderItem.ProductID == item?.ID)?.Name;
 
-        //foreach (var item in ListOrderItem)
-        //{
-        //    if (BOorderItem.ID == item?.ID)
-        //    {
-        //        BOorderItem.Name = item?.Name;
-        //        break;
-        //    }
-        //}
-        return BOorderItem;
+            //foreach (var item in ListOrderItem)
+            //{
+            //    if (BOorderItem.ID == item?.ID)
+            //    {
+            //        BOorderItem.Name = item?.Name;
+            //        break;
+            //    }
+            //}
+            return BOorderItem;
+        }
     }
     /// <summary>
     /// help function to chack status
@@ -469,44 +494,50 @@ internal class Order : BlApi.IOrder
 
     public BO.OrderItem buildOIFromP(int OId, int PId)
     {
-        //check if the product exist
-        if (Dal!.Product.GetAll().Any(i => i?.ID == PId))
+        lock (Dal!)
         {
-            BO.Product product = new BO.Product();
-            foreach (var item in Dal.Product.GetAll().ToList())
+            //check if the product exist
+            if (Dal!.Product.GetAll().Any(i => i?.ID == PId))
             {
-                if (item?.ID == PId)
+                BO.Product product = new BO.Product();
+                foreach (var item in Dal.Product.GetAll().ToList())
                 {
-                    CopyProperties<BO.Product, DO.Product?>.Copy(ref product!, item);
-                    product.Category = (BO.Category)item?.Category!;
-                    break;
+                    if (item?.ID == PId)
+                    {
+                        CopyProperties<BO.Product, DO.Product?>.Copy(ref product!, item);
+                        product.Category = (BO.Category)item?.Category!;
+                        break;
+                    }
                 }
+                BO.OrderItem newOI = new BO.OrderItem();
+                newOI.Price = product.Price;
+                newOI.Name = product.Name;
+                newOI.ProductID = product.ID;
+                newOI.Amount = 1;
+                newOI.TotalPrice = newOI.Price;
+                return newOI;
             }
-            BO.OrderItem newOI = new BO.OrderItem();
-            newOI.Price = product.Price;
-            newOI.Name = product.Name;
-            newOI.ProductID = product.ID;
-            newOI.Amount = 1;
-            newOI.TotalPrice = newOI.Price;
-            return newOI;
+            else
+                throw new BO.WorngOrderException("the product is not exist");
         }
-        else
-            throw new BO.WorngOrderException("the product is not exist");
     }
 
     public BO.Order? nextOrder()
     {
-        BO.Order? order = null;
-        var orders = (from item in Dal?.Order.GetAll()
-                      where item?.DeliveryDate == null
-                      select BuildOrderBO((DO.Order)item)).ToList();
+        lock (Dal!)
+        {
+            BO.Order? order = null;
+            var orders = (from item in Dal?.Order.GetAll()
+                          where item?.DeliveryDate == null
+                          select BuildOrderBO((DO.Order)item)).ToList();
 
-        if (orders.Count == 0)
-            return order;
+            if (orders.Count == 0)
+                return order;
 
-        orders.OrderBy(orderByMin);
+            orders.OrderBy(orderByMin);
 
-        return orders.FirstOrDefault();
+            return orders.FirstOrDefault();
+        }
     }
 
     private DateTime? orderByMin(BO.Order? order)

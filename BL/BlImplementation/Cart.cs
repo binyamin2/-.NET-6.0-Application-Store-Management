@@ -21,57 +21,60 @@ internal class Cart : BlApi.ICart
     /// <returns>BO.Cart</returns>
     public BO.Cart Add(BO.Cart cart, int id)
     {
-        bool instock = false;
-        foreach (var item in Dal.Product.GetAll())
+        lock (Dal)
         {
-            if (item?.ID == id)
+            bool instock = false;
+            foreach (var item in Dal.Product.GetAll())
             {
-                if (item?.InStock > 0)
+                if (item?.ID == id)
                 {
-                    instock = true;
-                    break;
-                }
-            }
-        }
-        if (!instock)
-        {
-            throw new BO.NotInStockException("the product is over from stock");
-        }
-        //return true if the product exist in the cart
-        bool exist=cart.Items.Any(i => i.ProductID == id);
-        if(!exist)
-        {
-            //check if the product exist
-            if (Dal.Product.GetAll().Any(i => i?.ID == id))
-            {
-                BO.Product product = new BO.Product();
-                foreach (var item in Dal.Product.GetAll())
-                {
-                    if (item?.ID == id)
+                    if (item?.InStock > 0)
                     {
-                        CopyProperties<BO.Product, DO.Product?>.Copy(ref product, item);
-                        product!.Category = (BO.Category)item?.Category!;
+                        instock = true;
                         break;
                     }
                 }
-                BO.OrderItem newOI = new BO.OrderItem();
-                newOI.Price = product.Price;
-                newOI.Name = product.Name;
-                newOI.ProductID = product.ID;
-                newOI.Amount = 1;
-                newOI.TotalPrice = newOI.Price;
-                cart.Items.Add(newOI);
-                cart.TotalPrice += newOI.TotalPrice;
-                return cart;
-
             }
-            else
-                throw new BO.WrongCartDeteilsException("the product is not exist");
+            if (!instock)
+            {
+                throw new BO.NotInStockException("the product is over from stock");
+            }
+            //return true if the product exist in the cart
+            bool exist = cart.Items.Any(i => i.ProductID == id);
+            if (!exist)
+            {
+                //check if the product exist
+                if (Dal.Product.GetAll().Any(i => i?.ID == id))
+                {
+                    BO.Product product = new BO.Product();
+                    foreach (var item in Dal.Product.GetAll())
+                    {
+                        if (item?.ID == id)
+                        {
+                            CopyProperties<BO.Product, DO.Product?>.Copy(ref product, item);
+                            product!.Category = (BO.Category)item?.Category!;
+                            break;
+                        }
+                    }
+                    BO.OrderItem newOI = new BO.OrderItem();
+                    newOI.Price = product.Price;
+                    newOI.Name = product.Name;
+                    newOI.ProductID = product.ID;
+                    newOI.Amount = 1;
+                    newOI.TotalPrice = newOI.Price;
+                    cart.Items.Add(newOI);
+                    cart.TotalPrice += newOI.TotalPrice;
+                    return cart;
+
+                }
+                else
+                    throw new BO.WrongCartDeteilsException("the product is not exist");
+            }
+
+
+            UpDateOI(cart, id, 1);
+            return cart;
         }
-       
-        
-        UpDateOI(cart, id,1);
-        return cart;
       
     }
     /// <summary>
@@ -82,6 +85,7 @@ internal class Cart : BlApi.ICart
     /// <exception cref="BO.WrongCartDeteilsException"></exception>
     public void ConfirmOrder(BO.Cart cart, Tuple<string?, string?, string?> DetailClient)//tuple orser=name,email,addres
     {
+        lock(Dal) {
         if (string.IsNullOrEmpty(DetailClient.Item1))
             throw new BO.WrongCartDeteilsException("name not valid");
         if (string.IsNullOrEmpty(DetailClient.Item2))
@@ -128,7 +132,7 @@ internal class Cart : BlApi.ICart
         {
             throw  new BO.WrongCartDeteilsException(ex.Message,ex);
         }
-
+        }
     }
     /// <summary>
     /// update the cart
@@ -140,48 +144,51 @@ internal class Cart : BlApi.ICart
     /// <exception cref="BO.WrongCartDeteilsException"></exception>
     public BO.Cart Update(BO.Cart cart, int id, int amount)
     {
-        bool exist = cart.Items!.Any(i => i.ProductID == id);//Check if the product in the cart
-        if (!exist)
-            throw new BO.WrongCartDeteilsException("the product is not in the cart");
-        if (!Dal!.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
-            throw new BO.WrongCartDeteilsException("the product is not exist");
-        int? currentInStock=0;
-        if (amount < 0)//check if the amount is valid
+        lock (Dal!)
         {
-            throw new BO.WrongCartDeteilsException("amount must be not negative");
-        }
-
-        //find how match in stock
-        currentInStock = Dal.Product.GetAll().First(item => item?.ID == id)?.InStock;
-
-        foreach (var item in cart.Items!)//adding/updating the product
-        {
-            if (item!.ProductID==id)
+            bool exist = cart.Items!.Any(i => i.ProductID == id);//Check if the product in the cart
+            if (!exist)
+                throw new BO.WrongCartDeteilsException("the product is not in the cart");
+            if (!Dal!.Product.GetAll().Any(i => i?.ID == id))//Check if the product exist
+                throw new BO.WrongCartDeteilsException("the product is not exist");
+            int? currentInStock = 0;
+            if (amount < 0)//check if the amount is valid
             {
-                if (amount == 0)//delete the product if the amount is 0
-                {
-                    cart.TotalPrice-=item.TotalPrice;
-                    cart.Items.Remove(item);
-                    return cart;
-                }
-                else if (item.Amount<amount)//if want biger amount
-                {
-                    if((amount) >currentInStock)//check if have enough product to add
-                    {
-                        throw new BO.WrongCartDeteilsException("there no enough product in stock");
-                    }
-                    UpDateOI(cart,id, amount - item.Amount);
-                }
-                else if(item.Amount>amount)//if want smaller amount
-                {
-                    UpDateOI(cart, id, amount- item.Amount);
-                }
-                break;
-               
+                throw new BO.WrongCartDeteilsException("amount must be not negative");
             }
-            
+
+            //find how match in stock
+            currentInStock = Dal.Product.GetAll().First(item => item?.ID == id)?.InStock;
+
+            foreach (var item in cart.Items!)//adding/updating the product
+            {
+                if (item!.ProductID == id)
+                {
+                    if (amount == 0)//delete the product if the amount is 0
+                    {
+                        cart.TotalPrice -= item.TotalPrice;
+                        cart.Items.Remove(item);
+                        return cart;
+                    }
+                    else if (item.Amount < amount)//if want biger amount
+                    {
+                        if ((amount) > currentInStock)//check if have enough product to add
+                        {
+                            throw new BO.WrongCartDeteilsException("there no enough product in stock");
+                        }
+                        UpDateOI(cart, id, amount - item.Amount);
+                    }
+                    else if (item.Amount > amount)//if want smaller amount
+                    {
+                        UpDateOI(cart, id, amount - item.Amount);
+                    }
+                    break;
+
+                }
+
+            }
+            return cart;
         }
-        return cart;
     }
     /// <summary>
     /// func for update order item
@@ -191,17 +198,19 @@ internal class Cart : BlApi.ICart
     /// <param name="amount"></param>
    public void UpDateOI(BO.Cart cart,int id,int amount)
     {
-     
-        foreach (var item in cart.Items!)
+        lock (Dal!)
         {
-            if(item!.ProductID==id)
+            foreach (var item in cart.Items!)
             {
-                item.Amount+=amount;
-                item.TotalPrice+=item.Price*amount;
-                cart.TotalPrice += item.Price * amount;
-                return;
-            }
+                if (item!.ProductID == id)
+                {
+                    item.Amount += amount;
+                    item.TotalPrice += item.Price * amount;
+                    cart.TotalPrice += item.Price * amount;
+                    return;
+                }
 
+            }
         }
     }
     /// <summary>
@@ -211,11 +220,14 @@ internal class Cart : BlApi.ICart
     /// <returns></returns>
     public DO.OrderItem BuildOI(BO.OrderItem BOOI)
     {
-        DO.OrderItem item = new DO.OrderItem();
-        item.ProductID = BOOI.ProductID;
-        item.Amount = BOOI.Amount;
-        item.Price = BOOI.Price;
-        return item;
+        lock (Dal!)
+        {
+            DO.OrderItem item = new DO.OrderItem();
+            item.ProductID = BOOI.ProductID;
+            item.Amount = BOOI.Amount;
+            item.Price = BOOI.Price;
+            return item;
+        }
     }
 
     public void cartZero(BO.Cart cart)
