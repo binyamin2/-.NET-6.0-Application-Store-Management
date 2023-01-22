@@ -85,6 +85,8 @@
     <InStock>35</InStock>
   </Product>
   <Product>
+    <ID>111128</ID>
+    <Name>BootsBlandstone</Name>
     <ID>111123</ID>
     <Name>Blandstone</Name>
     <Price>350</Price>
@@ -139,5 +141,19 @@
     <Price>350</Price>
     <Category>Boots</Category>
     <InStock>35</InStock>
+  </Product>
+  <Product>
+    <ID>111127</ID>
+    <Name>BootsRedback</Name>
+    <Price>350</Price>
+    <Category>Boots</Category>
+    <InStock>4</InStock>
+  </Product>
+  <Product>
+    <ID>111120</ID>
+    <Name>SandalsChcko</Name>
+    <Price>350</Price>
+    <Category>Sandals</Category>
+    <InStock>56</InStock>
   </Product>
 </ArrayOfProduct>
