@@ -1,6 +1,3 @@
-
-# Developed by Binyamin Shapira and Oz Asban
-
 # Store Management Application
 
 This project is a store management application developed as part of a study project using the NET platform. The main focus of the project was on object-oriented programming and building a fully functional application for store management, as well as designing and building a UI in WPF.
@@ -36,3 +33,4 @@ The end result of this project is a fully functional store management applicatio
 Working on this project has been an incredible learning experience. It has provided us with hands-on exposure to cutting-edge technologies and has taught us valuable skills such as collaborative teamwork, problem-solving, and adapting to new challenges. We have gained a deeper understanding of developing solutions using the .NET platform and applying object-oriented programming principles effectively.
 
 
+# Developed by Binyamin Shapira and Oz Asban
