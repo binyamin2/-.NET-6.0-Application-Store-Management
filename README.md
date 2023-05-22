@@ -1,6 +1,11 @@
 # Store Management Application
 
-This project is a store management application developed as part of a study project using the NET platform. The main focus of the project was on object-oriented programming and building a fully functional application for store management, as well as designing and building a UI in WPF.
+This project is a store management application developed as part of a study project using the .NET platform.
+The main focus of the project was on object-oriented programming and building a fully functional application for store management.
+Additionally, the project involved designing and building a user interface (UI) using Windows Presentation Foundation (WPF).
+
+The store management application aims to provide efficient inventory management and streamline the shopping experience for both store managers and customers.
+It offers a range of features such as inventory tracking, product creation, shipment management, and shopping basket functionality.
 
 ## Technologies and Skills Utilized
 
